@@ -13,7 +13,7 @@ def social():
         "msg":"social screen"
     })
 
-# SIGNUP ############################################
+# SIGNUP
 
 @api.route('/signup/', methods=['POST'])
 def signup():
@@ -117,24 +117,5 @@ def each_product(product_id):
     return jsonify({
         "msg":"product not found"
     }), 401
-
-""" # PRODUCTOS POR CATEGORÍAS HACER DE ÚLTIMAS
-
-@api.route('/products/categories/<string:categorie>/')
-def categories_products(categorie):
-    products_categories = Products.query.filter(Products.categories == categorie).all()
-    all_products_categories = []
-
-    if products_categories is None:
-        return jsonify({
-            "msg":"No have products in this categorie"
-        }), 404
-
-    
-    for i in range(len(products_categories)):
-        if products_categories[i].categories == "tecnologia":
-            
-
- """
 
 
