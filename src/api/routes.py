@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Signup, Products, Categories, TokenBlocklist
+from api.models import db, User, Products, Categories, TokenBlocklist
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime, timezone # para el cierre de sesión
@@ -28,8 +28,8 @@ def signup():
     is_active = request.json.get("is_active")
     name = request.json.get("name")
     surname = request.json.get("surname")
-    signup = Signup(email = email, password = cripto.generate_password_hash(password).decode("utf-8"), is_active = is_active, name = name, surname = surname)
-    users = Signup.query.filter(Signup.email == email).first()
+    signup = User(email = email, password = cripto.generate_password_hash(password).decode("utf-8"), is_active = is_active, name = name, surname = surname)
+    users = User.query.filter(User.email == email).first()
 
     if not users is None:
 
@@ -51,7 +51,7 @@ def signup():
 def user_login():
     email=request.json.get('email')
     password=request.json.get('password')
-    user=Signup.query.filter(Signup.email==email).first()
+    user=User.query.filter(User.email==email).first()
     # No encuentro Usuario
 
     if user == None:
@@ -95,7 +95,7 @@ def user_logout():
 
 @api.route('/users/', methods=['GET'])
 def users():
-    users = Signup.query.filter(Signup.__tablename__ == "signup").all()
+    users = User.query.filter(User.__tablename__ == "signup").all()
     all_users = []
 
     if len(users) == 0:

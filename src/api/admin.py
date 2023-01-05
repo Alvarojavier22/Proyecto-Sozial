@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, Signup, Products, Categories
+from .models import db, User, Products, Categories
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -11,7 +11,7 @@ def setup_admin(app):
 
     
     # Add your models here, for example this is how we add a the User model to the admin
-    admin.add_view(ModelView(Signup, db.session))
+    admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Products, db.session))
     admin.add_view(ModelView(Categories, db.session))
 

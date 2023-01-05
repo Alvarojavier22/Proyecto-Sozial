@@ -2,8 +2,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class Signup(db.Model):
-    __tablename__ = "signup"
+class User(db.Model):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=False, nullable=False)
     surname = db.Column(db.String(50), unique=False, nullable=False)
@@ -12,7 +12,7 @@ class Signup(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Signup {self.email}>'
+        return f'<User {self.email}>'
 
     def serialize(self):
         return {
@@ -26,13 +26,15 @@ class Signup(db.Model):
 class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
-    categories = db.Column(db.String(50), nullable=False)
+    categorie_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     product_id = db.Column(db.Integer, unique=True, nullable=False)
     name = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     avaliable = db.Column(db.Boolean(), unique=False, nullable=False)
+
+    
 
     def __repr__(self):
         return f'<Products {self.name}>'
@@ -53,6 +55,7 @@ class Categories(db.Model):
     __tablename__ = "categories"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
+    products = db.relationship('Products',backref='categories', lazy=True)
 
     def __repr__(self):
         return f'<Categories {self.name}>'
