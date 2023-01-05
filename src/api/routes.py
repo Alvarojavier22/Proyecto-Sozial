@@ -4,8 +4,14 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, Signup, Products, Categories
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
+from datetime import datetime, timezone # para el cierre de sesión
+from flask_bcrypt import Bcrypt
+
 
 api = Blueprint('api', __name__)
+
+cripto = Bcrypt(Flask(__name__))
 
 @api.route('/social/', methods=['GET'])
 def social():
@@ -39,6 +45,34 @@ def signup():
         "msg":"User create succefully"
     }), 201
 
+# LOGIN
+
+@api.route('/login/',  methods=['POST'])
+def user_login():
+    email=request.json.get('email')
+    password=request.json.get('password')
+    user=Signup.query.filter(Signup.email==email).first()
+    # No encuentro Usuario
+
+    if user == None:
+        print(("Correo invalido"))
+        return jsonify({"msg":"Inicio de sesion invalido"}), 401
+
+# Validacion de la clave
+    if cripto.check_password_hash(user.password, password):
+    # if user.password==password:
+        print("Clave ok")
+        access_token=create_access_token(identity=user.id)
+        refresh_token=create_refresh_token(identity=user.id)
+        return jsonify({"token":access_token, "refresh":refresh_token}), 200
+
+    else:
+    # Clave Invalida
+        print(("Clave invalida"))
+        return jsonify({"msg":"Inicio de sesion invalido"}), 401
+
+
+
 # ALL USERS
 
 @api.route('/users/', methods=['GET'])
@@ -46,7 +80,7 @@ def users():
     users = Signup.query.filter(Signup.__tablename__ == "signup").all()
     all_users = []
 
-    if users is None:
+    if len(users) == 0:
         return jsonify({
             "msg":"No have any user"
         }), 404
@@ -58,6 +92,7 @@ def users():
         return jsonify({
             "users":all_users
         }), 201
+
 
 
 # CATEGORIAS
