@@ -17,7 +17,6 @@ class Signup(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "email": self.email,
             "name":self.name,
             "surname":self.surname,
             "email":self.email,

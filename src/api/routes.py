@@ -2,9 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Signup, Products, Categories
+from api.models import db, Signup, Products, Categories, TokenBlocklist
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime, timezone # para el cierre de sesión
 from flask_bcrypt import Bcrypt
 
@@ -28,7 +28,7 @@ def signup():
     is_active = request.json.get("is_active")
     name = request.json.get("name")
     surname = request.json.get("surname")
-    signup = Signup(email = email, password = password, is_active = is_active, name = name, surname = surname)
+    signup = Signup(email = email, password = cripto.generate_password_hash(password).decode("utf-8"), is_active = is_active, name = name, surname = surname)
     users = Signup.query.filter(Signup.email == email).first()
 
     if not users is None:
@@ -71,6 +71,24 @@ def user_login():
         print(("Clave invalida"))
         return jsonify({"msg":"Inicio de sesion invalido"}), 401
 
+@api.route('/userdata/', methods=['GET'])
+@jwt_required() # automaticamente protege la ruta la cual se le indique
+def user_data():
+    user_id = get_jwt_identity() #me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
+    user = User.query.get(user_id) # con este id solo se accede a la información de ese usuario y de más nadie
+    return jsonify({
+        "user":user.serialize() 
+    })
+
+@api.route('/logout', methods=['POST'])
+@jwt_required()
+def user_logout():
+    jti = get_jwt()["jti"]
+    now = datetime.now(timezone.utc)
+    blocked_token=TokenBlocklist(jti=jti, created_at=now)
+    db.session.add(blocked_token)
+    db.session.commit()
+    return jsonify(msg="JWT revoked")
 
 
 # ALL USERS
