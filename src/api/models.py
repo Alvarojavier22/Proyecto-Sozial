@@ -26,13 +26,13 @@ class User(db.Model):
 class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
-    categorie_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     product_id = db.Column(db.Integer, unique=True, nullable=False)
     name = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     avaliable = db.Column(db.Boolean(), unique=False, nullable=False)
+    categorie_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
     
 
@@ -42,7 +42,7 @@ class Products(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "categories":self.categories,
+            #"categories":self.categories.serialize(), # MISMO PROBLEMA CON EL TEMA DE HACER EL POST DESDE EL POSTMAN
             "product_id": self.product_id,
             "name": self.name,
             "description": self.description,
@@ -64,6 +64,27 @@ class Categories(db.Model):
         return {
             "name": self.name
         }
+
+    
+class Post(db.Model):
+    __tablename__ = "post"
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(1000), unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship(User)
+
+    def __repr__(self):
+        return f'<Post {self.id}>'
+
+    def serialize(self):
+        return {
+            "text": self.text,
+            "post_id": self.id,
+            "user_id": self.user_id,
+            #"user_name": self.user.name+str(" ")+self.user.surname
+            # COMO HACER PARA PODER VINCULAR EL USUARIO DESDE EL POSTMAN
+        }
+
 
 class TokenBlocklist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
