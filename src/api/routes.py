@@ -50,14 +50,17 @@ def signup():
 
 
 
-""" # DELETE EACH USER
-@api.route('users/<int:user_id>/', methods=['DELETE'])
+# DELETE EACH USER <----------------------------------
+@api.route('users/<int:user_id>/', methods=['PUT'])
 def delete_user(user_id):
     user = User.query.filter(User.id == user_id).first()
 
     if not user is None:
     
-        db.session.delete(user)
+        update_users = user
+        update_users.is_active = False
+
+        db.session.add(update_users)
         db.session.commit()
 
         return jsonify ({
@@ -66,7 +69,7 @@ def delete_user(user_id):
 
     return jsonify({
         "msg":"No exists user to delete"
-    }) """
+    })
 
 # PARA ELIMINAR UN USUARIO SE VE AFECTADO TODO LO QUE DEPENDEDA DE ÉL (POSTS, PRODUCT), preguntar que hacer ahí 
 
@@ -133,6 +136,9 @@ def users():
     if not users is None:
 
         for i in range(len(users)):
+            if users[i].is_active == False: # para que salte el usuario si no esta activo
+                continue
+
             all_users.append(users[i].serialize())
 
         if len(all_users) > 0:
@@ -251,11 +257,11 @@ def delete_products():
 
 
 # GENERATE POSTS
-@api.route('/posts/', methods=['POST'])
-def post():
+@api.route('/posts/<int:user_id>', methods=['POST'])
+def post(user_id):
     text = request.json.get("text")
 
-    post = Post(text = text)
+    post = Post(user_id = user_id, text = text) # <------
 
     db.session.add(post)
     db.session.commit()

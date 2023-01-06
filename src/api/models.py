@@ -81,7 +81,7 @@ class Post(db.Model):
             "text": self.text,
             "post_id": self.id,
             "user_id": self.user_id,
-            #"user_name": self.user.name+str(" ")+self.user.surname
+            "user_name": self.user.name+str(" ")+self.user.surname
             # COMO HACER PARA PODER VINCULAR EL USUARIO DESDE EL POSTMAN
         }
 
