@@ -26,7 +26,7 @@ class User(db.Model):
 class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, unique=True, nullable=False)
+    product_id = db.Column(db.Integer, unique=True, nullable=False) # UNA MANERA QUE ESTE ID SEA UN NUMERO RAMDON DE 6 DIGITOS
     name = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)

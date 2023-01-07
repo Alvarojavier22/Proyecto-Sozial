@@ -50,12 +50,40 @@ def signup():
 
 
 
+
+# ALL USERS
+@api.route('/users/', methods=['GET'])
+def users():
+    users = User.query.filter(User.__tablename__ == "user").all()
+    all_users = []
+
+    print(users)
+    if not users is None:
+
+        for i in range(len(users)):
+            if users[i].is_active == False: # para que salte el usuario si no esta activo
+                continue
+
+            all_users.append(users[i].serialize())
+
+        if len(all_users) > 0:
+            return jsonify({
+                "users":all_users
+            }), 201
+
+    return jsonify({
+            "msg":"No have any user"
+        }), 404
+
+
+
+
 # DELETE EACH USER <----------------------------------
 @api.route('users/<int:user_id>/', methods=['PUT'])
 def delete_user(user_id):
     user = User.query.filter(User.id == user_id).first()
 
-    if not user is None:
+    if user.is_active == True:
     
         update_users = user
         update_users.is_active = False
@@ -71,7 +99,8 @@ def delete_user(user_id):
         "msg":"No exists user to delete"
     })
 
-# PARA ELIMINAR UN USUARIO SE VE AFECTADO TODO LO QUE DEPENDEDA DE ÉL (POSTS, PRODUCT), preguntar que hacer ahí 
+
+
 
 
 
@@ -102,6 +131,9 @@ def user_login():
         print(("Clave invalida"))
         return jsonify({"msg":"Inicio de sesion invalido"}), 401
 
+
+
+
 @api.route('/userdata/', methods=['GET'])
 @jwt_required() # automaticamente protege la ruta la cual se le indique
 def user_data():
@@ -126,30 +158,6 @@ def user_logout():
 
 
 
-# ALL USERS
-@api.route('/users/', methods=['GET'])
-def users():
-    users = User.query.filter(User.__tablename__ == "user").all()
-    all_users = []
-
-    print(users)
-    if not users is None:
-
-        for i in range(len(users)):
-            if users[i].is_active == False: # para que salte el usuario si no esta activo
-                continue
-
-            all_users.append(users[i].serialize())
-
-        if len(all_users) > 0:
-            return jsonify({
-                "users":all_users
-            }), 201
-
-    return jsonify({
-            "msg":"No have any user"
-        }), 404
-
 
 
 # CATEGORIES
@@ -173,6 +181,7 @@ def categories():
 
 
 
+
 # POST PRODUCTS
 @api.route('/products/', methods=['POST'])
 def post_products():
@@ -182,8 +191,13 @@ def post_products():
     price = request.json.get("price")
     quantity = request.json.get("quantity")
     avaliable = request.json.get("avaliable")
-
     post_products = Products(product_id = product_id, name = name, description = description, price = price, quantity = quantity, avaliable = avaliable)
+    product = Products.query.filter(Products.product_id  == product_id).first()
+
+    if not product is None:
+        return jsonify({
+            "msg":"product already exists"
+        }), 404
 
     db.session.add(post_products)
     db.session.commit()
@@ -236,7 +250,7 @@ def each_product(product_id):
 
 
 # DELETE ALL PRODUCTS
-@api.route('/products/delete/', methods=['DELETE'])
+@api.route('/delete/products/', methods=['DELETE'])
 def delete_products():
     products = Products.query.filter(Products.__tablename__ == "products").all()
 
@@ -255,25 +269,58 @@ def delete_products():
 
 
 
+# DELETE EACH PRODUCT
+@api.route('/delete/products/<int:product_id>/', methods=['DELETE'])
+def delete_product(product_id):
+    products = Products.query.filter(Products.product_id == product_id).first()
+
+    if not products is None:
+
+        delete_product = products
+
+        db.session.delete(delete_product)
+        db.session.commit()
+
+        return jsonify({
+            "success":"The product has been delete successfully"
+        }), 201
+
+    return jsonify({
+        "msg":"the product doesn't exists"
+    }), 404
+
+
+
+
+
+
+
 
 # GENERATE POSTS
 @api.route('/posts/<int:user_id>', methods=['POST'])
 def post(user_id):
+    user = User.query.filter(User.id == user_id).first()
     text = request.json.get("text")
 
     post = Post(user_id = user_id, text = text) # <------
 
-    db.session.add(post)
-    db.session.commit()
+    if user.is_active == True:
+
+        db.session.add(post)
+        db.session.commit()
+
+        return jsonify({
+            "success":"publicaction generate successfully"
+        }), 200
 
     return jsonify({
-        "success":"publicaction generate successfully"
-    }), 200
-    
+        "msg":"user doesn't exists"
+    }), 494
+        
 
 
 
-# GET POSTS
+# GET ALL POSTS
 @api.route('/posts/', methods=['GET'])
 def get_post():
     posts = Post.query.filter(Post.__tablename__ == "post").all()
@@ -315,26 +362,61 @@ def each_post(post_id):
 
 
 # (GET) POST BY EACH USER
-@api.route('/posts/<string:username>/', methods=['GET'])
-def post_user(username):
-    users = User.query.filter(User.name == username).first()  # ARREGLAR QUE LA COMPARATIVA DE NOMBRES PARA LA RUTA PERMITA MAYUSCULAS Y MINUSCULAS
-    posts = Post.query.filter(Post.user_id == users.id).all()
+@api.route('/posts/user/<int:user_id>/', methods=['GET'])
+def post_user(user_id):
+    posts = Post.query.filter(Post.user_id == user_id).all()
 
     all_user_post = []
 
+
     if not posts is None:
 
-        for i in range(len(posts)):
-            all_user_post.append(posts[i].serialize())
+        if len(posts) > 0:
 
+            for i in range(len(posts)):
+                all_user_post.append(posts[i].serialize())
+
+            return jsonify({
+                "user posts":all_user_post
+            }), 201
+        
         return jsonify({
-            "posts":all_user_post
-        }), 201
+            "msg":"This user not have posts to show"
+        })
 
     return jsonify({
         "msg":"This user doesn't have a posts"
     }), 404
 
 
+#@api.route('/posts/<int:user_id>/<int:post_id>/', methods=['DELETE']) 
+# PREGUNTAR COMO HACER ESA LINEA
+
+
+# DELETE POST
+@api.route('delete/posts/<int:post_id>/', methods=['DELETE'])
+def delete_post(post_id):
+    posts = Post.query.filter(Post.__tablename__ == "post").all()
+    post = Post.query.filter(Post.id == post_id).first()
+    all_post = []
+
+    if not post is None:
+        
+        
+        db.session.delete(post)
+        db.session.commit()
+        
+        return jsonify({
+            "success":"post has been delete successfully"
+        }), 201
+
+
+
+    return jsonify({
+        "msg":"product doesn't exists"
+    }), 404
+
+    
+    
 
 
