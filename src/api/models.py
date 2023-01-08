@@ -66,11 +66,27 @@ class Categories(db.Model):
             "name": self.name
         }
 
+class ShoppingCart(db.Model):
+    __tablename__ = "shoppingcart"
+    id = db.Column(db.Integer, primary_key=True)
+    add_cart = db.Column(db.Boolean(), unique=False, nullable=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    products = db.relationship(Products)
+
+    def __repr__(self):
+        return f'<ShoppingCart {self.name}>'
+
+    def serialize(self):
+        return {
+            "name": self.name
+        }
+
     ####### REVISAR ##########
 class Post(db.Model):
     __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     text = db.Column(db.String(1000), unique=False, nullable=False)
+    # date = db.Column(db.datetime(), default=datetime.now()) # mirar como colocar la fecha para los posts
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship(User)
     likes = db.relationship('Likes', backref='Post', lazy=True)
@@ -101,7 +117,7 @@ class Likes(db.Model):
     def serialize(self):
         return {
             "post_id": self.post_id,
-            "user_post_id": self.post.user_id
+            #"user_post_id": self.post.user_id
         }
 
 

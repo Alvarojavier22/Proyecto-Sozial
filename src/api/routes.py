@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Products, Categories, Post, Likes, TokenBlocklist
+from api.models import db, User, Products, Categories, Post, Likes, ShoppingCart, TokenBlocklist
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime, timezone # para el cierre de sesión
@@ -172,25 +172,41 @@ def post(user_id):
 
     return jsonify({
         "msg":"user doesn't exists"
-    }), 494
+    }), 404
 
 
 
 # ADD PRODCUCT TO FAVORITE LIST
 
 
-# ADD PRODUCT TO SHOPPING CART
+# SHOPPING CART LIST
+ 
 
 
-# FEED
-@api.route('/social/', methods=['GET'])
-def social():
+# ADD PRODUCT TO SHOPPING CART (INCOMPLETA)
+@api.route('/add/cart/<int:product_id>/', methods=['POST'])
+def add_product_to_cart(product_id):
+    product = Products.query.filter(Products.id == product_id).first()
+    add_cart = request.json.get("add_cart")
+
+    add_shoppingCart = ShoppingCart(add_cart = add_cart, product_id = product_id)
+
+    if not product is None:
+
+        db.session.add(add_shoppingCart)
+        db.session.commit()
+
+        return jsonify({
+            "success":"product has been added to shopping cart"
+        }), 201
+
     return jsonify({
-        "msg":"social screen"
-    })
+        "msg":"product doesn't exists"
+    }), 404
 
+        
 
-# GET ALL POSTS
+# GET ALL POSTS (FEED)
 @api.route('/posts/', methods=['GET'])
 def get_post():
     posts = Post.query.filter(Post.__tablename__ == "post").all()
@@ -211,6 +227,21 @@ def get_post():
     return jsonify({
         "msg":"not exists any post to show"
     }), 404
+
+
+# GET EACH POST
+@api.route('/posts/<int:post_id>/')
+def each_post(post_id):
+    post = Post.query.filter(Post.id == post_id).first()
+
+    if post is None:
+        return jsonify({
+            "msg":"post doesn't exists"
+        }), 404
+
+    return jsonify({
+        "post":post.serialize()
+    }), 202
 
 
 # (GET) POST BY EACH USER
@@ -502,19 +533,7 @@ def user_logout():
 
 
 
-# GET EACH POST
-@api.route('/posts/<int:post_id>/')
-def each_post(post_id):
-    post = Post.query.filter(Post.id == post_id).first()
 
-    if post is None:
-        return jsonify({
-            "msg":"post doesn't exists"
-        }), 404
-
-    return jsonify({
-        "post":post.serialize()
-    }), 202
 
 
 
