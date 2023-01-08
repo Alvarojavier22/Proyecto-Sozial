@@ -20,7 +20,8 @@ class User(db.Model):
             "name":self.name,
             "surname":self.surname,
             "email":self.email,
-            "is_active":self.is_active
+            "is_active":self.is_active,
+            "password":self.password #para las pruebas del cambio de clave
         }
 
 class Products(db.Model):
@@ -65,13 +66,14 @@ class Categories(db.Model):
             "name": self.name
         }
 
-    
+    ####### REVISAR ##########
 class Post(db.Model):
     __tablename__ = "post"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
     text = db.Column(db.String(1000), unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship(User)
+    likes = db.relationship('Likes', backref='Post', lazy=True)
 
     def __repr__(self):
         return f'<Post {self.id}>'
@@ -84,6 +86,24 @@ class Post(db.Model):
             "user_name": self.user.name+str(" ")+self.user.surname
             # COMO HACER PARA PODER VINCULAR EL USUARIO DESDE EL POSTMAN
         }
+
+####### REVISAR ##########
+class Likes(db.Model):
+    __tablename__ = "likes"
+    id = db.Column(db.Integer, primary_key=True)
+    is_like = db.Column(db.Boolean(), unique=False, nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=True)
+    post = db.relationship(Post)
+
+    def __repr__(self):
+        return f'<Post {self.id}>'
+
+    def serialize(self):
+        return {
+            "post_id": self.post_id,
+            "user_post_id": self.post.user_id
+        }
+
 
 
 class TokenBlocklist(db.Model):

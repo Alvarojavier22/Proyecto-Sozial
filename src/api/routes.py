@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Products, Categories, Post, TokenBlocklist
+from api.models import db, User, Products, Categories, Post, Likes, TokenBlocklist
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime, timezone # para el cierre de sesión
@@ -14,71 +14,8 @@ api = Blueprint('api', __name__)
 cripto = Bcrypt(Flask(__name__))
 
 
-# FEED
-@api.route('/social/', methods=['GET'])
-def social():
-    return jsonify({
-        "msg":"social screen"
-    })
 
-
-
-# USER SIGNUP
-@api.route('/signup/', methods=['POST'])
-def signup():
-    email = request.json.get("email")
-    password = request.json.get("password")
-    is_active = request.json.get("is_active")
-    name = request.json.get("name")
-    surname = request.json.get("surname")
-    signup = User(email = email, password = cripto.generate_password_hash(password).decode("utf-8"), is_active = is_active, name = name, surname = surname)
-    users = User.query.filter(User.email == email).first()
-
-    if not users is None:
-
-        return jsonify({
-            "msg":"User already exist"
-        }), 404
-
-    db.session.add(signup)
-    db.session.commit()
-    print(signup)
-
-    return jsonify({
-        "msg":"User create succefully"
-    }), 201
-
-
-
-
-# ALL USERS
-@api.route('/users/', methods=['GET'])
-def users():
-    users = User.query.filter(User.__tablename__ == "user").all()
-    all_users = []
-
-    print(users)
-    if not users is None:
-
-        for i in range(len(users)):
-            if users[i].is_active == False: # para que salte el usuario si no esta activo
-                continue
-
-            all_users.append(users[i].serialize())
-
-        if len(all_users) > 0:
-            return jsonify({
-                "users":all_users
-            }), 201
-
-    return jsonify({
-            "msg":"No have any user"
-        }), 404
-
-
-
-
-# DELETE EACH USER <----------------------------------
+# DELETE USERS (ADMIN) SE HACE CON EL METODO PUT PORQUE CUANDO SE TRATA DE ELIMINAR CON DELETE DA ERROR POR EL HECHO DE QUE EXISTEN PUBLICACIONES QUE DEPENDEN DE EL
 @api.route('users/<int:user_id>/', methods=['PUT'])
 def delete_user(user_id):
     user = User.query.filter(User.id == user_id).first()
@@ -102,6 +39,26 @@ def delete_user(user_id):
 
 
 
+# DELETE POST
+@api.route('delete/posts/<int:post_id>/', methods=['DELETE'])
+def delete_post(post_id):
+    post = Post.query.filter(Post.id == post_id).first()
+
+    if not post is None:
+        
+        
+        db.session.delete(post)
+        db.session.commit()
+        
+        return jsonify({
+            "success":"post has been delete successfully"
+        }), 201
+
+
+
+    return jsonify({
+        "msg":"product doesn't exists"
+    }), 404
 
 
 # LOGIN
@@ -115,8 +72,6 @@ def user_login():
     if user == None:
         print(("Correo invalido"))
         return jsonify({"msg":"Inicio de sesion invalido"}), 401
-
-
 
 # PASSWORDS VALIDATION
     if cripto.check_password_hash(user.password, password):
@@ -132,30 +87,158 @@ def user_login():
         return jsonify({"msg":"Inicio de sesion invalido"}), 401
 
 
+#CHANGE PASSWORD
+@api.route('/user/change_password/', methods=['PUT'])
+def change_password():
+    email = request.json.get("email")
+    password = request.json.get("password")
+    user = User.query.filter(User.email == email).first()
 
+    if not user is None:
+        user.password = password
 
-@api.route('/userdata/', methods=['GET'])
-@jwt_required() # automaticamente protege la ruta la cual se le indique
-def user_data():
-    user_id = get_jwt_identity() #me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
-    user = User.query.get(user_id) # con este id solo se accede a la información de ese usuario y de más nadie
+        db.session.add(user)
+        db.session.commit()
+
+        return jsonify({
+            "success":"password has been change correctly"
+        }), 201
+
     return jsonify({
-        "user":user.serialize() 
+        "msg":"this user doesn't exists"
+    }), 404
+
+
+# ALL LIKES ####### REVISAR ##########
+@api.route('/likes/')
+def likes():
+    likes = Likes.query.filter(Likes.__tablename__ == "likes").all()
+
+    all_likes = []
+    
+
+    for i in range(len(likes)):
+        all_likes.append(likes[i].serialize())
+
+        return jsonify({
+            "likes":all_likes
+        })
+
+    print(all_likes)
+
+
+
+# USER INTERACTION WITH LIKES (HACER)
+@api.route('/likes/<int:post_id>/', methods=['POST'])
+def generate_likes(post_id):
+    is_like = request.json.get("is_like")
+    generate_like = Likes(is_like = is_like)
+    post = Post.query.filter(Post.id  == post_id).first()
+
+    if not post is None:
+        is_like = False
+        db.session.add(generate_like)
+        db.session.commit()
+
+        return jsonify({
+            "success":"like has been generated successfully"
+        }), 201
+
+    return jsonify({
+        "msg":"post doesn't exists"
+    }), 404
+
+
+
+# USER INTERACTION WITH COMMENTS (HACER)
+
+
+# GENERATE POSTS
+@api.route('/posts/<int:user_id>', methods=['POST'])
+def post(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    text = request.json.get("text")
+
+    post = Post(user_id = user_id, text = text) # <------
+
+    if user.is_active == True:
+
+        db.session.add(post)
+        db.session.commit()
+
+        return jsonify({
+            "success":"publicaction generate successfully"
+        }), 200
+
+    return jsonify({
+        "msg":"user doesn't exists"
+    }), 494
+
+
+
+# ADD PRODCUCT TO FAVORITE LIST
+
+
+# ADD PRODUCT TO SHOPPING CART
+
+
+# FEED
+@api.route('/social/', methods=['GET'])
+def social():
+    return jsonify({
+        "msg":"social screen"
     })
 
 
+# GET ALL POSTS
+@api.route('/posts/', methods=['GET'])
+def get_post():
+    posts = Post.query.filter(Post.__tablename__ == "post").all()
+    all_posts = []
 
-# LOGOUT SESSION
-@api.route('/logout/', methods=['POST'])
-@jwt_required()
-def user_logout():
-    jti = get_jwt()["jti"]
-    now = datetime.now(timezone.utc)
-    blocked_token=TokenBlocklist(jti=jti, created_at=now)
-    db.session.add(blocked_token)
-    db.session.commit()
-    return jsonify(msg="JWT revoked")
+    if not posts is None:
+    
+        for i in range(len(posts)):
+            all_posts.append(posts[i].serialize())
 
+        if len(all_posts) > 0:
+
+            return jsonify({
+                "all posts":all_posts
+            }), 200
+        
+    
+    return jsonify({
+        "msg":"not exists any post to show"
+    }), 404
+
+
+# (GET) POST BY EACH USER
+@api.route('/posts/user/<int:user_id>/', methods=['GET'])
+def post_user(user_id):
+    posts = Post.query.filter(Post.user_id == user_id).all()
+
+    all_user_post = []
+
+
+    if not posts is None:
+
+        if len(posts) > 0:
+
+            for i in range(len(posts)):
+                all_user_post.append(posts[i].serialize())
+
+            return jsonify({
+                "user posts":all_user_post
+            }), 201
+        
+        return jsonify({
+            "msg":"This user not have posts to show"
+        })
+
+    return jsonify({
+        "msg":"This user doesn't have a posts"
+    }), 404
 
 
 
@@ -207,6 +290,50 @@ def post_products():
     }), 201
 
 
+# DEACTIVATE PRODUCTS
+@api.route('/products/deactivate/<int:product_id>/', methods=['PUT'])
+def deactivate_product(product_id):
+    product = Products.query.filter(Products.product_id == product_id).first()
+
+    if product.avaliable == True:
+
+        product.avaliable = False
+
+        db.session.add(product)
+        db.session.commit()
+
+        return jsonify({
+            "success":"now the product isn't avaliable"
+        }), 201
+
+    return jsonify({
+        "msg":"this product doesn't is active now"
+    }), 404
+
+
+# ACTIVATE PRODUCTS
+@api.route('/products/activate/<int:product_id>/', methods=['PUT'])
+def activate_product(product_id):
+    product = Products.query.filter(Products.product_id == product_id).first()
+
+    if product.avaliable == False:
+
+        product.avaliable = True
+
+        db.session.add(product)
+        db.session.commit()
+
+        return jsonify({
+            "success":"now the product is avaliable"
+        }), 201
+
+    return jsonify({
+        "msg":"this product doesn't is inactive now"
+    }), 404
+    
+
+
+
 
 
 
@@ -217,9 +344,12 @@ def products():
     all_products = []
 
     for i in range(len(products)):
+        if products[i].avaliable == False:
+            continue
+
         all_products.append(products[i].serialize())
 
-    if len(products) > 0:
+    if len(all_products) > 0:
         return jsonify({
             "Products":all_products
         }), 201
@@ -293,54 +423,81 @@ def delete_product(product_id):
 
 
 
+# USER SIGNUP
+@api.route('/signup/', methods=['POST'])
+def signup():
+    email = request.json.get("email")
+    password = request.json.get("password")
+    is_active = request.json.get("is_active")
+    name = request.json.get("name")
+    surname = request.json.get("surname")
+    signup = User(email = email, password = cripto.generate_password_hash(password).decode("utf-8"), is_active = is_active, name = name, surname = surname)
+    users = User.query.filter(User.email == email).first()
 
-
-
-# GENERATE POSTS
-@api.route('/posts/<int:user_id>', methods=['POST'])
-def post(user_id):
-    user = User.query.filter(User.id == user_id).first()
-    text = request.json.get("text")
-
-    post = Post(user_id = user_id, text = text) # <------
-
-    if user.is_active == True:
-
-        db.session.add(post)
-        db.session.commit()
+    if not users is None:
 
         return jsonify({
-            "success":"publicaction generate successfully"
-        }), 200
+            "msg":"User already exist"
+        }), 404
+
+    db.session.add(signup)
+    db.session.commit()
 
     return jsonify({
-        "msg":"user doesn't exists"
-    }), 494
-        
+        "msg":"User create succefully"
+    }), 201
 
 
 
-# GET ALL POSTS
-@api.route('/posts/', methods=['GET'])
-def get_post():
-    posts = Post.query.filter(Post.__tablename__ == "post").all()
-    all_posts = []
 
-    if not posts is None:
-    
-        for i in range(len(posts)):
-            all_posts.append(posts[i].serialize())
+# ALL USERS
+@api.route('/users/', methods=['GET'])
+def users():
+    users = User.query.filter(User.__tablename__ == "user").all()
+    all_users = []
 
-        if len(all_posts) > 0:
+    print(users)
+    if not users is None:
 
+        for i in range(len(users)):
+            if users[i].is_active == False: # para que salte el usuario si no esta activo
+                continue
+
+            all_users.append(users[i].serialize())
+
+        if len(all_users) > 0:
             return jsonify({
-                "all posts":all_posts
-            }), 200
-        
-    
+                "users":all_users
+            }), 201
+
     return jsonify({
-        "msg":"not exists any post to show"
-    }), 404
+            "msg":"No have any user"
+        }), 404
+
+
+
+
+@api.route('/userdata/', methods=['GET'])
+@jwt_required() # automaticamente protege la ruta la cual se le indique
+def user_data():
+    user_id = get_jwt_identity() #me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
+    user = User.query.get(user_id) # con este id solo se accede a la información de ese usuario y de más nadie
+    return jsonify({
+        "user":user.serialize() 
+    })
+
+
+
+# LOGOUT SESSION
+@api.route('/logout/', methods=['POST'])
+@jwt_required()
+def user_logout():
+    jti = get_jwt()["jti"]
+    now = datetime.now(timezone.utc)
+    blocked_token=TokenBlocklist(jti=jti, created_at=now)
+    db.session.add(blocked_token)
+    db.session.commit()
+    return jsonify(msg="JWT revoked")
 
 
 
@@ -361,60 +518,13 @@ def each_post(post_id):
 
 
 
-# (GET) POST BY EACH USER
-@api.route('/posts/user/<int:user_id>/', methods=['GET'])
-def post_user(user_id):
-    posts = Post.query.filter(Post.user_id == user_id).all()
 
-    all_user_post = []
-
-
-    if not posts is None:
-
-        if len(posts) > 0:
-
-            for i in range(len(posts)):
-                all_user_post.append(posts[i].serialize())
-
-            return jsonify({
-                "user posts":all_user_post
-            }), 201
-        
-        return jsonify({
-            "msg":"This user not have posts to show"
-        })
-
-    return jsonify({
-        "msg":"This user doesn't have a posts"
-    }), 404
 
 
 #@api.route('/posts/<int:user_id>/<int:post_id>/', methods=['DELETE']) 
 # PREGUNTAR COMO HACER ESA LINEA
 
 
-# DELETE POST
-@api.route('delete/posts/<int:post_id>/', methods=['DELETE'])
-def delete_post(post_id):
-    posts = Post.query.filter(Post.__tablename__ == "post").all()
-    post = Post.query.filter(Post.id == post_id).first()
-    all_post = []
-
-    if not post is None:
-        
-        
-        db.session.delete(post)
-        db.session.commit()
-        
-        return jsonify({
-            "success":"post has been delete successfully"
-        }), 201
-
-
-
-    return jsonify({
-        "msg":"product doesn't exists"
-    }), 404
 
     
     
