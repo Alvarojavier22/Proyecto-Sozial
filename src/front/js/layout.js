@@ -11,6 +11,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Login} from"./pages/login.jsx";
 import { PassRecover } from "./pages/passrecover.jsx";
+import { SignUp } from "./pages/signup.jsx";
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -28,6 +29,7 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Login/>} path="/" />
                         <Route element={<PassRecover/>} path="/passrecover"/>
+                        <Route element={<SignUp/>} path="/signup"/>
                     </Routes>
              
             </BrowserRouter>
