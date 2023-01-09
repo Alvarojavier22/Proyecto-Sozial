@@ -54,7 +54,7 @@
 	width: 320px;
 	padding: 30px;
 	padding-top: 156px;
-    ;
+    
 }
 
 .login__field {
@@ -157,4 +157,94 @@
 
 #linklogin{
     text-decoration: none;
+}
+
+
+
+
+/* SIGNUP */
+
+
+#formsign{
+	margin: auto;
+	width: 50%;
+	margin-top: 100px;
+	border-style: outset;
+	padding: 10px;
+	box-shadow: 0px 2px 2px #6f5586;
+	position: absolute;
+	top:10%;
+}
+
+#contsign{
+	
+	background: linear-gradient(90deg, #e6d6ef, #d9b8f8);	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
+	
+.forgotemail{
+	font-weight: 700;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+
+ /* ALERT Forgot Password */
+.popup_box{
+	position:absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	user-select: none;
+	width: 400px;
+	background: #be8bf8;
+	text-align: center;
+	padding: 40px;
+	border: 1px solid #b3b3b3;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
+	z-index: 9999;
+	opacity: 0;
+	transition: all .3s ease-in-out ;
+}
+
+
+.popup .btns{
+	margin: 40px 0 0 0 ;
+}
+.btns .btn-1, .btns .btn-2{
+	background: #999999;
+	color: white;
+	font-size: 18px;
+	padding: 10px 13px;
+	border: 1px solid #808080;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+.btns .btn-2{
+	background: rgb(92, 47, 255);
+	margin-left: 20px;
+	border: 1px solid #252ba6;
+
+}
+
+.btn-1:hover{
+	transition: .5s;
+	background:hsl(273, 79%, 55%);
+}
+.btn-2:hover{
+	transition: .5s;
+	background:#7522a2;
+	
+
+}
+
+#inputrecover{
+	border: #4C489D;
+	border-radius: 5px;
+	border-style: outset;
+	user-select: none;
 }
