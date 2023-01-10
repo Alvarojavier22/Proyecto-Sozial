@@ -23,12 +23,20 @@ class User(db.Model):
             "is_active":self.is_active,
             "password":self.password #para las pruebas del cambio de clave
         }
+        
+    # para solo traer información específica
+    def serialize_cart(self):
+        return {
+            "id": self.id,
+            "name":self.name,
+            "surname":self.surname
+        }
 
 class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, unique=True, nullable=False) # UNA MANERA QUE ESTE ID SEA UN NUMERO RAMDON DE 6 DIGITOS
-    user_id = db.Column(db.Integer, unique=False, nullable=False)
+    #product_id = db.Column(db.Integer, unique=True, nullable=False) # UNA MANERA QUE ESTE ID SEA UN NUMERO RAMDON DE 6 DIGITOS
+    # user_id = db.Column(db.Integer, unique=False, nullable=False)
     name = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
@@ -44,8 +52,6 @@ class Products(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
-            "product_id": self.product_id,
             "name": self.name,
             "description": self.description,
             "price": self.price,
@@ -81,10 +87,11 @@ class ShoppingCart(db.Model):
         return f'<ShoppingCart {self.name}>'
 
     def serialize(self):
+        user = User.query.filter(User.id == self.user_id).first()
         return {
             "product_id": self.products.product_id,
             "product_name":self.products.name,
-            "user_id": self.user_id
+            "user_id": user.serialize_cart()
         }
 
 

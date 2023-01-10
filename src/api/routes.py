@@ -372,9 +372,9 @@ def user_shoppingcart(user_id):
 @api.route('/add/cart/<int:user_id>/<int:product_id>/', methods=['POST'])
 def add_product_to_cart(user_id, product_id):
     user = User.query.filter(User.id == user_id).first()
-    product = Products.query.filter(Products.product_id == product_id).first() # PROBLEMAS CON ESTE ID QUE NO LO QUIERE TOMAR PARA HACER LA VALIDACIÓN SOLO ME TOMA EL ID DE LA PRIMARY KEY
+    product = Products.query.filter(Products.id == product_id).first() # PROBLEMAS CON ESTE ID QUE NO LO QUIERE TOMAR PARA HACER LA VALIDACIÓN SOLO ME TOMA EL ID DE LA PRIMARY KEY
     shoppingcart_id = ShoppingCart.query.filter(ShoppingCart.product_id == product_id).first()
-    add_shoppingCart = ShoppingCart(product_id = product_id, user_id = user_id)
+    add_shoppingCart = ShoppingCart(user_id = user_id)
 
     if not user is None:
         if not product is None and product.avaliable == True:
@@ -495,22 +495,16 @@ def categories():
 # POST PRODUCTS
 @api.route('/products/<int:user_id>/', methods=['POST'])
 def post_products(user_id):
-    product_id = request.json.get("product_id")
     name = request.json.get("name")
     description = request.json.get("description")
     price = request.json.get("price")
     quantity = request.json.get("quantity")
     avaliable = request.json.get("avaliable")
-    post_products = Products(user_id = user_id, product_id = product_id, name = name, description = description, price = price, quantity = quantity, avaliable = avaliable)
-    product = Products.query.filter(Products.product_id  == product_id).first()
+    post_products = Products(name = name, description = description, price = price, quantity = quantity, avaliable = avaliable)
     user = User.query.filter(User.id == user_id).first()
 
     if not user is None:
             
-        if not product is None:
-            return jsonify({
-                "msg":"product already exists"
-            }), 404
 
         db.session.add(post_products)
         db.session.commit()
@@ -525,17 +519,19 @@ def post_products(user_id):
 
 
 # PRODUCTS BY USER
-@api.route('/products/<int:user_id>/', methods=['GET'])
+@api.route('/products/user/<int:user_id>/', methods=['GET'])
 def user_products(user_id):
     user = User.query.filter(User.id == user_id).first()
     products = Products.query.filter(Products.user_id == user_id).all()
 
     all_user_products = []
 
-    if not user is None:
+    if not user is None :
 
         for i in range(len(products)):
-            all_user_products.append(products[i].serialize())
+            if products[i].avaliable == True:
+                all_user_products.append(products[i].serialize())
+            continue
 
         if len(all_user_products) > 0:
             return jsonify({
@@ -555,7 +551,7 @@ def user_products(user_id):
 # DEACTIVATE PRODUCTS
 @api.route('/products/deactivate/<int:product_id>/', methods=['PUT'])
 def deactivate_product(product_id):
-    product = Products.query.filter(Products.product_id == product_id).first()
+    product = Products.query.filter(Products.id == product_id).first()
 
     if product.avaliable == True:
 
@@ -576,7 +572,7 @@ def deactivate_product(product_id):
 # ACTIVATE PRODUCTS
 @api.route('/products/activate/<int:product_id>/', methods=['PUT'])
 def activate_product(product_id):
-    product = Products.query.filter(Products.product_id == product_id).first()
+    product = Products.query.filter(Products.id == product_id).first()
 
     if product.avaliable == False:
 
@@ -622,9 +618,9 @@ def products():
 # EACH PRODUCT
 @api.route('/products/<int:product_id>/')
 def each_product(product_id):
-    product = Products.query.filter(Products.product_id == product_id).first()
+    product = Products.query.filter(Products.id == product_id).first()
 
-    if not product is None:
+    if not product is None and product.avaliable == True:
         return jsonify({
             "product":product.serialize()
         }), 201
@@ -656,16 +652,15 @@ def delete_products():
 
 
 
-# DELETE EACH PRODUCT
+# DELETE EACH PRODUCT ## HACER MEDIANTE PUT
 @api.route('/delete/products/<int:product_id>/', methods=['DELETE'])
 def delete_product(product_id):
-    products = Products.query.filter(Products.product_id == product_id).first()
+    products = Products.query.filter(Products.id == product_id).first()
 
-    if not products is None:
+    if not products is None and products.avaliable == True:
 
-        delete_product = products
 
-        db.session.delete(delete_product)
+        db.session.delete(products)
         db.session.commit()
 
         return jsonify({
