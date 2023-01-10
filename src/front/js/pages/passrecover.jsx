@@ -19,7 +19,7 @@ export const PassRecover=()=>{
     
   </div>
   <div className="container d-flex justify-content-end">
-  <button type="button" className="btn btn-secondary">Cancel</button>
+  <Link to="/"><button type="button" className="btn btn-secondary">Cancel</button></Link>
   <button type="button" className="btn btn-primary ms-1 click" onClick={()=> setButtonPopup(true)}>Send</button>
   </div>
 </form>
@@ -29,7 +29,7 @@ export const PassRecover=()=>{
       <input type="text" id="inputrecover" placeholder="" />
       <div className="btns">
     <a href="" className="btn-1">Re-Send</a>
-    <a href="" className="btn-2">Done</a>
+    <Link to="/newpass" className="btn-2">Done</Link>
   </div>
   
 </Popup>

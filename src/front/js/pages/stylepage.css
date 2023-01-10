@@ -162,7 +162,7 @@
 
 
 
-/* SIGNUP */
+/* FORGOT PASSWORD */
 
 
 #formsign{
@@ -247,4 +247,102 @@
 	border-radius: 5px;
 	border-style: outset;
 	user-select: none;
+}
+
+/* SIGNUP*/
+
+#container_signup{
+	background: linear-gradient(90deg, #8c8c8c, #f3f3f3 );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
+.signup{
+	background: linear-gradient(90deg, #8e4e8e, #ad78b8);		
+	position: relative;	
+	height: 500px;
+	width: 360px;	
+	box-shadow: 0px 0px 24px #7c5696;
+	border-radius: 5px;
+}
+.signup-content{
+	z-index: 1;
+	position: relative;	
+	height: 100%;
+}
+
+.signup_field {
+	padding: 20px 12px;	
+	position: relative;	
+	
+}
+.sign_input{
+	border: none;
+	border-bottom: 2px solid #fdfdff;
+	background: none;
+	padding: 9px;
+	transition: .3s;
+	font-weight:  700;
+	color: #070707;
+	font-size: 20px;
+}
+.sign_input:active,
+.sign_input:focus,
+.sign_input:hover {
+	outline: none;
+	border-bottom-color: #312e36;
+}
+.signup h1{
+	text-align: center;
+	color: #000000;
+	font-family: ;
+}
+.signup h1::after{
+	content:"";
+	display: block;
+	width: 200px;
+	height: 5px;
+	color: #000000;
+	background: black;
+	margin-left: 85px;
+	margin-top: 5px;
+	position: absolute;
+	justify-content: center;
+}
+.sign_input::placeholder{
+	color: #331d47;
+}
+#check{
+	position: absolute ;
+	padding-left: 40px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 500;
+}
+.signbtn{
+	position:absolute;
+	top: 90%;
+	left: 40%;
+	
+}
+.signbtn button{
+	border-radius: 5px;
+	background: #572585;
+	color: rgb(178, 178, 178);
+	font-size: 20px;
+	border: 1px solid;
+	border: #252ba6;
+	box-shadow: 2px 2px 5px #38133d;
+}
+
+.signbtn button:hover{
+	background-color: #420565;
+	box-shadow: 0 0 10px rgb(255, 123, 255)
+}
+#linksign{
+	color: rgb(136, 171, 240);
+	transition: .2s;
+}
+#linksign:hover{
+	color: white;
 }
