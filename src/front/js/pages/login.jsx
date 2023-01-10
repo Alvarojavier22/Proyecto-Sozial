@@ -26,7 +26,7 @@ export const Login=()=>{
             <div id="forgotdiv">
                 
                 <Link to="/passrecover" id="forgot"><span >Forgot password?</span></Link>
-                <button className="button-1" role="button">Sign in</button>
+                <Link to="/signup"><button className="button-1" role="button">Sign Up</button></Link>
             </div>
 		</div>
 		<div className="screen__background">
