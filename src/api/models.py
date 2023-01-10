@@ -43,7 +43,6 @@ class Products(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            #"categories":self.categories.serialize(), # MISMO PROBLEMA CON EL TEMA DE HACER EL POST DESDE EL POSTMAN
             "product_id": self.product_id,
             "name": self.name,
             "description": self.description,
@@ -70,6 +69,9 @@ class ShoppingCart(db.Model):
     __tablename__ = "shoppingcart"
     id = db.Column(db.Integer, primary_key=True)
     add_cart = db.Column(db.Boolean(), unique=False, nullable=True)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # PREGUNTAR COMO HACER PARA RELACIONAR DOS MODELOS 
+    #user = db.relationship(user)
+    user_id = db.Column(db.Integer(), unique=False, nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     products = db.relationship(Products)
 
@@ -78,10 +80,11 @@ class ShoppingCart(db.Model):
 
     def serialize(self):
         return {
-            "name": self.name
+            "product_id": self.products.products.product_id,
+            "product_name":self.products.name
         }
 
-    ####### REVISAR ##########
+
 class Post(db.Model):
     __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -103,7 +106,7 @@ class Post(db.Model):
             # COMO HACER PARA PODER VINCULAR EL USUARIO DESDE EL POSTMAN
         }
 
-####### REVISAR ##########
+
 class Likes(db.Model):
     __tablename__ = "likes"
     id = db.Column(db.Integer, primary_key=True)
@@ -112,12 +115,31 @@ class Likes(db.Model):
     post = db.relationship(Post)
 
     def __repr__(self):
-        return f'<Post {self.id}>'
+        return f'<Likes {self.id}>'
 
     def serialize(self):
         return {
             "post_id": self.post_id,
-            #"user_post_id": self.post.user_id
+            "user_post_id": self.post.user_id,
+            "user_post_name": self.post.user.name
+        }
+
+class Comments(db.Model):
+    __tablename__ = "comments"
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String(2000), unique=False, nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=True)
+    post = db.relationship(Post)
+
+    def __repr__(self):
+        return f'<Comments {self.id}>'
+
+    def serialize(self):
+        return {
+            "post_id": self.post_id,
+            "commet":self.comment,
+            "user_post_id": self.post.user_id,
+            "user_post_name": self.post.user.name
         }
 
 

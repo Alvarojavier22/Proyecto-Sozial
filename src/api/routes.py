@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Products, Categories, Post, Likes, ShoppingCart, TokenBlocklist
+from api.models import db, User, Products, Categories, Post, Likes, Comments, ShoppingCart, TokenBlocklist
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime, timezone # para el cierre de sesión
@@ -109,34 +109,14 @@ def change_password():
     }), 404
 
 
-# ALL LIKES ####### REVISAR ##########
-@api.route('/likes/')
-def likes():
-    likes = Likes.query.filter(Likes.__tablename__ == "likes").all()
-
-    all_likes = []
-    
-
-    for i in range(len(likes)):
-        all_likes.append(likes[i].serialize())
-
-        return jsonify({
-            "likes":all_likes
-        })
-
-    print(all_likes)
-
-
-
-# USER INTERACTION WITH LIKES (HACER)
+# USER INTERACTION WITH LIKES
 @api.route('/likes/<int:post_id>/', methods=['POST'])
 def generate_likes(post_id):
     is_like = request.json.get("is_like")
-    generate_like = Likes(is_like = is_like)
+    generate_like = Likes(is_like = is_like, post_id = post_id)
     post = Post.query.filter(Post.id  == post_id).first()
 
     if not post is None:
-        is_like = False
         db.session.add(generate_like)
         db.session.commit()
 
@@ -149,8 +129,102 @@ def generate_likes(post_id):
     }), 404
 
 
+# ALL LIKES
+@api.route('/likes/', methods=['GET'])
+def likes():
+    likes = Likes.query.filter(Likes.__tablename__ == "likes").all()
+
+    all_likes = []
+    
+
+    for i in range(len(likes)):
+        all_likes.append(likes[i].serialize())
+
+    if len(all_likes) > 0:
+        return jsonify({
+            "likes":all_likes
+        })
+
+    return jsonify({
+        "msg":"No have any like"
+    }), 404
+
+# LIKES BY POSTS
+@api.route('/likes/<int:post_id>/')
+def likes_by_posts(post_id):
+    likes = Likes.query.filter(Likes.post_id == post_id).all()
+    likes_by_posts = []
+
+    if not likes is None: 
+        for i in range(len(likes)):
+            likes_by_posts.append(likes[i].serialize())
+
+        return jsonify({
+            "likes by post":likes_by_posts
+        }), 201
+
+    return jsonify({
+        "msg":"this post not have any like"
+    }), 404
+
 
 # USER INTERACTION WITH COMMENTS (HACER)
+@api.route('/comments/<int:post_id>/', methods=['POST'])
+def post_comments(post_id):
+    comment = request.json.get("comment")
+    generate_comment = Comments(comment = comment, post_id = post_id)
+    post = Post.query.filter(Post.id == post_id).first()
+
+    if not post is None:
+        db.session.add(generate_comment)
+        db.session.commit()
+
+        return jsonify({
+            "success":"comment has been generated successfully"
+        }), 201
+
+    return jsonify({
+        "msg":"post doesn't exists"
+    }), 404
+
+# ALL COMMENTS
+@api.route('/comments/', methods=['GET'])
+def get_comments():
+    comments = Comments.query.filter(Comments.__tablename__ == "comments").all()
+
+    all_commets = []
+
+    for i in range(len(comments)):
+        all_commets.append(comments[i].serialize())
+
+    if len(all_commets) > 0:
+        return jsonify({
+            "all comments":all_commets
+        }), 201
+
+    return jsonify({
+        "msg":"No have any comment"
+    }), 404
+
+# COMMENT BY POST
+@api.route('/comments/<post_id>/', methods=['GET'])
+def commet_by_post(post_id):
+    comments = Comments.query.filter(Comments.post_id == post_id).all()
+    comments_by_id = []
+ # no me deja esta validación para cuando el post no exista
+    if not comments is None: 
+        for i in range(len(comments)):
+            comments_by_id.append(comments[i].serialize())
+
+        return jsonify({
+            "comments by post":comments_by_id
+        }), 201
+
+    return jsonify({
+        "msg":"this post not have any like"
+    }), 404
+
+
 
 
 # GENERATE POSTS
@@ -179,31 +253,75 @@ def post(user_id):
 # ADD PRODCUCT TO FAVORITE LIST
 
 
-# SHOPPING CART LIST
- 
+# ALL SHOPPING CART LIST
+@api.route('/shopping_cart/', methods=['GET'])
+def shopping_cart():
+    shoppingcart = ShoppingCart.query.filter(ShoppingCart.__tablename__ == "shoppingcart").all()
 
+    all_shoppingcart_list = []
 
-# ADD PRODUCT TO SHOPPING CART (INCOMPLETA)
-@api.route('/add/cart/<int:product_id>/', methods=['POST'])
-def add_product_to_cart(product_id):
-    product = Products.query.filter(Products.id == product_id).first()
-    add_cart = request.json.get("add_cart")
-
-    add_shoppingCart = ShoppingCart(add_cart = add_cart, product_id = product_id)
-
-    if not product is None:
-
-        db.session.add(add_shoppingCart)
-        db.session.commit()
+    if len(shoppingcart) > 0:
+        for i in range(len(shoppingcart)):
+            all_shoppingcart_list.append(shoppingcart[i].serialize())
 
         return jsonify({
-            "success":"product has been added to shopping cart"
+            "shopping cart list":all_shoppingcart_list
         }), 201
 
     return jsonify({
-        "msg":"product doesn't exists"
+        "msg":"shopping cart not have products"
     }), 404
 
+# SHOPPING CART LIST BY USER
+@api.route('/shopping_cart/<int:user_id>/')
+def user_shoppingcart(user_id):
+    shoppingcart_products = ShoppingCart.query.filter(ShoppingCart.user_id == user_id).all()
+    user_shoppingcart = []
+
+    if len(shoppingcart_products) > 0:
+        for i in range(len(shoppingcart_products)):
+            user_shoppingcart.append(shoppingcart_products[i].serialize())
+
+        return jsonify({
+            "user shopping cart":user_shoppingcart
+        }), 201
+
+    return jsonify({
+        "msg":"this user don't have any product in shopping cart"
+    }), 404
+
+
+# ADD PRODUCT TO SHOPPING CART ## SALE MEJOR GENERAR LA VALIDACIÓN DEL USUARIO POR LA RUTA
+@api.route('/add/cart/<int:user_id>/<int:product_id>/', methods=['POST'])
+def add_product_to_cart(user_id, product_id):
+    user = User.query.filter(User.id == user_id).first()
+    product = Products.query.filter(Products.product_id == product_id).first() # PROBLEMAS CON ESTE ID QUE NO LO QUIERE TOMAR PARA HACER LA VALIDACIÓN SOLO ME TOMA EL ID DE LA PRIMARY KEY
+    shoppingcart_id = ShoppingCart.query.filter(ShoppingCart.product_id == product_id).first()
+    add_shoppingCart = ShoppingCart(product_id = product_id, user_id = user_id)
+
+    if not user is None:
+        if not product is None:
+
+            if shoppingcart_id is None:
+
+                db.session.add(add_shoppingCart)
+                db.session.commit()
+
+                return jsonify({
+                    "success":"product has been added to shopping cart"
+                }), 201
+                
+            return jsonify({
+                "msg":"product already exists in shopping cart"
+            }), 404
+
+        return jsonify({
+            "msg":"product doesn't exists"
+        }), 404
+
+    return jsonify({
+        "msg":"user doesn't exists"
+    }), 404
         
 
 # GET ALL POSTS (FEED)
