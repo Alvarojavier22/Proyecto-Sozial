@@ -87,7 +87,7 @@ def user_login():
         return jsonify({"msg":"Inicio de sesion invalido"}), 401
 
 
-#CHANGE PASSWORD
+# CHANGE PASSWORD
 @api.route('/user/change_password/', methods=['PUT'])
 def change_password():
     email = request.json.get("email")
@@ -210,23 +210,31 @@ def likes_by_posts(post_id):
     }), 404
 
 
-# USER INTERACTION WITH COMMENTS (HACER)
-@api.route('/comments/<int:post_id>/', methods=['POST'])
-def post_comments(post_id):
+# USER INTERACTION WITH COMMENTS
+@api.route('/comments/<int:comment_user_id>/<int:post_id>/', methods=['POST'])
+def post_comments(comment_user_id, post_id):
     comment = request.json.get("comment")
-    generate_comment = Comments(comment = comment, post_id = post_id)
+    # comment_user_id = request.json.get("comment_user_id")
+    generate_comment = Comments(comment = comment, post_id = post_id, comment_user_id = comment_user_id)
+    user = User.query.filter(User.id == comment_user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
 
-    if not post is None:
-        db.session.add(generate_comment)
-        db.session.commit()
+    if not user is None:
+
+        if not post is None:
+            db.session.add(generate_comment)
+            db.session.commit()
+
+            return jsonify({
+                "success":"comment has been generated successfully"
+            }), 201
 
         return jsonify({
-            "success":"comment has been generated successfully"
-        }), 201
-
+            "msg":"post doesn't exists"
+        }), 404
+    
     return jsonify({
-        "msg":"post doesn't exists"
+        "msg":"this user doesn't exists to generate comments"
     }), 404
 
 # ALL COMMENTS
@@ -267,6 +275,32 @@ def commet_by_post(post_id):
     }), 404
 
 
+# DELETE COMMENTS
+@api.route('/comments/<int:comment_user_id>/<int:comment_id>/', methods=['DELETE'])
+def delete_comments(comment_user_id, comment_id):
+    user = User.query.filter(User.id == comment_user_id).first()
+    comment = Comments.query.filter(Comments.id == comment_id).first()
+
+    if not user is None:
+
+        if not comment is None:
+
+            db.session.delete(comment) 
+            db.session.commit()
+
+            return jsonify({
+                "success":"comment has been remove successfully"
+            }), 201
+
+        return jsonify({
+            "msg":"this comment doesn't exists"
+        }), 404
+
+    return jsonify({
+        "msg":"this user doesn't exists"
+    }), 404
+    
+
 
 
 # GENERATE POSTS
@@ -292,7 +326,7 @@ def post(user_id):
 
 
 
-# ADD PRODCUCT TO FAVORITE LIST
+# ADD PRODUCT TO FAVORITE LIST
 
 
 # ALL SHOPPING CART LIST
@@ -314,6 +348,7 @@ def shopping_cart():
         "msg":"shopping cart not have products"
     }), 404
 
+
 # SHOPPING CART LIST BY USER
 @api.route('/shopping_cart/<int:user_id>/')
 def user_shoppingcart(user_id):
@@ -332,7 +367,7 @@ def user_shoppingcart(user_id):
         "msg":"this user don't have any product in shopping cart"
     }), 404
 
-
+##########################################
 # ADD PRODUCT TO SHOPPING CART ## SALE MEJOR GENERAR LA VALIDACIÓN DEL USUARIO POR LA RUTA
 @api.route('/add/cart/<int:user_id>/<int:product_id>/', methods=['POST'])
 def add_product_to_cart(user_id, product_id):
@@ -342,7 +377,7 @@ def add_product_to_cart(user_id, product_id):
     add_shoppingCart = ShoppingCart(product_id = product_id, user_id = user_id)
 
     if not user is None:
-        if not product is None:
+        if not product is None and product.avaliable == True:
 
             if shoppingcart_id is None:
 
@@ -458,28 +493,63 @@ def categories():
 
 
 # POST PRODUCTS
-@api.route('/products/', methods=['POST'])
-def post_products():
+@api.route('/products/<int:user_id>/', methods=['POST'])
+def post_products(user_id):
     product_id = request.json.get("product_id")
     name = request.json.get("name")
     description = request.json.get("description")
     price = request.json.get("price")
     quantity = request.json.get("quantity")
     avaliable = request.json.get("avaliable")
-    post_products = Products(product_id = product_id, name = name, description = description, price = price, quantity = quantity, avaliable = avaliable)
+    post_products = Products(user_id = user_id, product_id = product_id, name = name, description = description, price = price, quantity = quantity, avaliable = avaliable)
     product = Products.query.filter(Products.product_id  == product_id).first()
+    user = User.query.filter(User.id == user_id).first()
 
-    if not product is None:
+    if not user is None:
+            
+        if not product is None:
+            return jsonify({
+                "msg":"product already exists"
+            }), 404
+
+        db.session.add(post_products)
+        db.session.commit()
+
         return jsonify({
-            "msg":"product already exists"
-        }), 404
-
-    db.session.add(post_products)
-    db.session.commit()
+            "success":"product post successfully"
+        }), 201
 
     return jsonify({
-        "success":"product post successfully"
-    }), 201
+        "msg":"user doesn't exists"
+    }), 404
+
+
+# PRODUCTS BY USER
+@api.route('/products/<int:user_id>/', methods=['GET'])
+def user_products(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    products = Products.query.filter(Products.user_id == user_id).all()
+
+    all_user_products = []
+
+    if not user is None:
+
+        for i in range(len(products)):
+            all_user_products.append(products[i].serialize())
+
+        if len(all_user_products) > 0:
+            return jsonify({
+                "user products":all_user_products
+            }), 201
+
+        return jsonify({
+            "msg":"this user doesn't have products posted"
+        }), 404
+
+    return jsonify({
+        "msg":"this user doesn't exists"
+    }), 404
+
 
 
 # DEACTIVATE PRODUCTS
@@ -523,11 +593,6 @@ def activate_product(product_id):
         "msg":"this product doesn't is inactive now"
     }), 404
     
-
-
-
-
-
 
 # ALL PRODUCTS
 @api.route('/products/', methods=['GET'])

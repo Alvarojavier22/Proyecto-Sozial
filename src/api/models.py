@@ -28,6 +28,7 @@ class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, unique=True, nullable=False) # UNA MANERA QUE ESTE ID SEA UN NUMERO RAMDON DE 6 DIGITOS
+    user_id = db.Column(db.Integer, unique=False, nullable=False)
     name = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
@@ -43,6 +44,7 @@ class Products(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "user_id": self.user_id,
             "product_id": self.product_id,
             "name": self.name,
             "description": self.description,
@@ -80,8 +82,9 @@ class ShoppingCart(db.Model):
 
     def serialize(self):
         return {
-            "product_id": self.products.products.product_id,
-            "product_name":self.products.name
+            "product_id": self.products.product_id,
+            "product_name":self.products.name,
+            "user_id": self.user_id
         }
 
 
@@ -130,6 +133,7 @@ class Comments(db.Model):
     __tablename__ = "comments"
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(2000), unique=False, nullable=False)
+    comment_user_id = db.Column(db.Integer(), unique=False, nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=True)
     post = db.relationship(Post)
 
@@ -138,11 +142,13 @@ class Comments(db.Model):
 
     def serialize(self):
         return {
+            "comment_id": self.id,
             "post_id": self.post_id,
             "commet":self.comment,
             "user_post_id": self.post.user_id,
             "post_content": self.post.text,
-            "user_post_name": self.post.user.name
+            "user_post_name": self.post.user.name+str(" ")+self.post.user.surname,
+            "comment_user_id": self.comment_user_id
         }
 
 
