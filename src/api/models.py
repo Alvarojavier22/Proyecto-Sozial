@@ -110,7 +110,7 @@ class Post(db.Model):
 class Likes(db.Model):
     __tablename__ = "likes"
     id = db.Column(db.Integer, primary_key=True)
-    is_like = db.Column(db.Boolean(), unique=False, nullable=False)
+    like_user_id = db.Column(db.Integer(), nullable=False, unique=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=True)
     post = db.relationship(Post)
 
@@ -121,7 +121,9 @@ class Likes(db.Model):
         return {
             "post_id": self.post_id,
             "user_post_id": self.post.user_id,
-            "user_post_name": self.post.user.name
+            "post_content": self.post.text,
+            "user_post_name": self.post.user.name,
+            "like_user_id": self.like_user_id
         }
 
 class Comments(db.Model):
@@ -139,6 +141,7 @@ class Comments(db.Model):
             "post_id": self.post_id,
             "commet":self.comment,
             "user_post_id": self.post.user_id,
+            "post_content": self.post.text,
             "user_post_name": self.post.user.name
         }
 

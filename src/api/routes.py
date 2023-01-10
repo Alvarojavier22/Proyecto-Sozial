@@ -109,24 +109,66 @@ def change_password():
     }), 404
 
 
-# USER INTERACTION WITH LIKES
+# USER INTERACTION WITH LIKES ##### VERIFICAR UNA MENERA MÁS CORTA DE GENERAR ESTA COMPARATIVA
 @api.route('/likes/<int:post_id>/', methods=['POST'])
 def generate_likes(post_id):
-    is_like = request.json.get("is_like")
-    generate_like = Likes(is_like = is_like, post_id = post_id)
+    like_user_id = request.json.get("like_user_id")
+    like_user = Likes.query.filter(Likes.like_user_id == like_user_id).first()
+    user = User.query.filter(User.id == like_user_id).first()
     post = Post.query.filter(Post.id  == post_id).first()
+    generate_like = Likes(post_id = post_id, like_user_id = like_user_id)
 
-    if not post is None:
-        db.session.add(generate_like)
-        db.session.commit()
+    if not user is None:
+
+        if not post is None:
+
+            if like_user is None:
+
+                db.session.add(generate_like)
+                db.session.commit()
+
+                return jsonify({
+                    "success":"like has been generated successfully"
+                }), 201
+
+            return jsonify({
+                "msg":"this user's like already exists in this post"
+            }), 404
 
         return jsonify({
-            "success":"like has been generated successfully"
-        }), 201
+            "msg":"post doesn't exists"
+        }), 404
 
     return jsonify({
-        "msg":"post doesn't exists"
+        "msg":"this user doesn't exists to generate likes"
     }), 404
+
+
+# REMOVE LIKES IN POST
+@api.route('/likes/<int:user_like_id>/<post_id>/', methods=['DELETE'])
+def remove_likes(user_like_id, post_id):
+    user = User.query.filter(User.id == user_like_id).first()
+    like = Likes.query.filter(Likes.like_user_id == user_like_id).first()
+
+    if not user is None:
+
+        if not like is None:
+
+            db.session.delete(like) 
+            db.session.commit()
+
+            return jsonify({
+                "success":"like has been remove successfully"
+            }), 201
+
+        return jsonify({
+            "msg":"this like doesn't exists"
+        }), 404
+
+    return jsonify({
+        "msg":"this user doesn't exists"
+    }), 404
+
 
 
 # ALL LIKES
@@ -365,12 +407,13 @@ def each_post(post_id):
 # (GET) POST BY EACH USER
 @api.route('/posts/user/<int:user_id>/', methods=['GET'])
 def post_user(user_id):
+    user = User.query.filter(User.id == user_id).first()
     posts = Post.query.filter(Post.user_id == user_id).all()
 
     all_user_post = []
 
 
-    if not posts is None:
+    if not user is None:
 
         if len(posts) > 0:
 
@@ -386,7 +429,7 @@ def post_user(user_id):
         })
 
     return jsonify({
-        "msg":"This user doesn't have a posts"
+        "msg":"This user doesn't exists"
     }), 404
 
 
