@@ -169,16 +169,17 @@
 	margin: auto;
 	width: 50%;
 	margin-top: 100px;
-	border-style: outset;
+	border-radius: 5px;
 	padding: 10px;
-	box-shadow: 0px 2px 2px #6f5586;
+	box-shadow: 0px 2px 12px #6f5586;
 	position: absolute;
 	top:10%;
+	background: linear-gradient(90deg, #8e4e8e, #ad78b8);
 }
 
 #contsign{
 	
-	background: linear-gradient(90deg, #e6d6ef, #d9b8f8);	
+	background: linear-gradient(90deg, #8c8c8c, #f3f3f3 );
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -296,7 +297,7 @@
 .signup h1{
 	text-align: center;
 	color: #000000;
-	font-family: ;
+	
 }
 .signup h1::after{
 	content:"";
@@ -304,11 +305,12 @@
 	width: 200px;
 	height: 5px;
 	color: #000000;
-	background: black;
+	background: rgb(37, 35, 35);
 	margin-left: 85px;
 	margin-top: 5px;
 	position: absolute;
 	justify-content: center;
+	border-radius: 5px;
 }
 .sign_input::placeholder{
 	color: #331d47;
@@ -345,4 +347,103 @@
 }
 #linksign:hover{
 	color: white;
+}
+
+/* RESET PASSWORD*/
+.newpass{
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+	width: 100%;
+	position: relative;
+}
+.passreset{
+	background: linear-gradient(90deg, #8e4e8e, #ad78b8);		
+	height: 400px;
+	width: 400px;
+	position: relative;
+	top: 20%;
+	box-shadow: 0px 0px 24px #7c5696;
+	padding: 10px;
+	border-radius: 8px;
+}
+#backnewpass{
+	background: linear-gradient(90deg, #8c8c8c, #f3f3f3 );
+	display: flex;
+	align-items: center;
+	height: 100%;
+	
+
+}
+
+
+
+
+.passreset h1{
+	text-align: center;
+}
+
+.passreset p{
+	font-weight: 500;
+	font-size: 15px;
+	padding: 10px;
+	right: 13px;
+	left: 10px;
+	position: relative;
+
+}
+
+
+.newpass_inputs{
+	position:relative;
+	padding: 12px;
+	margin-left: 10px;
+
+}
+.newpass_input{
+	margin-bottom: 10px;
+	width: 300px;
+	border: none;
+	background: none;
+	border-bottom: 2px solid #bdb0b0;
+	
+}
+.newpass_input:focus{
+	border: none;
+	;
+
+}
+.newpass_input:hover{
+	border-bottom-color: rgb(37, 36, 37);
+}
+.buttonsetpass{
+	
+	position: absolute;
+	left: 20px;
+	font-size: 25px;
+	border-radius: 15px;
+	width: 201px;
+	background: #6825a6;
+	color: #c7bdbd;
+	border: none;
+	box-shadow: 0 0 12px #420565;
+	transition: .5s ease-in-out;
+}
+.buttonsetpass:hover{
+	box-shadow: 0px 0 10px #dfa6e7;
+	color: rgb(225, 160, 255);
+}
+.passreset footer{
+	position: absolute;
+	top:90%;
+	left: 9%;
+}
+.newpass_input::placeholder{
+	color: rgb(31, 30, 30);
+}
+#sozialsupp:hover{
+	color: white;
+}
+#sozialsupp{
+	transition: .3s ease;
 }
