@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Products, Categories, Post, Likes, Comments, ShoppingCart, TokenBlocklist
+from api.models import db, User, Products, Categories, Post, Likes, Comments, ShoppingCart, Favorites, TokenBlocklist
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime, timezone # para el cierre de sesión
@@ -325,8 +325,60 @@ def post(user_id):
     }), 404
 
 
+# ALL FAVORITES LIST
+@api.route('/favorites/', methods=['GET'])
+def favorites():
+    favorites = Favorites.query.filter(Favorites.__tablename__ == "favorites").all()
+
+    all_favorites_list = []
+
+    if len(favorites) > 0:
+        for i in range(len(favorites)):
+            all_favorites_list.append(favorites[i].serialize())
+
+        return jsonify({
+            "favorites list":all_favorites_list
+        }), 201
+
+    return jsonify({
+        "msg":"doesn't exists any product like favorite"
+    }), 404
+
 
 # ADD PRODUCT TO FAVORITE LIST
+@api.route('/favorites/add/<int:user_id>/<int:product_id>/', methods=['POST'])
+def add_favorites(user_id, product_id):
+    user = User.query.filter(User.id == user_id).first()
+    product = Products.query.filter(Products.id == product_id).first()
+    favorite_id = Favorites.query.filter(Favorites.product_id == product_id).first() # PARA VALIDAR QUE EL PRODUCTO NO SE ENCUENTRA YA COMO FAVORITO
+    add_favorites = Favorites(user_id = user_id, product_id = product_id)
+
+    if not user is None:
+
+        if not product is None and product.avaliable == True:
+
+            if favorite_id is None:
+
+                db.session.add(add_favorites)
+                db.session.commit()
+
+                return jsonify({
+                    "success":"product has been added to favorites"
+                }), 201
+
+            return jsonify({
+                "msg":"product already exists in favorites"
+            }), 404
+
+        return jsonify({
+            "msg":"product doesn't exists"
+        }), 404
+
+    return jsonify({
+        "msg":"user doesn't exists"
+    }), 404
+
+
 
 
 # ALL SHOPPING CART LIST
@@ -369,12 +421,12 @@ def user_shoppingcart(user_id):
 
 ##########################################
 # ADD PRODUCT TO SHOPPING CART ## SALE MEJOR GENERAR LA VALIDACIÓN DEL USUARIO POR LA RUTA
-@api.route('/add/cart/<int:user_id>/<int:product_id>/', methods=['POST'])
+@api.route('/cart/add/<int:user_id>/<int:product_id>/', methods=['POST'])
 def add_product_to_cart(user_id, product_id):
     user = User.query.filter(User.id == user_id).first()
-    product = Products.query.filter(Products.id == product_id).first() # PROBLEMAS CON ESTE ID QUE NO LO QUIERE TOMAR PARA HACER LA VALIDACIÓN SOLO ME TOMA EL ID DE LA PRIMARY KEY
+    product = Products.query.filter(Products.id == product_id).first()
     shoppingcart_id = ShoppingCart.query.filter(ShoppingCart.product_id == product_id).first()
-    add_shoppingCart = ShoppingCart(user_id = user_id)
+    add_shoppingCart = ShoppingCart(user_id = user_id, product_id = product_id)
 
     if not user is None:
         if not product is None and product.avaliable == True:

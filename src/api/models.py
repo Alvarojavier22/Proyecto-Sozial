@@ -27,15 +27,13 @@ class User(db.Model):
     # para solo traer información específica
     def serialize_cart(self):
         return {
-            "id": self.id,
-            "name":self.name,
-            "surname":self.surname
+            "user_id": self.id,
+            "name":self.name+str(" ")+self.surname
         }
 
 class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
-    #product_id = db.Column(db.Integer, unique=True, nullable=False) # UNA MANERA QUE ESTE ID SEA UN NUMERO RAMDON DE 6 DIGITOS
     # user_id = db.Column(db.Integer, unique=False, nullable=False)
     name = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
@@ -58,6 +56,7 @@ class Products(db.Model):
             "quantity":self.quantity,
             "avaliable": self.avaliable
         }
+        
 
 class Categories(db.Model):
     __tablename__ = "categories"
@@ -73,12 +72,32 @@ class Categories(db.Model):
             "name": self.name
         }
 
+class Favorites(db.Model):
+    __tablename__ = "favorites"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer(), unique=False, nullable=False)
+    # name = db.Column(db.String(50), unique=True, nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    products = db.relationship(Products)
+
+    def __repr__(self):
+        return f'<Categories {self.name}>'
+
+    def serialize(self):
+        user = User.query.filter(User.id == self.user_id).first()
+        return {
+            "favorite_id":self.id,
+            "product_id":self.products.id,
+            "product_name": self.products.name,
+            "user": user.serialize_cart()
+        }
+        
+
+
 class ShoppingCart(db.Model):
     __tablename__ = "shoppingcart"
     id = db.Column(db.Integer, primary_key=True)
-    add_cart = db.Column(db.Boolean(), unique=False, nullable=True)
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # PREGUNTAR COMO HACER PARA RELACIONAR DOS MODELOS 
-    #user = db.relationship(user)
+    # add_cart = db.Column(db.Boolean(), unique=False, nullable=True)
     user_id = db.Column(db.Integer(), unique=False, nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     products = db.relationship(Products)
@@ -89,9 +108,9 @@ class ShoppingCart(db.Model):
     def serialize(self):
         user = User.query.filter(User.id == self.user_id).first()
         return {
-            "product_id": self.products.product_id,
+            "product_id": self.products.id,
             "product_name":self.products.name,
-            "user_id": user.serialize_cart()
+            "user": user.serialize_cart()
         }
 
 
