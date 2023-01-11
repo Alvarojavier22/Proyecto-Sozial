@@ -344,6 +344,35 @@ def favorites():
         "msg":"doesn't exists any product like favorite"
     }), 404
 
+# FAVORITES BY USER
+@api.route('/favorites/<int:user_id>/', methods=['GET'])
+def user_favorites(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    favorites = Favorites.query.filter(Favorites.user_id == user_id).all()
+
+    user_favorites = []
+
+    if not user is None:
+
+        if len(favorites) > 0:
+
+            for i in range(len(favorites)):
+                user_favorites.append(favorites[i].serialize())
+
+            return jsonify({
+                "user favorites":user_favorites
+            }), 201
+
+        return jsonify({
+            "msg":"this user doesn't have any favorite"
+        }), 404
+
+    return jsonify({
+        "msg":"this user doesn't exists"
+    }), 404
+
+
+
 
 # ADD PRODUCT TO FAVORITE LIST
 @api.route('/favorites/add/<int:user_id>/<int:product_id>/', methods=['POST'])
