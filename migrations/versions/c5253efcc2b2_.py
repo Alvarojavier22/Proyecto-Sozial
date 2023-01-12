@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8f87b573acfc
+Revision ID: c5253efcc2b2
 Revises: 
-Create Date: 2023-01-11 18:00:04.908878
+Create Date: 2023-01-11 18:27:07.080856
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8f87b573acfc'
+revision = 'c5253efcc2b2'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -62,6 +62,13 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
+    op.create_table('buy',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('product_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('comment', sa.String(length=2000), nullable=False),
@@ -100,6 +107,7 @@ def downgrade():
     op.drop_table('likes')
     op.drop_table('favorites')
     op.drop_table('comments')
+    op.drop_table('buy')
     op.drop_table('products')
     op.drop_table('post')
     op.drop_table('user')

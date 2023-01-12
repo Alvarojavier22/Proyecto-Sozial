@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Products, Categories, Post, Likes, Comments, ShoppingCart, Favorites, TokenBlocklist
+from api.models import db, User, Products, Categories, Post, Likes, Comments, ShoppingCart, Favorites, Buy, TokenBlocklist
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime, timezone # para el cierre de sesión
@@ -107,6 +107,55 @@ def change_password():
     return jsonify({
         "msg":"this user doesn't exists"
     }), 404
+
+
+# USERDATA VALIDATION
+@api.route('/userdata/', methods=['GET'])
+@jwt_required() # automaticamente protege la ruta la cual se le indique
+def user_data():
+    user_id = get_jwt_identity() #me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
+    user = User.query.get(user_id) # con este id solo se accede a la información de ese usuario y de más nadie
+    return jsonify({
+        "user":user.serialize() 
+    })
+
+
+# LOGOUT SESSION
+@api.route('/logout/', methods=['POST'])
+@jwt_required()
+def user_logout():
+    jti = get_jwt()["jti"]
+    now = datetime.now(timezone.utc)
+    blocked_token=TokenBlocklist(jti=jti, created_at=now)
+    db.session.add(blocked_token)
+    db.session.commit()
+    return jsonify(msg="JWT revoked")
+
+
+# ALL USERS
+@api.route('/users/', methods=['GET'])
+def users():
+    users = User.query.filter(User.__tablename__ == "user").all()
+    all_users = []
+
+    print(users)
+    if not users is None:
+
+        for i in range(len(users)):
+            if users[i].is_active == False: # para que salte el usuario si no esta activo
+                continue
+
+            all_users.append(users[i].serialize())
+
+        if len(all_users) > 0:
+            return jsonify({
+                "users":all_users
+            }), 201
+
+    return jsonify({
+            "msg":"No have any user"
+        }), 404
+
 
 
 # USER INTERACTION WITH LIKES ##### VERIFICAR UNA MENERA MÁS CORTA DE GENERAR ESTA COMPARATIVA
@@ -448,8 +497,8 @@ def user_shoppingcart(user_id):
         "msg":"this user don't have any product in shopping cart"
     }), 404
 
-##########################################
-# ADD PRODUCT TO SHOPPING CART ## SALE MEJOR GENERAR LA VALIDACIÓN DEL USUARIO POR LA RUTA
+
+# ADD PRODUCT TO SHOPPING CART
 @api.route('/cart/add/<int:user_id>/<int:product_id>/', methods=['POST'])
 def add_product_to_cart(user_id, product_id):
     user = User.query.filter(User.id == user_id).first()
@@ -733,7 +782,7 @@ def delete_products():
 
 
 
-# DELETE EACH PRODUCT ## HACER MEDIANTE PUT
+# DELETE EACH PRODUCT ################ HACER MEDIANTE PUT
 @api.route('/delete/products/<int:product_id>/', methods=['DELETE'])
 def delete_product(product_id):
     products = Products.query.filter(Products.id == product_id).first()
@@ -781,56 +830,87 @@ def signup():
     }), 201
 
 
+# PRODUCTS THAT HAS BEEN PURCHASED
+@api.route('/purchased_products/', methods=['GET'])
+def purchased_products():
+    purchased_products = Buy.query.filter(Buy.__tablename__ == "buy").all()
+
+    all_purchased_products = []
+
+    if len(purchased_products) > 0:
+
+        for i in range(len(purchased_products)):
+            all_purchased_products.append(purchased_products[i].serialize())
+
+        return jsonify({
+            "purchased products":all_purchased_products
+        }), 201
+
+    return jsonify({
+        "msg":"doesn't exists any product that has been purchased"
+    }), 404
 
 
-# ALL USERS
-@api.route('/users/', methods=['GET'])
-def users():
-    users = User.query.filter(User.__tablename__ == "user").all()
-    all_users = []
+# RODUCTS THAT HAS BEEN PURCHASED BY USER
+@api.route('/purchased_products/<int:user_id>/', methods=['GET'])
+def user_purchased_products(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    user_purchased_products = Buy.query.filter(Buy.user_id == user_id).all()
 
-    print(users)
-    if not users is None:
+    user_products = []
 
-        for i in range(len(users)):
-            if users[i].is_active == False: # para que salte el usuario si no esta activo
-                continue
+    if not user is None:
 
-            all_users.append(users[i].serialize())
+        if len(user_purchased_products) > 0:
 
-        if len(all_users) > 0:
+            for i in range(len(user_purchased_products)):
+                user_products.append(user_purchased_products[i].serialize())
+
             return jsonify({
-                "users":all_users
+                "user purshased products":user_products
+            }), 201
+            
+
+        return jsonify({
+            "msg":"this user doesn't has buyed products"
+        })
+
+    return jsonify({
+        "msg":"this user doesn't exists"
+    }), 404
+
+
+# BUY PRODUCT
+@api.route('/products/buy/<int:user_id>/<int:product_id>/', methods=['POST'])
+def buy_product(user_id, product_id):
+    user = User.query.filter(User.id == user_id).first()
+    product = Products.query.filter(Products.id == product_id).first()
+    buy = Buy(user_id = user_id, product_id = product_id)
+
+    if not user is None:
+
+        if not product is None:
+
+            db.session.add(buy)
+            db.session.commit()
+
+            return jsonify({
+                "success":"this product has been buy"
             }), 201
 
-    return jsonify({
-            "msg":"No have any user"
+        return jsonify({
+            "msg":"this product doesn't exists"
         }), 404
 
-
-
-
-@api.route('/userdata/', methods=['GET'])
-@jwt_required() # automaticamente protege la ruta la cual se le indique
-def user_data():
-    user_id = get_jwt_identity() #me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
-    user = User.query.get(user_id) # con este id solo se accede a la información de ese usuario y de más nadie
     return jsonify({
-        "user":user.serialize() 
-    })
+        "msg":"this user doesn't exists"
+    }), 404
 
 
 
-# LOGOUT SESSION
-@api.route('/logout/', methods=['POST'])
-@jwt_required()
-def user_logout():
-    jti = get_jwt()["jti"]
-    now = datetime.now(timezone.utc)
-    blocked_token=TokenBlocklist(jti=jti, created_at=now)
-    db.session.add(blocked_token)
-    db.session.commit()
-    return jsonify(msg="JWT revoked")
+
+
+    
 
 
 
@@ -840,10 +920,6 @@ def user_logout():
 
 
 
-
-
-#@api.route('/posts/<int:user_id>/<int:post_id>/', methods=['DELETE']) 
-# PREGUNTAR COMO HACER ESA LINEA
 
 
 

@@ -103,7 +103,7 @@ class ShoppingCart(db.Model):
     products = db.relationship(Products)
 
     def __repr__(self):
-        return f'<ShoppingCart {self.name}>'
+        return f'<ShoppingCart {self.products.name}>'
 
     def serialize(self):
         user = User.query.filter(User.id == self.user_id).first()
@@ -175,6 +175,24 @@ class Comments(db.Model):
             "post_content": self.post.text,
             "user_post_name": self.post.user.name+str(" ")+self.post.user.surname,
             "comment_user_id": self.comment_user_id
+        }
+
+class Buy(db.Model):
+    __tablename__ = "buy"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False, unique=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    products = db.relationship(Products)
+
+    def __repr__(self):
+        return f'<Buy {self.products.name}>'
+
+    def serialize(self):
+        user = User.query.filter(User.id == self.user_id).first()
+        return {
+            "product_id": self.products.id,
+            "product_name":self.products.name,
+            "user": user.serialize_cart()
         }
 
 
