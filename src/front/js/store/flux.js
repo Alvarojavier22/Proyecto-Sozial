@@ -1,3 +1,5 @@
+const apiUrl = process.env.BACKEND_URL
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
