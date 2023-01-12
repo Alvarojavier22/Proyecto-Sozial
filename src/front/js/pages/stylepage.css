@@ -158,7 +158,10 @@
 #linklogin{
     text-decoration: none;
 }
-
+.login__field #togglePassword{
+	user-select: none;
+	color: rgb(95, 89, 89);
+}
 
 
 
@@ -348,6 +351,12 @@
 #linksign:hover{
 	color: white;
 }
+.signup_field #togglePassword{
+	user-select: none;
+}
+
+
+
 
 /* RESET PASSWORD*/
 .newpass{
@@ -446,4 +455,7 @@
 }
 #sozialsupp{
 	transition: .3s ease;
+}
+.newpass_inputs #togglePassword{
+	user-select: none;
 }
