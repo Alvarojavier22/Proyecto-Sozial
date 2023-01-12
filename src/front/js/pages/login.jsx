@@ -1,9 +1,9 @@
 import  React  from "react";
 import "./stylepage.css"
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
 export const Login=()=>{
-
+const [loginPassHide, setLoginPassHide]=useState(true)
     return(
         <div className="container" id="container">
 	<div className="screen">
@@ -15,7 +15,8 @@ export const Login=()=>{
 				</div>
 				<div className="login__field">
 					<i className="login__icon fas fa-lock"></i>
-					<input type="password" className="login__input" placeholder="Password"/>
+					<input type={`${ loginPassHide==true? "password": "text"}`} className="login__input" placeholder="Password"/>
+					<i className={`far fa-eye${ loginPassHide==true? "": "-slash"} `} onClick={()=>loginPassHide==true?setLoginPassHide(false):setLoginPassHide(true)} id="togglePassword" style={{"marginLeft": "-30px", "cursor": "pointer"}}></i>
 				</div>
 				<Link to="/home" id="linklogin"><button className="button login__submit">
 					<span className="button__text">Log In Now</span>
