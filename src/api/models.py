@@ -34,7 +34,7 @@ class User(db.Model):
 class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
-    # user_id = db.Column(db.Integer, unique=False, nullable=False)
+    seller_id = db.Column(db.Integer, unique=False, nullable=False)
     name = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
@@ -48,8 +48,10 @@ class Products(db.Model):
         return f'<Products {self.name}>'
 
     def serialize(self):
+        user = User.query.filter(User.id == self.seller_id).first()
         return {
-            "id": self.id,
+            "product_id": self.id,
+            "seller_info": user.serialize_cart(),
             "name": self.name,
             "description": self.description,
             "price": self.price,
@@ -132,7 +134,6 @@ class Post(db.Model):
             "post_id": self.id,
             "user_id": self.user_id,
             "user_name": self.user.name+str(" ")+self.user.surname
-            # COMO HACER PARA PODER VINCULAR EL USUARIO DESDE EL POSTMAN
         }
 
 

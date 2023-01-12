@@ -39,27 +39,36 @@ def delete_user(user_id):
 
 
 
-# DELETE POST
-@api.route('delete/posts/<int:post_id>/', methods=['DELETE'])
-def delete_post(post_id):
+# DELETE POST ########## VALIDAR ESTA CONDICIÓN PARA QUE EL UNICO QUE PUBLICA EL POST PUEDA ELIMINARLO
+@api.route('delete/posts/<user_id>/<int:post_id>/', methods=['DELETE'])
+def delete_post(user_id, post_id):
+    user = User.query.filter(User.id == user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
 
-    if not post is None:
-        
-        
-        db.session.delete(post)
-        db.session.commit()
-        
+    if not user is None:
+
+        if not post is None:
+
+            if post.user_id == user_id:  #### ESTA VALIDACIÓN NO ME QUIERE AGARRAR
+            
+                db.session.delete(post)
+                db.session.commit()
+                
+                return jsonify({
+                    "success":"post has been delete successfully"
+                }), 201
+                
+            return jsonify({
+                "msg":"only the creator of the post can delete it"
+            }), 404
+
         return jsonify({
-            "success":"post has been delete successfully"
-        }), 201
-
-
+            "msg":"post doesn't exists"
+        }), 404
 
     return jsonify({
-        "msg":"product doesn't exists"
+        "msg":"this user doesn't exists"
     }), 404
-
 
 # LOGIN
 @api.route('/login/',  methods=['POST'])
@@ -70,21 +79,28 @@ def user_login():
     # No encuentro Usuario
 
     if user == None:
-        print(("Correo invalido"))
-        return jsonify({"msg":"Inicio de sesion invalido"}), 401
+        return jsonify({
+            "msg":"invalid login"
+        }), 401
 
 # PASSWORDS VALIDATION
     if cripto.check_password_hash(user.password, password):
     # if user.password==password:
-        print("Clave ok")
-        access_token=create_access_token(identity=user.id)
+        # adittional_claims lo que hacer es agregar información adicional al access tokken, se puede mirar en jwt.io
+        # validar la posibilidad de que pueda crearse un perfil de admin
+        access_token=create_access_token(identity=user.id, additional_claims={"role":"user"})
         refresh_token=create_refresh_token(identity=user.id)
-        return jsonify({"token":access_token, "refresh":refresh_token}), 200
+        return jsonify({
+            "token":access_token,
+            "refresh":refresh_token,
+            "role":"user"
+        }), 200
 
     else:
     #INVALID PASSWORD
-        print(("Clave invalida"))
-        return jsonify({"msg":"Inicio de sesion invalido"}), 401
+        return jsonify({
+            "success":"invalid password"
+        }), 401
 
 
 # CHANGE PASSWORD
@@ -112,11 +128,17 @@ def change_password():
 # USERDATA VALIDATION
 @api.route('/userdata/', methods=['GET'])
 @jwt_required() # automaticamente protege la ruta la cual se le indique
-def user_data():
+def user_data_protected():
     user_id = get_jwt_identity() #me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
     user = User.query.get(user_id) # con este id solo se accede a la información de ese usuario y de más nadie
+    
     return jsonify({
-        "user":user.serialize() 
+        "user_id": user.id,
+        "is_active": user.is_active,
+        "user_email":user.email,
+        "user_name":user.name+str(" ")+user.surname,
+        "role":get_jwt()["role"], # aqui se trae la información del rol de cliente
+        "msg":"valid token"
     })
 
 
@@ -622,20 +644,19 @@ def categories():
 
 
 
-# POST PRODUCTS
-@api.route('/products/<int:user_id>/', methods=['POST'])
-def post_products(user_id):
+# POST PRODUCTS ####### VALIDAR SI ESTA RELACIÓN ESTÁ BUENA PARA VENDEDOR (MIRAR EL MODEL DE POST)
+@api.route('/products/<int:seller_id>/', methods=['POST'])
+def post_products(seller_id):
     name = request.json.get("name")
     description = request.json.get("description")
     price = request.json.get("price")
     quantity = request.json.get("quantity")
     avaliable = request.json.get("avaliable")
-    post_products = Products(name = name, description = description, price = price, quantity = quantity, avaliable = avaliable)
-    user = User.query.filter(User.id == user_id).first()
+    post_products = Products(seller_id = seller_id, name = name, description = description, price = price, quantity = quantity, avaliable = avaliable)
+    user = User.query.filter(User.id == seller_id).first()
 
     if not user is None:
             
-
         db.session.add(post_products)
         db.session.commit()
 
@@ -762,7 +783,7 @@ def each_product(product_id):
 
 
 
-# DELETE ALL PRODUCTS
+# DELETE ALL PRODUCTS (No es un muy necesaria esta ruta que digamos, a menos que sea para el admin o que el usuario quiera eliminar toda us mercancia)
 @api.route('/delete/products/', methods=['DELETE'])
 def delete_products():
     products = Products.query.filter(Products.__tablename__ == "products").all()
@@ -782,7 +803,7 @@ def delete_products():
 
 
 
-# DELETE EACH PRODUCT ################ HACER MEDIANTE PUT
+# DELETE EACH PRODUCT ################ HACER MEDIANTE PUT LEUGO VALIDAR DONDE SE USE ESE PRODCUT PARA TAMBIEN DESACTIVARLO
 @api.route('/delete/products/<int:product_id>/', methods=['DELETE'])
 def delete_product(product_id):
     products = Products.query.filter(Products.id == product_id).first()
