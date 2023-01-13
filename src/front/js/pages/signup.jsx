@@ -21,9 +21,9 @@ export const SignUp=()=>{
                             <input type={`${ confirmPassHide==true? "password": "text"}`} className="sign_input" placeholder="Confirm Password"/>
                             <i className={`far fa-eye${ confirmPassHide==true? "": "-slash"} `} onClick={()=>confirmPassHide==true?setConfirmPassHide(false):setConfirmPassHide(true)} id="togglePassword" style={{"marginLeft": "-30px", "cursor": "pointer"}}></i>
                         </div>
-                        <div class="form-check" id="check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                <label class="form-check-label" for="flexCheckDefault">
+                        <div className="form-check" id="check">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                <label className="form-check-label" for="flexCheckDefault">
                                      I accept the <Link to="#" id="linksign">terms of use</Link> & <Link to="#" id="linksign">privacy policy</Link>
                                  </label>
                             </div>
