@@ -55,7 +55,7 @@ const {store, actions}=useContext(Context)
                         <div className="form-check" id="check">
                             <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
 
-                                <label className="form-check-label" htmlFor="flexCheckDefault">
+                                <label className="form-check-label" htmlFor="flexCheckDefault"/>
                                 <label className="form-check-label" htmlFor="flexCheckDefault">
                                      I accept the <Link to="#" id="linksign">terms of use</Link> & <Link to="#" id="linksign">privacy policy</Link>
                                  </label>
