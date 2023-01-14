@@ -576,13 +576,16 @@ def user_shoppingcart(user_id):
 
 # ADD PRODUCT TO SHOPPING CART
 @api.route('/cart/add/<int:user_id>/<int:product_id>/', methods=['POST'])
+@jwt_required()
 def add_product_to_cart(user_id, product_id):
+    jwt_user_id = get_jwt_identity()
     user = User.query.filter(User.id == user_id).first()
     product = Products.query.filter(Products.id == product_id).first()
     shoppingcart_id = ShoppingCart.query.filter(ShoppingCart.product_id == product_id).first()
     add_shoppingCart = ShoppingCart(user_id = user_id, product_id = product_id)
 
-    if not user is None:
+    if not user is None and jwt_user_id == user_id:
+
         if not product is None and product.avaliable == True:
 
             if shoppingcart_id is None:
@@ -603,7 +606,7 @@ def add_product_to_cart(user_id, product_id):
         }), 404
 
     return jsonify({
-        "msg":"user doesn't exists"
+        "msg":"login to be able to add products to your shopping cart"
     }), 404
         
 
