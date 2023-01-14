@@ -39,7 +39,7 @@ def delete_user(user_id):
 
 
 
-# DELETE POST ########## VALIDAR ESTA CONDICIÓN PARA QUE EL UNICO QUE PUBLICA EL POST PUEDA ELIMINARLO
+# DELETE POST
 @api.route('delete/posts/<int:post_id>/', methods=['DELETE'])
 @jwt_required()
 def delete_post(post_id):
@@ -56,11 +56,11 @@ def delete_post(post_id):
         }), 201
             
     return jsonify({
-        "msg":"post doesn't exists"
+        "msg":"post doesn't exists in this user"
     }), 404
     
     
-# ADMIN LOGIN
+# ADMIN LOGIN # VALIDAR SI SE PUEDE HACER ASÍ PARA QUE EL LOGIN SE GENERE CON EL ROL ADMIN
 @api.route('/admin/login/',  methods=['POST'])
 def admin_login():
     email=request.json.get('email')
@@ -87,7 +87,7 @@ def admin_login():
         }), 200
 
 
-# LOGIN
+# LOGIN USER
 @api.route('/login/',  methods=['POST'])
 def user_login():
     email=request.json.get('email')
@@ -173,7 +173,7 @@ def user_logout():
     return jsonify(msg="JWT revoked")
 
 
-# ALL USERS
+# ALL USERS # ACOMODAR PARA QUE SOLO SEA EL ADMIN EL QUE PUEDA MIRAR TODOS LOS USUARIOS
 @api.route('/users/', methods=['GET'])
 def users():
     users = User.query.filter(User.__tablename__ == "user").all()
@@ -198,39 +198,28 @@ def users():
         }), 404
 
 
-
+####################### LE FALTA ###################################3
 # USER INTERACTION WITH LIKES ##### VERIFICAR UNA MENERA MÁS CORTA DE GENERAR ESTA COMPARATIVA
-@api.route('/likes/<int:post_id>/', methods=['POST'])
+@api.route('/likes/<int:post_id>/<like_user_id>/', methods=['POST'])
+@jwt_required()
 def generate_likes(post_id):
-    like_user_id = request.json.get("like_user_id")
-    like_user = Likes.query.filter(Likes.like_user_id == like_user_id).first()
-    user = User.query.filter(User.id == like_user_id).first()
-    post = Post.query.filter(Post.id  == post_id).first()
-    generate_like = Likes(post_id = post_id, like_user_id = like_user_id)
+    user_id = get_jwt_identity()
+    like_user = Likes.query.filter(Likes.user_id == like_user_id).first()
+    post = Post.query.filter(Post.id  == post_id).filter(Post.user_id == user_id).first()
+    generate_like = Likes(post_id = post_id, like_user = like_user)
 
-    if not user is None:
 
-        if not post is None:
+    if not post is None:
 
-            if like_user is None:
-
-                db.session.add(generate_like)
-                db.session.commit()
-
-                return jsonify({
-                    "success":"like has been generated successfully"
-                }), 201
-
-            return jsonify({
-                "msg":"this user's like already exists in this post"
-            }), 404
+        db.session.add(generate_like)
+        db.session.commit()
 
         return jsonify({
-            "msg":"post doesn't exists"
-        }), 404
+            "success":"like has been generated successfully"
+        }), 201
 
     return jsonify({
-        "msg":"this user doesn't exists to generate likes"
+        "msg":"login for generate like"
     }), 404
 
 
@@ -870,7 +859,7 @@ def signup():
     }), 201
 
 
-# PRODUCTS THAT HAS BEEN PURCHASED
+# PRODUCTS THAT HAS BEEN PURCHASED # SOLO DE VERIFICACIÓN PARA COMPARAR
 @api.route('/purchased_products/', methods=['GET'])
 def purchased_products():
     purchased_products = Buy.query.filter(Buy.__tablename__ == "buy").all()
@@ -949,13 +938,18 @@ def buy_product(user_id, product_id):
 
 
 
-
-    
-
-
-
-
-
+""" 
+# Se recibe un archivo en la peticion
+    file=request.files['profilePic']
+    # Extraemos la extension del archivo
+    extension=file.filename.split(".")[1]
+    # Guardar el archivo recibido en un archivo temporal
+    temp = tempfile.NamedTemporaryFile(delete=False)
+    file.save(temp.name)
+    # Subir el archivo a firebase
+    ## Se llama al bucket
+    bucket=storage.bucket(name="clase-imagenes-flask.appspot.com")
+    # Se genera el nombre de archivo con el id de la imagen y la extension """
 
 
 

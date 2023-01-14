@@ -140,7 +140,6 @@ class Post(db.Model):
 class Likes(db.Model):
     __tablename__ = "likes"
     id = db.Column(db.Integer, primary_key=True)
-    like_user_id = db.Column(db.Integer(), nullable=False, unique=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=True)
     post = db.relationship(Post)
 
