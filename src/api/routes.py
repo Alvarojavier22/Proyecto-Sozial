@@ -6,7 +6,7 @@ from api.models import db, User, Products, Categories, Post, Likes, Comments, Sh
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime, timezone # para el cierre de sesión
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt ##
 
 
 api = Blueprint('api', __name__)
