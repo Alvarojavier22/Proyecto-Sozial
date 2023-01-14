@@ -40,6 +40,26 @@ def delete_user(user_id):
 
 
 # DELETE POST ########## VALIDAR ESTA CONDICIÓN PARA QUE EL UNICO QUE PUBLICA EL POST PUEDA ELIMINARLO
+@api.route('delete/posts/<int:post_id>/', methods=['DELETE'])
+@jwt_required()
+def delete_post(post_id):
+    user_id = get_jwt_identity()
+    post = Post.query.filter(Post.id == post_id).filter(Post.user_id == user_id).first()
+
+    if not post is None:
+        
+        db.session.delete(post)
+        db.session.commit()
+        
+        return jsonify({
+            "success":"post has been delete successfully"
+        }), 201
+            
+    return jsonify({
+        "msg":"post doesn't exists"
+    }), 404
+
+""" # DELETE POST ########## VALIDAR ESTA CONDICIÓN PARA QUE EL UNICO QUE PUBLICA EL POST PUEDA ELIMINARLO
 @api.route('delete/posts/<user_id>/<int:post_id>/', methods=['DELETE'])
 def delete_post(user_id, post_id):
     user = User.query.filter(User.id == user_id).first()
@@ -68,7 +88,7 @@ def delete_post(user_id, post_id):
 
     return jsonify({
         "msg":"this user doesn't exists"
-    }), 404
+    }), 404 """
 
 # LOGIN
 @api.route('/login/',  methods=['POST'])
