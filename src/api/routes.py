@@ -527,7 +527,7 @@ def add_favorites(user_id, product_id):
 
 
 
-# ALL SHOPPING CART LIST
+# ALL SHOPPING CART LIST ### PARA VERIFICACIÓN O PARA ADMINS
 @api.route('/shopping_cart/', methods=['GET'])
 def shopping_cart():
     shoppingcart = ShoppingCart.query.filter(ShoppingCart.__tablename__ == "shoppingcart").all()
@@ -548,21 +548,29 @@ def shopping_cart():
 
 
 # SHOPPING CART LIST BY USER
-@api.route('/shopping_cart/<int:user_id>/')
+@api.route('/shopping_cart/<int:user_id>/', methods=['GET'])
+@jwt_required()
 def user_shoppingcart(user_id):
+    jwt_user_id = get_jwt_identity()
     shoppingcart_products = ShoppingCart.query.filter(ShoppingCart.user_id == user_id).all()
     user_shoppingcart = []
 
-    if len(shoppingcart_products) > 0:
-        for i in range(len(shoppingcart_products)):
-            user_shoppingcart.append(shoppingcart_products[i].serialize())
+    if jwt_user_id == user_id:
+
+        if len(shoppingcart_products) > 0:
+            for i in range(len(shoppingcart_products)):
+                user_shoppingcart.append(shoppingcart_products[i].serialize())
+
+            return jsonify({
+                "user shopping cart":user_shoppingcart
+            }), 201
 
         return jsonify({
-            "user shopping cart":user_shoppingcart
-        }), 201
+            "msg":"this user don't have any product in shopping cart"
+        }), 404
 
     return jsonify({
-        "msg":"this user don't have any product in shopping cart"
+        "msg":"login to see your shopping cart"
     }), 404
 
 
