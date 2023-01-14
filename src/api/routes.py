@@ -200,16 +200,16 @@ def users():
 
 
 # USER INTERACTION WITH LIKES
-@api.route('/likes/<int:post_id>/<like_user_id>/', methods=['POST'])
+@api.route('/likes/<int:post_id>/<int:like_user_id>/', methods=['POST'])
 @jwt_required()
 def generate_likes(post_id, like_user_id):
-    # user_id = get_jwt_identity()
-    like_user = User.query.filter(User.id == like_user_id).first() 
+    user_id = get_jwt_identity()
+    like_user = User.query.filter(User.id == user_id).first() 
     post = Post.query.filter(Post.id  == post_id).first()
     likes_verificator = Likes.query.filter(Likes.like_user_id == like_user_id).filter(Likes.post_id == post_id).first()
     generate_like = Likes(post_id = post_id, like_user_id = like_user_id) # un like_user_id es el de la ruta el otro es el de la tabla de likes para igualarlos
 
-    if not like_user is None:
+    if not like_user is None and like_user_id == user_id:
 
         if not post is None:
 
@@ -238,12 +238,12 @@ def generate_likes(post_id, like_user_id):
 @api.route('/likes/<post_id>/<int:like_user_id>/', methods=['DELETE'])
 @jwt_required()
 def remove_likes(post_id, like_user_id):
-    # user_id = get_jwt_identity()
-    like_user = User.query.filter(User.id == like_user_id).first()
+    user_id = get_jwt_identity()
+    like_user = User.query.filter(User.id == user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
     likes_verificator = Likes.query.filter(Likes.post_id == post_id).filter(Likes.like_user_id == like_user_id).first()
 
-    if not like_user is None:
+    if not like_user is None and like_user_id == user_id:
 
         if not post is None:
 
@@ -313,14 +313,14 @@ def likes_by_posts(post_id):
 @api.route('/comments/<int:post_id>/<int:comment_user_id>/', methods=['POST'])
 @jwt_required()
 def post_comments(comment_user_id, post_id):
-    # user_id = get_jwt_identity()
-    comment_user = User.query.filter(User.id == comment_user_id).first()
+    user_id = get_jwt_identity()
+    comment_user = User.query.filter(User.id == user_id).first()
     comment = request.json.get("comment")
     generate_comment = Comments(comment = comment, post_id = post_id, comment_user_id = comment_user_id)
     user = User.query.filter(User.id == comment_user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
 
-    if not user is None:
+    if not user is None and comment_user_id == user_id:
 
         if not post is None:
 
@@ -339,7 +339,8 @@ def post_comments(comment_user_id, post_id):
         "msg":"login for to generate comments"
     }), 404
 
-# ALL COMMENTS
+
+# ALL COMMENTS ## ARREGLAR PARA ADMIN
 @api.route('/comments/', methods=['GET'])
 def get_comments():
     comments = Comments.query.filter(Comments.__tablename__ == "comments").all()
@@ -358,13 +359,14 @@ def get_comments():
         "msg":"No have any comment"
     }), 404
 
-# COMMENT BY POST
+# COMMENT BY POST ## TODOS LOS USUARIOS
 @api.route('/comments/<post_id>/', methods=['GET'])
 def commet_by_post(post_id):
     comments = Comments.query.filter(Comments.post_id == post_id).all()
     comments_by_id = []
  # no me deja esta validación para cuando el post no exista
-    if not comments is None: 
+    if len(comments) > 0: 
+
         for i in range(len(comments)):
             comments_by_id.append(comments[i].serialize())
 
@@ -373,47 +375,55 @@ def commet_by_post(post_id):
         }), 201
 
     return jsonify({
-        "msg":"this post not have any like"
+        "msg":"this post not have any comment"
     }), 404
 
 
 # DELETE COMMENTS
-@api.route('/comments/<int:comment_user_id>/<int:comment_id>/', methods=['DELETE'])
-def delete_comments(comment_user_id, comment_id):
-    user = User.query.filter(User.id == comment_user_id).first()
-    comment = Comments.query.filter(Comments.id == comment_id).first()
+@api.route('/comments/<int:post_id>/<int:comment_user_id>/', methods=['DELETE'])
+@jwt_required()
+def delete_comments(post_id, comment_user_id):
+    user_id = get_jwt_identity()
+    comment_user = User.query.filter(User.id == user_id).first()
+    post = Post.query.filter(Post.id == post_id).filter()
+    comments_verificator = Comments.query.filter(Comments.post_id == post_id).filter(Comments.comment_user_id == comment_user_id).first()
 
-    if not user is None:
+    if not comment_user is None and comment_user_id == user_id:
 
-        if not comment is None:
+        if not post is None:
 
-            db.session.delete(comment) 
-            db.session.commit()
+            if not comments_verificator is None:
+
+                db.session.delete(comments_verificator) 
+                db.session.commit()
+
+                return jsonify({
+                    "success":"comment has been remove successfully"
+                }), 201
 
             return jsonify({
-                "success":"comment has been remove successfully"
-            }), 201
-
+                "msg":"this comment doesn't exists in this user"
+            }), 404
+        
         return jsonify({
-            "msg":"this comment doesn't exists"
+            "msg":"this post doesn't exists"
         }), 404
 
     return jsonify({
-        "msg":"this user doesn't exists"
-    }), 404
-    
-
+        "msg":"login to be able to delete the comment"
+    })
 
 
 # GENERATE POSTS
 @api.route('/posts/<int:user_id>', methods=['POST'])
+@jwt_required()
 def post(user_id):
-    user = User.query.filter(User.id == user_id).first()
+    jwt_user_id = get_jwt_identity()
     text = request.json.get("text")
 
-    post = Post(user_id = user_id, text = text) # <------
+    post = Post(user_id = user_id, text = text)
 
-    if user.is_active == True:
+    if user_id == jwt_user_id:
 
         db.session.add(post)
         db.session.commit()
@@ -423,7 +433,7 @@ def post(user_id):
         }), 200
 
     return jsonify({
-        "msg":"user doesn't exists"
+        "msg":"login for to be able generated posts"
     }), 404
 
 
