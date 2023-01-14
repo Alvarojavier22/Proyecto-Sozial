@@ -14,7 +14,7 @@ export const PassRecover=()=>{
         <form id="formsign" >
           <label htmlFor="forgotten-email" className="forgotemail">Recover your password</label>
   <div className="mb-2 ">
-    <label for="exampleInputEmail1" className="form-label">Enter your e-mail address to send you a password recovery code</label>
+    <label htmlFor="exampleInputEmail1" className="form-label">Enter your e-mail address to send you a password recovery code</label>
     <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail address"/>
     
   </div>
