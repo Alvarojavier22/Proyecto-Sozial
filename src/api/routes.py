@@ -612,7 +612,9 @@ def add_product_to_cart(user_id, product_id):
 
 # GET ALL POSTS (FEED)
 @api.route('/posts/', methods=['GET'])
+@jwt_required()
 def get_post():
+    user_id = get_jwt_identity()
     posts = Post.query.filter(Post.__tablename__ == "post").all()
     all_posts = []
 
@@ -635,10 +637,13 @@ def get_post():
 
 # GET EACH POST
 @api.route('/posts/<int:post_id>/')
+@jwt_required()
 def each_post(post_id):
+    jwt_user_id = get_jwt_identity()
     post = Post.query.filter(Post.id == post_id).first()
 
     if post is None:
+        
         return jsonify({
             "msg":"post doesn't exists"
         }), 404
@@ -648,9 +653,9 @@ def each_post(post_id):
     }), 202
 
 
-# (GET) POST BY EACH USER
-@api.route('/posts/user/<int:user_id>/', methods=['GET'])
-def post_user(user_id):
+# (GET) POST BY EACH USER ## PARA MIRAR EL FEED DE CADA USUARIO
+@api.route('/feed/user/<int:user_id>/', methods=['GET'])
+def feed_post_user(user_id):
     user = User.query.filter(User.id == user_id).first()
     posts = Post.query.filter(Post.user_id == user_id).all()
 
@@ -674,6 +679,37 @@ def post_user(user_id):
 
     return jsonify({
         "msg":"This user doesn't exists"
+    }), 404
+
+
+# (GET) OWN POST BY EACH USER
+@api.route('/posts/user/<int:user_id>/', methods=['GET'])
+@jwt_required()
+def post_user(user_id):
+    jwt_user_id = get_jwt_identity()
+    user = User.query.filter(User.id == user_id).first()
+    posts = Post.query.filter(Post.user_id == user_id).all()
+
+    all_user_post = []
+
+
+    if not user is None and user_id == jwt_user_id:
+
+        if len(posts) > 0:
+
+            for i in range(len(posts)):
+                all_user_post.append(posts[i].serialize())
+
+            return jsonify({
+                "user posts":all_user_post
+            }), 201
+        
+        return jsonify({
+            "msg":"This user not have posts to show"
+        })
+
+    return jsonify({
+        "msg":"log in to see user posts"
     }), 404
 
 
