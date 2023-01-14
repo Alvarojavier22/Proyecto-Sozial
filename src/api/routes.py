@@ -198,30 +198,41 @@ def users():
         }), 404
 
 
-####################### LE FALTA ###################################3
-# USER INTERACTION WITH LIKES ##### VERIFICAR UNA MENERA MÁS CORTA DE GENERAR ESTA COMPARATIVA
+
+# USER INTERACTION WITH LIKES
 @api.route('/likes/<int:post_id>/<like_user_id>/', methods=['POST'])
 @jwt_required()
-def generate_likes(post_id):
+def generate_likes(post_id, like_user_id):
     user_id = get_jwt_identity()
-    like_user = Likes.query.filter(Likes.user_id == like_user_id).first()
-    post = Post.query.filter(Post.id  == post_id).filter(Post.user_id == user_id).first()
-    generate_like = Likes(post_id = post_id, like_user = like_user)
+    like_user = User.query.filter(User.id == like_user_id).first() 
+    post = Post.query.filter(Post.id  == post_id).first()
+    likes_verificator = Likes.query.filter(Likes.like_user_id == like_user_id).filter(Likes.post_id == post_id).first()
+    generate_like = Likes(post_id = post_id, like_user_id = like_user_id) # un like_user_id es el de la ruta el otro es el de la tabla de likes para igualarlos
 
+    if not like_user is None:
 
-    if not post is None:
+        if not post is None:
 
-        db.session.add(generate_like)
-        db.session.commit()
+            if likes_verificator is None:
+
+                db.session.add(generate_like)
+                db.session.commit()
+
+                return jsonify({
+                    "success":"like has been generated successfully"
+                }), 201
+
+            return jsonify({
+                "msg":"this user has already generated as in this post"
+            })
 
         return jsonify({
-            "success":"like has been generated successfully"
-        }), 201
+            "msg":"post doesn't exists"
+        }), 404
 
     return jsonify({
         "msg":"login for generate like"
-    }), 404
-
+    })
 
 # REMOVE LIKES IN POST
 @api.route('/likes/<int:user_like_id>/<post_id>/', methods=['DELETE'])
@@ -250,7 +261,7 @@ def remove_likes(user_like_id, post_id):
 
 
 
-# ALL LIKES
+# GET ALL LIKES
 @api.route('/likes/', methods=['GET'])
 def likes():
     likes = Likes.query.filter(Likes.__tablename__ == "likes").all()

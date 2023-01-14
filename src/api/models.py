@@ -140,19 +140,22 @@ class Post(db.Model):
 class Likes(db.Model):
     __tablename__ = "likes"
     id = db.Column(db.Integer, primary_key=True)
+    like_user_id = db.Column(db.Integer, nullable=False, unique=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=True)
     post = db.relationship(Post)
 
     def __repr__(self):
-        return f'<Likes {self.id}>'
+        return f'<Likes id: {self.id}>'
 
     def serialize(self):
+        like_user = User.query.filter(User.id == self.like_user_id).first() 
         return {
             "post_id": self.post_id,
             "user_post_id": self.post.user_id,
             "post_content": self.post.text,
-            "user_post_name": self.post.user.name,
-            "like_user_id": self.like_user_id
+            "user_post_name": f'{self.post.user.name} {self.post.user.surname}',
+            "like_user_id": self.like_user_id,
+            "like_user_name": f'{like_user.name} {like_user.surname}'
         }
 
 class Comments(db.Model):
