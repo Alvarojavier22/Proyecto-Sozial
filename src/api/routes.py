@@ -40,35 +40,52 @@ def delete_user(user_id):
 
 
 # DELETE POST ########## VALIDAR ESTA CONDICIÓN PARA QUE EL UNICO QUE PUBLICA EL POST PUEDA ELIMINARLO
-@api.route('delete/posts/<user_id>/<int:post_id>/', methods=['DELETE'])
-def delete_post(user_id, post_id):
-    user = User.query.filter(User.id == user_id).first()
-    post = Post.query.filter(Post.id == post_id).first()
+@api.route('delete/posts/<int:post_id>/', methods=['DELETE'])
+@jwt_required()
+def delete_post(post_id):
+    user_id = get_jwt_identity()
+    post = Post.query.filter(Post.id == post_id).filter(Post.user_id == user_id).first()
 
-    if not user is None:
-
-        if not post is None:
-
-            if post.user_id == user_id:  #### ESTA VALIDACIÓN NO ME QUIERE AGARRAR
-            
-                db.session.delete(post)
-                db.session.commit()
-                
-                return jsonify({
-                    "success":"post has been delete successfully"
-                }), 201
-                
-            return jsonify({
-                "msg":"only the creator of the post can delete it"
-            }), 404
-
+    if not post is None:
+        
+        db.session.delete(post)
+        db.session.commit()
+        
         return jsonify({
-            "msg":"post doesn't exists"
-        }), 404
-
+            "success":"post has been delete successfully"
+        }), 201
+            
     return jsonify({
-        "msg":"this user doesn't exists"
+        "msg":"post doesn't exists"
     }), 404
+    
+    
+# ADMIN LOGIN
+@api.route('/admin/login/',  methods=['POST'])
+def admin_login():
+    email=request.json.get('email')
+    password=request.json.get('password')
+    user=User.query.filter(User.email==email).first()
+    # No encuentro Usuario
+
+    if user == None:
+        return jsonify({
+            "msg":"invalid login"
+        }), 401
+
+# PASSWORDS VALIDATION
+    if cripto.check_password_hash(user.password, password):
+    # if user.password==password:
+        # adittional_claims lo que hacer es agregar información adicional al access tokken, se puede mirar en jwt.io
+        # validar la posibilidad de que pueda crearse un perfil de admin
+        access_token=create_access_token(identity=user.id, additional_claims={"role":"admin"})
+        refresh_token=create_refresh_token(identity=user.id)
+        return jsonify({
+            "token":access_token,
+            "refresh":refresh_token,
+            "role":"admin"
+        }), 200
+
 
 # LOGIN
 @api.route('/login/',  methods=['POST'])
@@ -105,9 +122,11 @@ def user_login():
 
 # CHANGE PASSWORD
 @api.route('/user/change_password/', methods=['PUT'])
+@jwt_required()
 def change_password():
     email = request.json.get("email")
     password = request.json.get("password")
+    password = cripto.generate_password_hash(password).decode("utf-8")
     user = User.query.filter(User.email == email).first()
 
     if not user is None:
@@ -121,7 +140,7 @@ def change_password():
         }), 201
 
     return jsonify({
-        "msg":"this user doesn't exists"
+        "msg":"this is not your user"
     }), 404
 
 
