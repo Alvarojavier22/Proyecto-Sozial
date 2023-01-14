@@ -235,29 +235,38 @@ def generate_likes(post_id, like_user_id):
     })
 
 # REMOVE LIKES IN POST
-@api.route('/likes/<int:user_like_id>/<post_id>/', methods=['DELETE'])
-def remove_likes(user_like_id, post_id):
-    user = User.query.filter(User.id == user_like_id).first()
-    like = Likes.query.filter(Likes.like_user_id == user_like_id).first()
+@api.route('/likes/<post_id>/<int:like_user_id>/', methods=['DELETE'])
+@jwt_required()
+def remove_likes(post_id, like_user_id):
+    user_id = get_jwt_identity()
+    like_user = User.query.filter(User.id == user_id).first()
+    post = Post.query.filter(Post.id == post_id).first()
+    likes_verificator = Likes.query.filter(Likes.post_id == post_id).filter(Likes.like_user_id == like_user_id).first()
 
-    if not user is None:
+    if not like_user is None:
 
-        if not like is None:
+        if not post is None:
 
-            db.session.delete(like) 
-            db.session.commit()
+            if not likes_verificator is None:
+
+                db.session.delete(likes_verificator) 
+                db.session.commit()
+
+                return jsonify({
+                    "success":"like has been remove successfully"
+                }), 201
 
             return jsonify({
-                "success":"like has been remove successfully"
-            }), 201
+                "msg":"this like doesn't exists"
+            }), 404
 
         return jsonify({
-            "msg":"this like doesn't exists"
+            "msg":"this post doesn't exists"
         }), 404
 
     return jsonify({
-        "msg":"this user doesn't exists"
-    }), 404
+        "msg":"login for dislike post"
+    })
 
 
 
