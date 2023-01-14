@@ -4,6 +4,19 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 export const Login=()=>{
 const [loginPassHide, setLoginPassHide]=useState(true)
+
+	let validate = {
+		username: "i",
+		password: ""
+	}
+	const validate_login=()=>{
+		if(validate.username == ""){
+			alert("hola")
+		}else{
+			return true
+		}
+	}
+	
     return(
         <div className="container" id="container">
 	<div className="screen">
@@ -18,7 +31,7 @@ const [loginPassHide, setLoginPassHide]=useState(true)
 					<input type={`${ loginPassHide==true? "password": "text"}`} className="login__input" placeholder="Password"/>
 					<i className={`far fa-eye${ loginPassHide==true? "": "-slash"} `} onClick={()=>loginPassHide==true?setLoginPassHide(false):setLoginPassHide(true)} id="togglePassword" style={{"marginLeft": "-30px", "cursor": "pointer"}}></i>
 				</div>
-				<Link to="/home" id="linklogin"><button className="button login__submit">
+				<Link to="/home" id="linklogin"><button onClick={validate_login()} className="button login__submit">
 					<span className="button__text">Log In Now</span>
 					<i className="button__icon fas fa-chevron-right"></i>
 				</button>	</Link>			
@@ -33,6 +46,7 @@ const [loginPassHide, setLoginPassHide]=useState(true)
 		<div className="screen__background">
 			<span className="screen__background__shape screen__background__shape1"></span>
 		</div>		
+		
 	</div>
 </div>
     )

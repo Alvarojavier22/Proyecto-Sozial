@@ -3,6 +3,7 @@
 
 #container {
 	background: linear-gradient(90deg, #e4c5f4, #b76bcc);		
+	
 }
 
 #container {
@@ -257,10 +258,12 @@
 
 #container_signup{
 	background: linear-gradient(90deg, #8c8c8c, #f3f3f3 );
+
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	min-height: 100vh;
+	
 }
 .signup{
 	background: linear-gradient(90deg, #8e4e8e, #ad78b8);		
@@ -269,6 +272,8 @@
 	width: 360px;	
 	box-shadow: 0px 0px 24px #7c5696;
 	border-radius: 5px;
+	
+	
 }
 .signup-content{
 	z-index: 1;
