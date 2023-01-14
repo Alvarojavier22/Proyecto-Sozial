@@ -437,7 +437,7 @@ def post(user_id):
     }), 404
 
 
-# ALL FAVORITES LIST
+# ALL FAVORITES LIST ## SOLO PARA VERIFICAR AUNQUE PUEDE SER FUNCIÓN ADMIN
 @api.route('/favorites/', methods=['GET'])
 def favorites():
     favorites = Favorites.query.filter(Favorites.__tablename__ == "favorites").all()
@@ -456,15 +456,18 @@ def favorites():
         "msg":"doesn't exists any product like favorite"
     }), 404
 
+
 # FAVORITES BY USER
 @api.route('/favorites/<int:user_id>/', methods=['GET'])
+@jwt_required()
 def user_favorites(user_id):
+    jwt_user_id = get_jwt_identity()
     user = User.query.filter(User.id == user_id).first()
     favorites = Favorites.query.filter(Favorites.user_id == user_id).all()
 
     user_favorites = []
 
-    if not user is None:
+    if not user is None and user_id == jwt_user_id:
 
         if len(favorites) > 0:
 
@@ -480,7 +483,7 @@ def user_favorites(user_id):
         }), 404
 
     return jsonify({
-        "msg":"this user doesn't exists"
+        "msg":"log in to see your favorites list"
     }), 404
 
 
