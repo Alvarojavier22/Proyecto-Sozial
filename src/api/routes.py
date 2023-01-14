@@ -491,13 +491,15 @@ def user_favorites(user_id):
 
 # ADD PRODUCT TO FAVORITE LIST
 @api.route('/favorites/add/<int:user_id>/<int:product_id>/', methods=['POST'])
+@jwt_required()
 def add_favorites(user_id, product_id):
+    jwt_user_id = get_jwt_identity()
     user = User.query.filter(User.id == user_id).first()
     product = Products.query.filter(Products.id == product_id).first()
     favorite_id = Favorites.query.filter(Favorites.product_id == product_id).first() # PARA VALIDAR QUE EL PRODUCTO NO SE ENCUENTRA YA COMO FAVORITO
     add_favorites = Favorites(user_id = user_id, product_id = product_id)
 
-    if not user is None:
+    if not user is None and user_id == jwt_user_id:
 
         if not product is None and product.avaliable == True:
 
@@ -519,7 +521,7 @@ def add_favorites(user_id, product_id):
         }), 404
 
     return jsonify({
-        "msg":"user doesn't exists"
+        "msg":"log in to be able to add to favorites"
     }), 404
 
 
