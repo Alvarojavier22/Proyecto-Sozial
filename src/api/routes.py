@@ -203,7 +203,7 @@ def users():
 @api.route('/likes/<int:post_id>/<like_user_id>/', methods=['POST'])
 @jwt_required()
 def generate_likes(post_id, like_user_id):
-    user_id = get_jwt_identity()
+    # user_id = get_jwt_identity()
     like_user = User.query.filter(User.id == like_user_id).first() 
     post = Post.query.filter(Post.id  == post_id).first()
     likes_verificator = Likes.query.filter(Likes.like_user_id == like_user_id).filter(Likes.post_id == post_id).first()
@@ -238,8 +238,8 @@ def generate_likes(post_id, like_user_id):
 @api.route('/likes/<post_id>/<int:like_user_id>/', methods=['DELETE'])
 @jwt_required()
 def remove_likes(post_id, like_user_id):
-    user_id = get_jwt_identity()
-    like_user = User.query.filter(User.id == user_id).first()
+    # user_id = get_jwt_identity()
+    like_user = User.query.filter(User.id == like_user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
     likes_verificator = Likes.query.filter(Likes.post_id == post_id).filter(Likes.like_user_id == like_user_id).first()
 
@@ -270,7 +270,7 @@ def remove_likes(post_id, like_user_id):
 
 
 
-# GET ALL LIKES
+# GET ALL LIKES ### ACOMODAR PARA ADMIN SOLAMENTE
 @api.route('/likes/', methods=['GET'])
 def likes():
     likes = Likes.query.filter(Likes.__tablename__ == "likes").all()
@@ -290,7 +290,7 @@ def likes():
         "msg":"No have any like"
     }), 404
 
-# LIKES BY POSTS
+# LIKES BY POSTS ## NO NECESITA DE JWT PARA QUE TODOS LOS USUARIOS OGEADOS Y NO, PUEDAN MIRAR LAS PUBLICACIONES CON SUS LIKES
 @api.route('/likes/<int:post_id>/')
 def likes_by_posts(post_id):
     likes = Likes.query.filter(Likes.post_id == post_id).all()
@@ -310,10 +310,12 @@ def likes_by_posts(post_id):
 
 
 # USER INTERACTION WITH COMMENTS
-@api.route('/comments/<int:comment_user_id>/<int:post_id>/', methods=['POST'])
+@api.route('/comments/<int:post_id>/<int:comment_user_id>/', methods=['POST'])
+@jwt_required()
 def post_comments(comment_user_id, post_id):
+    # user_id = get_jwt_identity()
+    comment_user = User.query.filter(User.id == comment_user_id).first()
     comment = request.json.get("comment")
-    # comment_user_id = request.json.get("comment_user_id")
     generate_comment = Comments(comment = comment, post_id = post_id, comment_user_id = comment_user_id)
     user = User.query.filter(User.id == comment_user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
@@ -321,6 +323,7 @@ def post_comments(comment_user_id, post_id):
     if not user is None:
 
         if not post is None:
+
             db.session.add(generate_comment)
             db.session.commit()
 
@@ -333,7 +336,7 @@ def post_comments(comment_user_id, post_id):
         }), 404
     
     return jsonify({
-        "msg":"this user doesn't exists to generate comments"
+        "msg":"login for to generate comments"
     }), 404
 
 # ALL COMMENTS
