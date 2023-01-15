@@ -39,7 +39,11 @@ def delete_user(user_id):
 
 
 
+desarrollo
 # DELETE POST
+
+# DELETE POST ########## VALIDAR ESTA CONDICIÓN PARA QUE EL UNICO QUE PUBLICA EL POST PUEDA ELIMINARLO
+ main
 @api.route('delete/posts/<int:post_id>/', methods=['DELETE'])
 @jwt_required()
 def delete_post(post_id):
@@ -56,11 +60,19 @@ def delete_post(post_id):
         }), 201
             
     return jsonify({
+ desarrollo
         "msg":"post doesn't exists in this user"
     }), 404
     
     
 # ADMIN LOGIN # VALIDAR SI SE PUEDE HACER ASÍ PARA QUE EL LOGIN SE GENERE CON EL ROL ADMIN
+
+       
+    }), 404
+    
+    
+# ADMIN LOGIN
+ main
 @api.route('/admin/login/',  methods=['POST'])
 def admin_login():
     email=request.json.get('email')
@@ -72,6 +84,7 @@ def admin_login():
         return jsonify({
             "msg":"invalid login"
         }), 401
+ desarrollo
 
 # PASSWORDS VALIDATION
     if cripto.check_password_hash(user.password, password):
@@ -85,6 +98,9 @@ def admin_login():
             "refresh":refresh_token,
             "role":"admin"
         }), 200
+
+
+main
 
 
 # LOGIN USER
