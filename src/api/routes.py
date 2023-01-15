@@ -989,7 +989,7 @@ def purchased_products():
     }), 404
 
 
-# RODUCTS THAT HAS BEEN PURCHASED BY USER
+# PRODUCTS THAT HAS BEEN PURCHASED BY USER
 @api.route('/purchased_products/<int:user_id>/', methods=['GET'])
 @jwt_required()
 def user_purchased_products(user_id):
@@ -1022,12 +1022,14 @@ def user_purchased_products(user_id):
 
 # BUY PRODUCT
 @api.route('/products/buy/<int:user_id>/<int:product_id>/', methods=['POST'])
+@jwt_required()
 def buy_product(user_id, product_id):
+    jwt_user_id = get_jwt_identity()
     user = User.query.filter(User.id == user_id).first()
     product = Products.query.filter(Products.id == product_id).first()
     buy = Buy(user_id = user_id, product_id = product_id)
 
-    if not user is None:
+    if not user is None and user_id == jwt_user_id:
 
         if not product is None:
 
@@ -1043,7 +1045,7 @@ def buy_product(user_id, product_id):
         }), 404
 
     return jsonify({
-        "msg":"this user doesn't exists"
+        "msg":"log in to get products"
     }), 404
 
 
