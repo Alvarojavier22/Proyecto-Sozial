@@ -5,7 +5,7 @@ export const Newpass=()=>{
     const [newPassHide, setNewPassHide]=useState(true)
     const [secNewPassHide, setSecNewPassHide]=useState(true)
     return(
-        <div className="container" id="backnewpass">
+        <div className="container-fluid" id="backnewpass">
             <div className=" container newpass">
                 <form className="passreset">
                     <h1>Reset Password</h1>

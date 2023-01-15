@@ -14,13 +14,9 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 
 
-import firebase_admin
-from firebase_admin import credentials
-
-cred = credentials.Certificate("firebase-credentials.json")
-firebase_admin.initialize_app(cred)
 
 
+desarrollo
 #from models import Person
 
 ENV = os.getenv("FLASK_ENV")

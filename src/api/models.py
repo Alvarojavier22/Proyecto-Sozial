@@ -37,7 +37,7 @@ class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
     seller_id = db.Column(db.Integer, unique=False, nullable=False)
-    name = db.Column(db.String(50), unique=True, nullable=False)
+    name = db.Column(db.String(50), unique=False, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
@@ -142,20 +142,22 @@ class Post(db.Model):
 class Likes(db.Model):
     __tablename__ = "likes"
     id = db.Column(db.Integer, primary_key=True)
-    like_user_id = db.Column(db.Integer(), nullable=False, unique=False)
+    like_user_id = db.Column(db.Integer, nullable=False, unique=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=True)
     post = db.relationship(Post)
 
     def __repr__(self):
-        return f'<Likes {self.id}>'
+        return f'<Likes id: {self.id}>'
 
     def serialize(self):
+        like_user = User.query.filter(User.id == self.like_user_id).first() 
         return {
             "post_id": self.post_id,
             "user_post_id": self.post.user_id,
             "post_content": self.post.text,
-            "user_post_name": self.post.user.name,
-            "like_user_id": self.like_user_id
+            "user_post_name": f'{self.post.user.name} {self.post.user.surname}',
+            "like_user_id": self.like_user_id,
+            "like_user_name": f'{like_user.name} {like_user.surname}'
         }
 
 class Comments(db.Model):
@@ -170,6 +172,7 @@ class Comments(db.Model):
         return f'<Comments {self.id}>'
 
     def serialize(self):
+        user_comment = User.query.filter(User.id == self.comment_user_id).first()
         return {
             "comment_id": self.id,
             "post_id": self.post_id,
@@ -177,7 +180,8 @@ class Comments(db.Model):
             "user_post_id": self.post.user_id,
             "post_content": self.post.text,
             "user_post_name": self.post.user.name+str(" ")+self.post.user.surname,
-            "comment_user_id": self.comment_user_id
+            "comment_user_id": self.comment_user_id,
+            "comment_user_name": f'{user_comment.name} {user_comment.surname}'
         }
 
 class Buy(db.Model):
