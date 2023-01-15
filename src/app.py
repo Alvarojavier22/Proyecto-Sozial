@@ -15,8 +15,6 @@ from api.commands import setup_commands
 
 
 
-
-desarrollo
 #from models import Person
 
 ENV = os.getenv("FLASK_ENV")
