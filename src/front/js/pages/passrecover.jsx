@@ -9,7 +9,7 @@ export const PassRecover=()=>{
   const[buttonPopup, setButtonPopup]= useState(false)
 
     return(
-        <div className="container " id="contsign">
+        <div className="container-fluid " id="contsign">
 
         <form id="formsign" >
           <label htmlFor="forgotten-email" className="forgotemail">Recover your password</label>

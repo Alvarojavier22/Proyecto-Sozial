@@ -9,7 +9,7 @@ const {store, actions}=useContext(Context)
     /*fetch signup */
     const[name,setName]=useState()
     const[surname,setSurName]=useState()
-    const[password,setPassWord]=useState()
+    const[password,setPassWord]=useState("")
     const[email,setEmail]=useState()
     const[is_active, setIs_active]=useState(true)
     let item = {name,surname,password,email,is_active}
@@ -31,12 +31,12 @@ const {store, actions}=useContext(Context)
     console.log(checkinputs(password))
     const[confirmpass,setConfirmPass]=useState()
   
-
+    console.log(actions.signUp.result)
     /*Ocultar/ mostrar contraseñas */
     const [passHide, setPassHide]=useState(true)
     const [confirmPassHide, setConfirmPassHide]=useState(true)
     return(
-        <div className="container" id="container_signup">
+        <div className="container-fluid" id="container_signup">
             <div className="signup">
                 <div className="signup-content">
                     <form  className="signup">
