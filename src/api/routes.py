@@ -715,7 +715,7 @@ def post_user(user_id):
 
 
 
-# CATEGORIES
+# CATEGORIES ## ABIERTAS PARA LOGEADOS Y NO
 @api.route('/products/categories/', methods=['GET'])
 def categories():
     categories = Categories.query.filter(Categories.__tablename__ == "categories").all()
@@ -739,16 +739,18 @@ def categories():
 
 # POST PRODUCTS ####### VALIDAR SI ESTA RELACIÓN ESTÁ BUENA PARA VENDEDOR (MIRAR EL MODEL DE POST)
 @api.route('/products/<int:seller_id>/', methods=['POST'])
+@jwt_required()
 def post_products(seller_id):
     name = request.json.get("name")
     description = request.json.get("description")
     price = request.json.get("price")
     quantity = request.json.get("quantity")
     avaliable = request.json.get("avaliable")
+    user_id = get_jwt_identity()
     post_products = Products(seller_id = seller_id, name = name, description = description, price = price, quantity = quantity, avaliable = avaliable)
     user = User.query.filter(User.id == seller_id).first()
 
-    if not user is None:
+    if not user is None and seller_id == user_id:
             
         db.session.add(post_products)
         db.session.commit()
@@ -758,11 +760,11 @@ def post_products(seller_id):
         }), 201
 
     return jsonify({
-        "msg":"user doesn't exists"
+        "msg":"log in to post products"
     }), 404
 
 
-# PRODUCTS BY USER
+# PRODUCTS BY USER ### PARA TODOS QUE PUEDAN VER
 @api.route('/products/user/<int:user_id>/', methods=['GET'])
 def user_products(user_id):
     user = User.query.filter(User.id == user_id).first()
@@ -794,47 +796,62 @@ def user_products(user_id):
 
 # DEACTIVATE PRODUCTS
 @api.route('/products/deactivate/<int:product_id>/', methods=['PUT'])
+@jwt_required()
 def deactivate_product(product_id):
     product = Products.query.filter(Products.id == product_id).first()
 
-    if product.avaliable == True:
+    if not product is None:
 
-        product.avaliable = False
+        if product.avaliable == True:
 
-        db.session.add(product)
-        db.session.commit()
+            product.avaliable = False
+
+            db.session.add(product)
+            db.session.commit()
+
+            return jsonify({
+                "success":"now the product isn't avaliable"
+            }), 201
 
         return jsonify({
-            "success":"now the product isn't avaliable"
-        }), 201
+            "msg":"this product doesn't is active now"
+        }), 404
 
     return jsonify({
-        "msg":"this product doesn't is active now"
+        "msg":"this product doesn't exists"
     }), 404
 
 
 # ACTIVATE PRODUCTS
 @api.route('/products/activate/<int:product_id>/', methods=['PUT'])
+@jwt_required()
 def activate_product(product_id):
     product = Products.query.filter(Products.id == product_id).first()
 
-    if product.avaliable == False:
+    if not product is None:
 
-        product.avaliable = True
+        if product.avaliable == False:
 
-        db.session.add(product)
-        db.session.commit()
+            product.avaliable = True
+
+            db.session.add(product)
+            db.session.commit()
+
+            return jsonify({
+                "success":"now the product is avaliable"
+            }), 201
 
         return jsonify({
-            "success":"now the product is avaliable"
-        }), 201
+            "msg":"this product doesn't is inactive now"
+        }), 404
 
     return jsonify({
-        "msg":"this product doesn't is inactive now"
+        "msg":"this product doesn't exists"
     }), 404
+
     
 
-# ALL PRODUCTS
+# ALL PRODUCTS ## SOLO PARA VERIFICACIÓN 
 @api.route('/products/', methods=['GET'])
 def products():
     products = Products.query.filter(Products.__tablename__ == "products").all()
@@ -859,7 +876,7 @@ def products():
 
 
 
-# EACH PRODUCT
+# EACH PRODUCT ## LO PUEDEN VER TODOS LOS USARIOS
 @api.route('/products/<int:product_id>/')
 def each_product(product_id):
     product = Products.query.filter(Products.id == product_id).first()
@@ -898,21 +915,28 @@ def delete_products():
 
 # DELETE EACH PRODUCT ################ HACER MEDIANTE PUT LEUGO VALIDAR DONDE SE USE ESE PRODCUT PARA TAMBIEN DESACTIVARLO
 @api.route('/delete/products/<int:product_id>/', methods=['DELETE'])
+@jwt_required()
 def delete_product(product_id):
+    user_id = get_jwt_identity()
     products = Products.query.filter(Products.id == product_id).first()
 
-    if not products is None and products.avaliable == True:
+    if products.seller_id == user_id:
 
+        if not products is None and products.avaliable == True:
 
-        db.session.delete(products)
-        db.session.commit()
+            db.session.delete(products)
+            db.session.commit()
+
+            return jsonify({
+                "success":"The product has been delete successfully"
+            }), 201
 
         return jsonify({
-            "success":"The product has been delete successfully"
-        }), 201
+            "msg":"the product doesn't exists"
+        }), 404
 
     return jsonify({
-        "msg":"the product doesn't exists"
+        "msg":"log in to delete your products"
     }), 404
 
 
@@ -967,13 +991,15 @@ def purchased_products():
 
 # RODUCTS THAT HAS BEEN PURCHASED BY USER
 @api.route('/purchased_products/<int:user_id>/', methods=['GET'])
+@jwt_required()
 def user_purchased_products(user_id):
+    jwt_user_id = get_jwt_identity()
     user = User.query.filter(User.id == user_id).first()
     user_purchased_products = Buy.query.filter(Buy.user_id == user_id).all()
 
     user_products = []
 
-    if not user is None:
+    if not user is None and jwt_user_id == user_id:
 
         if len(user_purchased_products) > 0:
 
@@ -990,7 +1016,7 @@ def user_purchased_products(user_id):
         })
 
     return jsonify({
-        "msg":"this user doesn't exists"
+        "msg":"log in to see your purchased products"
     }), 404
 
 
