@@ -16,9 +16,11 @@ const [loginPassHide, setLoginPassHide]=useState(true)
 			return true
 		}
 	}
+
+	
 	
     return(
-        <div className="container" id="container">
+        <div className="container-fluid" id="container">
 	<div className="screen">
 		<div className="screen__content">
 			<form className="login">
