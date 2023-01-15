@@ -18,6 +18,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+
+
+			signUp: async (user)=>{
+				let result=await fetch(`${apiUrl}/api/signup`,{
+					method: "POST",
+					body: JSON.stringify(user),
+					headers:{
+						"Content-Type": "application/json"
+					}
+				})
+				result= await result.json()
+				console.log("result", result)
+			},
+
+
+
+
+
+
+
+
+
+
+
+
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
@@ -34,7 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}catch(error){
 					console.log("Error loading message from backend", error)
 				}
-				console.log(process.env.BACKEND_URL)
+				//console.log(process.env.BACKEND_URL)
 			},
 			changeColor: (index, color) => {
 				//get the store

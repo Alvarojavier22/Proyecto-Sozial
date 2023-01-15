@@ -10,6 +10,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(280), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    profile_picture_id=db.Column(db.Integer, db.ForeignKey("imagen.id"))
+    profile_picture=db.relationship("Imagen")
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -207,3 +209,9 @@ class TokenBlocklist(db.Model):
     jti = db.Column(db.String(36), nullable=False, index=True)
     created_at = db.Column(db.DateTime, nullable=False)
 
+
+class Imagen(db.Model):
+    __tablename__ = "imagen"
+    id=db.Column(db.Integer, primary_key=True)
+    resource_path=db.Column(db.String(250), unique=True, nullable=False)
+    description=db.column(db.String(200))
