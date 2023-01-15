@@ -77,9 +77,6 @@ database.database
 database.db
 diagram.png
 __pycache__/
- desarrollo
 
 
-
- main
 firebase-credentials.json

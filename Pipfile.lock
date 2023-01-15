@@ -1,9 +1,7 @@
 {
     "_meta": {
         "hash": {
-alejandro
             "sha256": "a9a16813b69b74983c3d294da7f197acd014e39875fd15836499ae54fed44504"
-
         },
         "pipfile-spec": 6,
         "requires": {
@@ -182,7 +180,7 @@ alejandro
             "hashes": [
                 "sha256:f52a1f5eb2c6820f13aa01c109caa5937ad3fd6caf5967817d0ef6c113403afc"
 
-        },
+        ]},
         "flask": {
             "hashes": [
                 "sha256:642c450d19c4ad482f96729bd2a8f6d32554aa1e231f4f6b4e7e5264b16cca2b",
@@ -525,7 +523,6 @@ alejandro
             "index": "pypi",
             "version": "==20.1.0"
         },
- desarrollo
         "idna": {
             "hashes": [
                 "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4",
@@ -890,7 +887,6 @@ alejandro
             "markers": "python_version >= '3.7' and python_version < '4'",
             "version": "==2.28.2"
         },
- desarrollo
         "setuptools": {
             "hashes": [
                 "sha256:4d3c92fac8f1118bb77a22181355e29c239cabfe2b9effdaa665c66b711136d7",
