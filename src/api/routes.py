@@ -43,7 +43,7 @@ desarrollo
 # DELETE POST
 
 # DELETE POST ########## VALIDAR ESTA CONDICIÓN PARA QUE EL UNICO QUE PUBLICA EL POST PUEDA ELIMINARLO
-main
+ main
 @api.route('delete/posts/<int:post_id>/', methods=['DELETE'])
 @jwt_required()
 def delete_post(post_id):
@@ -60,16 +60,19 @@ def delete_post(post_id):
         }), 201
             
     return jsonify({
- desarrollo,
-            "msg": "post doesn't exists in this user"}), 404
+ desarrollo
+        "msg":"post doesn't exists in this user"
+    }), 404
     
     
 # ADMIN LOGIN # VALIDAR SI SE PUEDE HACER ASÍ PARA QUE EL LOGIN SE GENERE CON EL ROL ADMIN
 
+       
+    }), 404
     
     
 # ADMIN LOGIN
-main
+ main
 @api.route('/admin/login/',  methods=['POST'])
 def admin_login():
     email=request.json.get('email')
@@ -81,16 +84,16 @@ def admin_login():
         return jsonify({
             "msg":"invalid login"
         }), 401
-desarrollo
+ desarrollo
 
 # PASSWORDS VALIDATION
-if cripto.check_password_hash(user.password, password):
+    if cripto.check_password_hash(user.password, password):
     # if user.password==password:
         # adittional_claims lo que hacer es agregar información adicional al access tokken, se puede mirar en jwt.io
         # validar la posibilidad de que pueda crearse un perfil de admin
         access_token=create_access_token(identity=user.id, additional_claims={"role":"admin"})
         refresh_token=create_refresh_token(identity=user.id)
-            return jsonify({
+        return jsonify({
             "token":access_token,
             "refresh":refresh_token,
             "role":"admin"
