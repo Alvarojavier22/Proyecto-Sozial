@@ -43,6 +43,7 @@ class Products(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     avaliable = db.Column(db.Boolean(), unique=False, nullable=False)
     categorie_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    
 
     
 
@@ -214,4 +215,4 @@ class Imagen(db.Model):
     __tablename__ = "imagen"
     id=db.Column(db.Integer, primary_key=True)
     resource_path=db.Column(db.String(250), unique=True, nullable=False)
-    description=db.column(db.String(200))
+    description=db.Column(db.String(200))
