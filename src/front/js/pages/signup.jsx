@@ -1,11 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import swal from "sweetalert"
 export const SignUp=()=>{
 
 const {store, actions}=useContext(Context)
+
+
+    /* prueba animacion de pagina*/ 
+    useEffect(() => {
+        const overlay = document.querySelector('.overlay');
+        overlay.classList.add('show');
+        setTimeout(() => {
+          overlay.classList.remove('show');
+        }, 500);
+      }, []);
+
     /*fetch signup */
     const[name,setName]=useState()
     const[surname,setSurName]=useState()
@@ -36,7 +47,7 @@ const {store, actions}=useContext(Context)
     const [passHide, setPassHide]=useState(true)
     const [confirmPassHide, setConfirmPassHide]=useState(true)
     return(
-        <div className="container-fluid" id="container_signup">
+        <div className="container-fluid overlay" id="container_signup">
             <div className="signup">
                 <div className="signup-content">
                     <form  className="signup">
