@@ -152,9 +152,8 @@ def change_password():
 @api.route("/userdata/", methods=["GET"])
 @jwt_required()  # automaticamente protege la ruta la cual se le indique
 def user_data_protected():
-    user_id = (
-        get_jwt_identity()
-    )  # me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
+    user_id = (get_jwt_identity())
+      # me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
     # con este id solo se accede a la información de ese usuario y de más nadie
     user = User.query.get(user_id)
 
@@ -164,6 +163,7 @@ def user_data_protected():
             "is_active": user.is_active,
             "user_email": user.email,
             "user_name": user.name + str(" ") + user.surname,
+            "profile_pic": user.profile_picture.image_url(),
             # aqui se trae la información del rol de cliente
             "role": get_jwt()["role"],
             "msg": "valid token",
@@ -937,8 +937,8 @@ def uploadPhoto():
         resource.upload_from_filename(temp.name, content_type="image/" + extension)
 
     # Guardar imagen en DB si ya no existe
-        if Imagen.query.filter(resource_path=filename).get() is None:
-            new_image=Imagen(resource_path=filename, description= "Profile photo of user" + user_id)
+        if Imagen.query.filter(Imagen.resource_path==filename).first() is None:
+            new_image=Imagen(resource_path=filename, description= "Profile photo of user" + str(user_id))
             db.session.add(new_image)
             # Procesar las operaciones en la DB y la mantiene abierta para permitir mas operaciones.
             db.session.flush()

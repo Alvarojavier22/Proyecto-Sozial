@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from firebase_admin import storage
+import datetime
 
 db = SQLAlchemy()
 
@@ -217,3 +219,20 @@ class Imagen(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     resource_path=db.Column(db.String(250), unique=True, nullable=False)
     description=db.column(db.String(200))
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "resource_path": self.resource_path,
+            "desciption": self.description,
+        }
+
+    def image_url(self):
+        bucket=storage.bucket(name="sozial-21faf.appspot.com")
+        resource=bucket.blob(self.resource_path)
+        signed_url=resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=15), methods=["GET"])
+        return{
+            "id": self.id,
+            "resource_path": self.resource_path,
+            "signed_url": signed_url
+        }
