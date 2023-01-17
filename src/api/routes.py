@@ -14,6 +14,7 @@ from api.models import (
     Favorites,
     Buy,
     TokenBlocklist,
+    Imagen,
 )
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import (
@@ -151,9 +152,8 @@ def change_password():
 @api.route("/userdata/", methods=["GET"])
 @jwt_required()  # automaticamente protege la ruta la cual se le indique
 def user_data_protected():
-    user_id = (
-        get_jwt_identity()
-    )  # me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
+    user_id = (get_jwt_identity())
+      # me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
     # con este id solo se accede a la información de ese usuario y de más nadie
     user = User.query.get(user_id)
 
@@ -163,6 +163,7 @@ def user_data_protected():
             "is_active": user.is_active,
             "user_email": user.email,
             "user_name": user.name + str(" ") + user.surname,
+            "profile_pic": user.profile_picture.image_url(),
             # aqui se trae la información del rol de cliente
             "role": get_jwt()["role"],
             "msg": "valid token",
@@ -906,3 +907,47 @@ def buy_product(user_id, product_id):
         return jsonify({"msg": "this product doesn't exists"}), 404
 
     return jsonify({"msg": "log in to get products"}), 404
+
+@api.route("/uploadPhoto", methods=["POST"])
+@jwt_required()
+def uploadPhoto():
+
+    # Buscamos el usuario en la Db partiendo desde el token
+        user_id=get_jwt_identity()
+        user=User.query.get(user_id)
+        if user is None:
+            return "User not found", 403
+
+    # peticion ala rchivo
+        file=request.files['profilePic']
+    # Extension del archivo
+        extension=file.filename.split(".")[1]
+    # Se genera el nombre del archivo con el id de la imagen y la extension
+        filename="profiles/" + str(user_id) + "." + extension
+        # Guardar el archivo temporalmente
+        temp=tempfile.NamedTemporaryFile(delete=False)
+        file.save(temp.name)
+        # Subir archivo a firebase
+        # Llamar a bucket
+        bucket=storage.bucket(name="sozial-21faf.appspot.com")
+        # Referencia al espacio en bucket
+        resource=bucket.blob(filename)
+        # Se sube el archivo temporal al bucket
+        # Se debe especificar el tipo de contenido dependiendo de la extension
+        resource.upload_from_filename(temp.name, content_type="image/" + extension)
+
+    # Guardar imagen en DB si ya no existe
+        if Imagen.query.filter(Imagen.resource_path==filename).first() is None:
+            new_image=Imagen(resource_path=filename, description= "Profile photo of user" + str(user_id))
+            db.session.add(new_image)
+            # Procesar las operaciones en la DB y la mantiene abierta para permitir mas operaciones.
+            db.session.flush()
+
+
+        # Atualizar el campo de la foto
+        user.profile_picture_id=new_image.id
+        # Se crea el registro en la DB
+        db.sesion.add(user)
+        db.sessioncommit()
+
+        return "OK", 200
