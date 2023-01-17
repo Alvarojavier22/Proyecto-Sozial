@@ -10,8 +10,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(280), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    picture_id=db.Column(db.Integer, db.ForeignKey("imagen.id"))
-    picture=db.relationship("Imagen")
+    profile_picture_id=db.Column(db.Integer, db.ForeignKey("imagen.id"))
+    profile_picture=db.relationship("Imagen")
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -43,6 +43,8 @@ class Products(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     avaliable = db.Column(db.Boolean(), unique=False, nullable=False)
     categorie_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    picture_id=db.Column(db.Integer, db.ForeignKey("imagen.id"))
+    picture=db.relationship("Imagen")
 
     
 

@@ -14,6 +14,7 @@ from api.models import (
     Favorites,
     Buy,
     TokenBlocklist,
+    Imagen,
 )
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import (
@@ -906,3 +907,47 @@ def buy_product(user_id, product_id):
         return jsonify({"msg": "this product doesn't exists"}), 404
 
     return jsonify({"msg": "log in to get products"}), 404
+
+@api.route("/uploadPhoto", methods=["POST"])
+@jwt_required()
+def uploadPhoto():
+
+    # Buscamos el usuario en la Db partiendo desde el token
+        user_id=get_jwt_identity()
+        user=User.query.get(user_id)
+        if user is None:
+            return "User not found", 403
+
+    # peticion ala rchivo
+        file=request.files['profilePic']
+    # Extension del archivo
+        extension=file.filename.split(".")[1]
+    # Se genera el nombre del archivo con el id de la imagen y la extension
+        filename="profiles/" + str(user_id) + "." + extension
+        # Guardar el archivo temporalmente
+        temp=tempfile.NamedTemporaryFile(delete=False)
+        file.save(temp.name)
+        # Subir archivo a firebase
+        # Llamar a bucket
+        bucket=storage.bucket(name="sozial-21faf.appspot.com")
+        # Referencia al espacio en bucket
+        resource=bucket.blob(filename)
+        # Se sube el archivo temporal al bucket
+        # Se debe especificar el tipo de contenido dependiendo de la extension
+        resource.upload_from_filename(temp.name, content_type="image/" + extension)
+
+    # Guardar imagen en DB si ya no existe
+        if Imagen.query.filter(resource_path=filename).get() is None:
+            new_image=Imagen(resource_path=filename, description= "Profile photo of user" + user_id)
+            db.session.add(new_image)
+            # Procesar las operaciones en la DB y la mantiene abierta para permitir mas operaciones.
+            db.session.flush()
+
+
+        # Atualizar el campo de la foto
+        user.profile_picture_id=new_image.id
+        # Se crea el registro en la DB
+        db.sesion.add(user)
+        db.sessioncommit()
+
+        return "OK", 200
