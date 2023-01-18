@@ -6,7 +6,7 @@ export const Login=()=>{
 const [loginPassHide, setLoginPassHide]=useState(true)
 
 	let validate = {
-		username: "i",
+		username: "",
 		password: ""
 	}
 	const validate_login=()=>{
@@ -33,7 +33,7 @@ const [loginPassHide, setLoginPassHide]=useState(true)
 					<input type={`${ loginPassHide==true? "password": "text"}`} className="login__input" placeholder="Password"/>
 					<i className={`far fa-eye${ loginPassHide==true? "": "-slash"} `} onClick={()=>loginPassHide==true?setLoginPassHide(false):setLoginPassHide(true)} id="togglePassword" style={{"marginLeft": "-30px", "cursor": "pointer"}}></i>
 				</div>
-				<Link to="/home" id="linklogin"><button onClick={validate_login()} className="button login__submit">
+				<Link to="/feed" id="linklogin"><button /*onClick={validate_login()}*/ className="button login__submit">
 					<span className="button__text">Log In Now</span>
 					<i className="button__icon fas fa-chevron-right"></i>
 				</button>	</Link>			

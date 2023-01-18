@@ -26,7 +26,7 @@ const {store, actions}=useContext(Context)
     let item = {name,surname,password,email,is_active}
 
     
-    console.log(password)
+   
 
     const mostrar_alerta=()=>{
         return swal({
@@ -37,12 +37,12 @@ const {store, actions}=useContext(Context)
     }
     const checkinputs=(thing)=>{
         return thing ===""
-        console.log(thing)
+        
     }
-    console.log(checkinputs(password))
+    
     const[confirmpass,setConfirmPass]=useState()
   
-    console.log(actions.signUp.result)
+    
     /*Ocultar/ mostrar contraseñas */
     const [passHide, setPassHide]=useState(true)
     const [confirmPassHide, setConfirmPassHide]=useState(true)
@@ -75,7 +75,7 @@ const {store, actions}=useContext(Context)
                             
                             
                             <div className="signbtn">
-                                <Link to={`${password==confirmpass?"/home":"#"}`}><button onClick={checkinputs(password)==false?()=>(actions.signUp(item)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
+                                <Link to={`${password==confirmpass?"/":"#"}`}><button onClick={checkinputs(password)==false?()=>(actions.signUp(item)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
 
                             </div>
                     </form>
