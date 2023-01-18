@@ -129,7 +129,7 @@ class Post(db.Model):
     # date = db.Column(db.datetime(), default=datetime.now()) # mirar como colocar la fecha para los posts
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship(User)
-    likes = db.relationship('Likes', backref='Post', lazy=True)
+    #likes = db.relationship('Likes', backref='Post', lazy=True)
 
     def __repr__(self):
         return f'<Post {self.id}>'
@@ -146,9 +146,10 @@ class Post(db.Model):
 class Likes(db.Model):
     __tablename__ = "likes"
     id = db.Column(db.Integer, primary_key=True)
-    like_user_id = db.Column(db.Integer, nullable=False, unique=False)
+    like_user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+    like_user = db.relationship(User)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=True)
-    post = db.relationship(Post)
+    post = db.relationship(Post)#backref='likes', lazy=True
 
     def __repr__(self):
         return f'<Likes id: {self.id}>'
