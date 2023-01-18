@@ -597,7 +597,7 @@ phone: 480px,     sm
 
 @media (min-width:992px){
 	.cart{
-		top: 2rem;
+		top: 1.3rem;
 		background: linear-gradient(0.8turn, #24446c, #5a56b1, #24446c) ;
 	}
 	.products img{
@@ -634,11 +634,31 @@ phone: 480px,     sm
 		right: 30%;
 		bottom: 3%;
 		font-size: 1.7rem;
+		transition: .2s ease;
+	}
+	
+	.checkout:hover{
+		font-size: 1.8rem;
+		box-shadow: 0 0 4rem #5C5696;
 	}
 	.arrow{
 		left: 30%;
 		bottom: 3%;
 		font-size: 1.7rem;
 		background-color: #24446c;
+		transition: .2s ease-in-out;
+	}
+
+	.arrow:hover{
+		font-size: 1.8rem;
+		box-shadow: 0 0 4rem #5C5696;
+	}
+	.cancelbuy{
+		transition: .1s ease;
+		
+	}
+	.cancelbuy:hover{
+		background-color: rgb(206, 54, 54);
+		box-shadow: 0 0 12px rgb(253, 3, 3);
 	}
 }
