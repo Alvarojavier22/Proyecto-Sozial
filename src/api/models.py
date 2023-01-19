@@ -4,6 +4,7 @@ import datetime
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
@@ -12,8 +13,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(280), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    profile_picture_id=db.Column(db.Integer, db.ForeignKey("imagen.id"))
-    profile_picture=db.relationship("Imagen")
+    profile_picture_id = db.Column(db.Integer, db.ForeignKey("imagen.id"))
+    profile_picture = db.relationship("Imagen")
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -21,19 +22,20 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "name":self.name,
-            "surname":self.surname,
-            "email":self.email,
-            "is_active":self.is_active,
-            "password":self.password #para las pruebas del cambio de clave
+            "name": self.name,
+            "surname": self.surname,
+            "email": self.email,
+            "is_active": self.is_active,
+            "password": self.password  # para las pruebas del cambio de clave
         }
-        
+
     # para solo traer información específica
     def serialize_cart(self):
         return {
             "user_id": self.id,
-            "name":self.name+str(" ")+self.surname
+            "name": self.name+str(" ")+self.surname
         }
+
 
 class Products(db.Model):
     __tablename__ = "products"
@@ -45,10 +47,10 @@ class Products(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     avaliable = db.Column(db.Boolean(), unique=False, nullable=False)
     categorie_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    picture_id=db.Column(db.Integer, db.ForeignKey("imagen.id"))
-    picture=db.relationship("Imagen")
-
-    
+    picture_id = db.Column(db.Integer, db.ForeignKey("imagen.id"))
+    picture = db.relationship("Imagen")
+    # sell_id=db.Column(db.Integer, db.ForeignKey("user.id"))
+    # seller=db.relationship("user")
 
     def __repr__(self):
         return f'<Products {self.name}>'
@@ -61,16 +63,16 @@ class Products(db.Model):
             "name": self.name,
             "description": self.description,
             "price": self.price,
-            "quantity":self.quantity,
+            "quantity": self.quantity,
             "avaliable": self.avaliable
         }
-        
+
 
 class Categories(db.Model):
     __tablename__ = "categories"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
-    products = db.relationship('Products',backref='categories', lazy=True)
+    products = db.relationship('Products', backref='categories', lazy=True)
 
     def __repr__(self):
         return f'<Categories {self.name}>'
@@ -79,6 +81,7 @@ class Categories(db.Model):
         return {
             "name": self.name
         }
+
 
 class Favorites(db.Model):
     __tablename__ = "favorites"
@@ -94,12 +97,11 @@ class Favorites(db.Model):
     def serialize(self):
         user = User.query.filter(User.id == self.user_id).first()
         return {
-            "favorite_id":self.id,
-            "product_id":self.products.id,
+            "favorite_id": self.id,
+            "product_id": self.products.id,
             "product_name": self.products.name,
             "user": user.serialize_cart()
         }
-        
 
 
 class ShoppingCart(db.Model):
@@ -117,7 +119,7 @@ class ShoppingCart(db.Model):
         user = User.query.filter(User.id == self.user_id).first()
         return {
             "product_id": self.products.id,
-            "product_name":self.products.name,
+            "product_name": self.products.name,
             "user": user.serialize_cart()
         }
 
@@ -154,7 +156,7 @@ class Likes(db.Model):
         return f'<Likes id: {self.id}>'
 
     def serialize(self):
-        like_user = User.query.filter(User.id == self.like_user_id).first() 
+        like_user = User.query.filter(User.id == self.like_user_id).first()
         return {
             "post_id": self.post_id,
             "user_post_id": self.post.user_id,
@@ -163,6 +165,7 @@ class Likes(db.Model):
             "like_user_id": self.like_user_id,
             "like_user_name": f'{like_user.name} {like_user.surname}'
         }
+
 
 class Comments(db.Model):
     __tablename__ = "comments"
@@ -176,17 +179,19 @@ class Comments(db.Model):
         return f'<Comments {self.id}>'
 
     def serialize(self):
-        user_comment = User.query.filter(User.id == self.comment_user_id).first()
+        user_comment = User.query.filter(
+            User.id == self.comment_user_id).first()
         return {
             "comment_id": self.id,
             "post_id": self.post_id,
-            "commet":self.comment,
+            "commet": self.comment,
             "user_post_id": self.post.user_id,
             "post_content": self.post.text,
             "user_post_name": self.post.user.name+str(" ")+self.post.user.surname,
             "comment_user_id": self.comment_user_id,
             "comment_user_name": f'{user_comment.name} {user_comment.surname}'
         }
+
 
 class Buy(db.Model):
     __tablename__ = "buy"
@@ -202,10 +207,9 @@ class Buy(db.Model):
         user = User.query.filter(User.id == self.user_id).first()
         return {
             "product_id": self.products.id,
-            "product_name":self.products.name,
+            "product_name": self.products.name,
             "user": user.serialize_cart()
         }
-
 
 
 class TokenBlocklist(db.Model):
@@ -216,22 +220,23 @@ class TokenBlocklist(db.Model):
 
 class Imagen(db.Model):
     __tablename__ = "imagen"
-    id=db.Column(db.Integer, primary_key=True)
-    resource_path=db.Column(db.String(250), unique=True, nullable=False)
-    description=db.column(db.String(200))
+    id = db.Column(db.Integer, primary_key=True)
+    resource_path = db.Column(db.String(250), unique=True, nullable=False)
+    description = db.column(db.String(200))
 
     def serialize(self):
-        return{
+        return {
             "id": self.id,
             "resource_path": self.resource_path,
             "desciption": self.description,
         }
 
     def image_url(self):
-        bucket=storage.bucket(name="sozial-21faf.appspot.com")
-        resource=bucket.blob(self.resource_path)
-        signed_url=resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=15), methods=["GET"])
-        return{
+        bucket = storage.bucket(name="sozial-21faf.appspot.com")
+        resource = bucket.blob(self.resource_path)
+        signed_url = resource.generate_signed_url(
+            version="v4", expiration=datetime.timedelta(minutes=15), methods=["GET"])
+        return {
             "id": self.id,
             "resource_path": self.resource_path,
             "signed_url": signed_url

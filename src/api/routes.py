@@ -58,7 +58,8 @@ def delete_user(user_id):
 @jwt_required()
 def delete_post(post_id):
     user_id = get_jwt_identity()
-    post = Post.query.filter(Post.id == post_id).filter(Post.user_id == user_id).first()
+    post = Post.query.filter(Post.id == post_id).filter(
+        Post.user_id == user_id).first()
 
     if not post is None:
 
@@ -92,7 +93,8 @@ def admin_login():
         refresh_token = create_refresh_token(identity=user.id)
 
         return (
-            jsonify({"token": access_token, "refresh": refresh_token, "role": "admin"}),
+            jsonify({"token": access_token,
+                    "refresh": refresh_token, "role": "admin"}),
             200,
         )
 
@@ -118,7 +120,8 @@ def user_login():
         )
         refresh_token = create_refresh_token(identity=user.id)
         return (
-            jsonify({"token": access_token, "refresh": refresh_token, "role": "user"}),
+            jsonify({"token": access_token,
+                    "refresh": refresh_token, "role": "user"}),
             200,
         )
 
@@ -135,7 +138,8 @@ def change_password():
     email = request.json.get("email")
     password = request.json.get("password")
     password = cripto.generate_password_hash(password).decode("utf-8")
-    user = User.query.filter(User.email == email).filter(User.id == user_id).first()
+    user = User.query.filter(User.email == email).filter(
+        User.id == user_id).first()
 
     if not user is None:
         user.password = password
@@ -153,7 +157,7 @@ def change_password():
 @jwt_required()  # automaticamente protege la ruta la cual se le indique
 def user_data_protected():
     user_id = (get_jwt_identity())
-      # me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
+    # me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
     # con este id solo se accede a la información de ese usuario y de más nadie
     user = User.query.get(user_id)
 
@@ -333,7 +337,8 @@ def post_comments(comment_user_id, post_id):
 # ALL COMMENTS ## ARREGLAR PARA ADMIN
 @api.route("/comments/", methods=["GET"])
 def get_comments():
-    comments = Comments.query.filter(Comments.__tablename__ == "comments").all()
+    comments = Comments.query.filter(
+        Comments.__tablename__ == "comments").all()
 
     all_commets = []
 
@@ -415,7 +420,8 @@ def post(user_id):
 # ALL FAVORITES LIST ## SOLO PARA VERIFICAR AUNQUE PUEDE SER FUNCIÓN ADMIN
 @api.route("/favorites/", methods=["GET"])
 def favorites():
-    favorites = Favorites.query.filter(Favorites.__tablename__ == "favorites").all()
+    favorites = Favorites.query.filter(
+        Favorites.__tablename__ == "favorites").all()
 
     all_favorites_list = []
 
@@ -460,7 +466,8 @@ def add_favorites(user_id, product_id):
     user = User.query.filter(User.id == user_id).first()
     product = Products.query.filter(Products.id == product_id).first()
     # PARA VALIDAR QUE EL PRODUCTO NO SE ENCUENTRA YA COMO FAVORITO
-    favorite_id = Favorites.query.filter(Favorites.product_id == product_id).first()
+    favorite_id = Favorites.query.filter(
+        Favorites.product_id == product_id).first()
     add_favorites = Favorites(user_id=user_id, product_id=product_id)
 
     if not user is None and user_id == jwt_user_id:
@@ -525,19 +532,20 @@ def user_shoppingcart(user_id):
     return jsonify({"msg": "login to see your shopping cart"}), 404
 
 
-# ADD PRODUCT TO SHOPPING CART
-@api.route("/cart/add/<int:user_id>/<int:product_id>/", methods=["POST"])
+# ADD PRODUCT TO SHOPPING CART ### TERMINAR ESA RUTA Y A RAIZ DE ESTA MEJORAR LAS OTRAS
+@api.route("/cart/add/<int:product_id>/", methods=["POST"])
 @jwt_required()
-def add_product_to_cart(user_id, product_id):
+def add_product_to_cart(product_id):
     jwt_user_id = get_jwt_identity()
-    user = User.query.filter(User.id == user_id).first()
+    # user = User.query.filter(User.id == jwt_user_id).first()
+    user = User.query.get(jwt_user_id)
     product = Products.query.filter(Products.id == product_id).first()
     shoppingcart_id = ShoppingCart.query.filter(
         ShoppingCart.product_id == product_id
     ).first()
-    add_shoppingCart = ShoppingCart(user_id=user_id, product_id=product_id)
+    add_shoppingCart = ShoppingCart(product_id=product_id)
 
-    if not user is None and jwt_user_id == user_id:
+    if not user is None:
 
         if not product is None and product.avaliable == True:
 
@@ -547,7 +555,8 @@ def add_product_to_cart(user_id, product_id):
                 db.session.commit()
 
                 return (
-                    jsonify({"success": "product has been added to shopping cart"}),
+                    jsonify(
+                        {"success": "product has been added to shopping cart"}),
                     201,
                 )
 
@@ -644,7 +653,8 @@ def post_user(user_id):
 # CATEGORIES ## ABIERTAS PARA LOGEADOS Y NO
 @api.route("/products/categories/", methods=["GET"])
 def categories():
-    categories = Categories.query.filter(Categories.__tablename__ == "categories").all()
+    categories = Categories.query.filter(
+        Categories.__tablename__ == "categories").all()
     all_categories = []
 
     for i in range(len(categories)):
@@ -756,7 +766,8 @@ def activate_product(product_id):
 # ALL PRODUCTS ## SOLO PARA VERIFICACIÓN
 @api.route("/products/", methods=["GET"])
 def products():
-    products = Products.query.filter(Products.__tablename__ == "products").all()
+    products = Products.query.filter(
+        Products.__tablename__ == "products").all()
     all_products = []
 
     for i in range(len(products)):
@@ -785,7 +796,8 @@ def each_product(product_id):
 # DELETE ALL PRODUCTS (No es un muy necesaria esta ruta que digamos, a menos que sea para el admin o que el usuario quiera eliminar toda us mercancia)
 @api.route("/delete/products/", methods=["DELETE"])
 def delete_products():
-    products = Products.query.filter(Products.__tablename__ == "products").all()
+    products = Products.query.filter(
+        Products.__tablename__ == "products").all()
 
     if len(products) == 0:
         return jsonify({"msg": "No exists products to delete"}), 404
@@ -908,46 +920,47 @@ def buy_product(user_id, product_id):
 
     return jsonify({"msg": "log in to get products"}), 404
 
+
 @api.route("/uploadPhoto", methods=["POST"])
 @jwt_required()
 def uploadPhoto():
 
     # Buscamos el usuario en la Db partiendo desde el token
-        user_id=get_jwt_identity()
-        user=User.query.get(user_id)
-        if user is None:
-            return "User not found", 403
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user is None:
+        return "User not found", 403
 
     # peticion ala rchivo
-        file=request.files['profilePic']
+    file = request.files['profilePic']
     # Extension del archivo
-        extension=file.filename.split(".")[1]
+    extension = file.filename.split(".")[1]
     # Se genera el nombre del archivo con el id de la imagen y la extension
-        filename="profiles/" + str(user_id) + "." + extension
-        # Guardar el archivo temporalmente
-        temp=tempfile.NamedTemporaryFile(delete=False)
-        file.save(temp.name)
-        # Subir archivo a firebase
-        # Llamar a bucket
-        bucket=storage.bucket(name="sozial-21faf.appspot.com")
-        # Referencia al espacio en bucket
-        resource=bucket.blob(filename)
-        # Se sube el archivo temporal al bucket
-        # Se debe especificar el tipo de contenido dependiendo de la extension
-        resource.upload_from_filename(temp.name, content_type="image/" + extension)
+    filename = "profiles/" + str(user_id) + "." + extension
+    # Guardar el archivo temporalmente
+    temp = tempfile.NamedTemporaryFile(delete=False)
+    file.save(temp.name)
+    # Subir archivo a firebase
+    # Llamar a bucket
+    bucket = storage.bucket(name="sozial-21faf.appspot.com")
+    # Referencia al espacio en bucket
+    resource = bucket.blob(filename)
+    # Se sube el archivo temporal al bucket
+    # Se debe especificar el tipo de contenido dependiendo de la extension
+    resource.upload_from_filename(temp.name, content_type="image/" + extension)
 
     # Guardar imagen en DB si ya no existe
-        if Imagen.query.filter(Imagen.resource_path==filename).first() is None:
-            new_image=Imagen(resource_path=filename, description= "Profile photo of user" + str(user_id))
-            db.session.add(new_image)
-            # Procesar las operaciones en la DB y la mantiene abierta para permitir mas operaciones.
-            db.session.flush()
+    if Imagen.query.filter(Imagen.resource_path == filename).first() is None:
+        new_image = Imagen(resource_path=filename,
+                           description="Profile photo of user" + str(user_id))
+        db.session.add(new_image)
+        # Procesar las operaciones en la DB y la mantiene abierta para permitir mas operaciones.
+        db.session.flush()
 
+    # Atualizar el campo de la foto
+    user.profile_picture_id = new_image.id
+    # Se crea el registro en la DB
+    db.sesion.add(user)
+    db.sessioncommit()
 
-        # Atualizar el campo de la foto
-        user.profile_picture_id=new_image.id
-        # Se crea el registro en la DB
-        db.sesion.add(user)
-        db.sessioncommit()
-
-        return "OK", 200
+    return "OK", 200
