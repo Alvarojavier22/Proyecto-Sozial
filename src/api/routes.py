@@ -547,7 +547,7 @@ def add_product_to_cart(product_id):
     )
 
 
-# GET ALL POSTS (FEED)
+# GET ALL POSTS (FEED) ✔️
 @api.route("/posts/", methods=["GET"])
 @jwt_required()
 def get_post():
@@ -582,7 +582,7 @@ def each_post(post_id):
     return jsonify({"post": post.serialize()}), 202
 
 
-# (GET) POST BY EACH USER ## PARA MIRAR EL FEED DE CADA USUARIO
+# (GET) POST BY EACH USER ## PARA MIRAR EL FEED DE CADA USUARIO // PUEDEN MIRARLO LOGEADOS O NO ✔️
 @api.route("/feed/user/<int:user_id>/", methods=["GET"])
 def feed_post_user(user_id):
     user = User.query.filter(User.id == user_id).first()
@@ -604,17 +604,15 @@ def feed_post_user(user_id):
     return jsonify({"msg": "This user doesn't exists"}), 404
 
 
-# (GET) OWN POST BY EACH USER
+# (GET) OWN POST BY EACH USER - FEED DEL PERFIL DEL USUARIO ✔️
 @api.route("/posts/user/<int:user_id>/", methods=["GET"])
-@jwt_required()
 def post_user(user_id):
-    jwt_user_id = get_jwt_identity()
     user = User.query.filter(User.id == user_id).first()
     posts = Post.query.filter(Post.user_id == user_id).all()
 
     all_user_post = []
 
-    if not user is None and user_id == jwt_user_id:
+    if not user is None:
 
         if len(posts) > 0:
 
@@ -625,24 +623,29 @@ def post_user(user_id):
 
         return jsonify({"msg": "This user not have posts to show"})
 
-    return jsonify({"msg": "log in to see user posts"}), 404
+    return jsonify({"msg": "This user doesn't exists"}), 404
 
 
-# DELETE POST
+# DELETE POST ✔️
 @api.route("delete/posts/<int:post_id>/", methods=["DELETE"])
 @jwt_required()
 def delete_post(post_id):
     user_id = get_jwt_identity()
+    user = User.query.get(user_id)
     post = Post.query.filter(Post.id == post_id).filter(Post.user_id == user_id).first()
 
-    if not post is None:
+    if not user is None:
 
-        db.session.delete(post)
-        db.session.commit()
+        if not post is None:
 
-        return jsonify({"success": "post has been delete successfully"}), 201
+            db.session.delete(post)
+            db.session.commit()
 
-    return jsonify({"msg": "post doesn't exists in this user"}), 404
+            return jsonify({"success": "post has been delete successfully"}), 201
+
+        return jsonify({"msg": "post doesn't exists in this user"}), 404
+
+    return jsonify({"msg": "login to delete this post"}), 404
 
 
 # CATEGORIES ## ABIERTAS PARA LOGEADOS Y NO
