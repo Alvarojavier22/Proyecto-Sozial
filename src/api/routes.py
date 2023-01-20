@@ -33,7 +33,8 @@ api = Blueprint("api", __name__)
 cripto = Bcrypt(Flask(__name__))
 
 
-# DELETE USERS (ADMIN) SE HACE CON EL METODO PUT PORQUE CUANDO SE TRATA DE ELIMINAR CON DELETE DA ERROR POR EL HECHO DE QUE EXISTEN PUBLICACIONES QUE DEPENDEN DE EL
+# DELETE USERS (ADMIN) SE HACE CON EL METODO PUT PORQUE CUANDO SE TRATA DE ELIMINAR CON DELETE DA ERROR POR EL HECHO DE  ❌
+# QUE EXISTEN PUBLICACIONES QUE DEPENDEN DE EL
 @api.route("users/<int:user_id>/", methods=["PUT"])
 def delete_user(user_id):
     user = User.query.filter(User.id == user_id).first()
@@ -51,26 +52,7 @@ def delete_user(user_id):
     return jsonify({"msg": "No exists user to delete"})
 
 
-# DELETE POST
-
-# DELETE POST
-@api.route("delete/posts/<int:post_id>/", methods=["DELETE"])
-@jwt_required()
-def delete_post(post_id):
-    user_id = get_jwt_identity()
-    post = Post.query.filter(Post.id == post_id).filter(Post.user_id == user_id).first()
-
-    if not post is None:
-
-        db.session.delete(post)
-        db.session.commit()
-
-        return jsonify({"success": "post has been delete successfully"}), 201
-
-    return jsonify({"msg": "post doesn't exists in this user"}), 404
-
-
-# ADMIN LOGIN # VALIDAR SI SE PUEDE HACER ASÍ PARA QUE EL LOGIN SE GENERE CON EL ROL ADMIN
+# ADMIN LOGIN # VALIDAR SI SE PUEDE HACER ASÍ PARA QUE EL LOGIN SE GENERE CON EL ROL ADMIN ❌
 @api.route("/admin/login/", methods=["POST"])
 def admin_login():
     email = request.json.get("email")
@@ -97,7 +79,7 @@ def admin_login():
         )
 
 
-# LOGIN USER
+# LOGIN USER ✔️
 @api.route("/login/", methods=["POST"])
 def user_login():
     email = request.json.get("email")
@@ -118,16 +100,16 @@ def user_login():
         )
         refresh_token = create_refresh_token(identity=user.id)
         return (
-            jsonify({"token": access_token, "refresh": refresh_token, "role": "user"}),
-            200,
+            jsonify({"token": access_token, "refresh": refresh_token, "role": "user", "success":"User login successfully"}),
+            200
         )
 
     else:
         # INVALID PASSWORD
-        return jsonify({"success": "invalid password"}), 401
+        return jsonify({"msg": "invalid password"}), 401
 
 
-# CHANGE PASSWORD
+# CHANGE PASSWORD ✔️
 @api.route("/user/change_password/", methods=["PUT"])
 @jwt_required()
 def change_password():
@@ -148,12 +130,12 @@ def change_password():
     return jsonify({"msg": "this is not your user"}), 404
 
 
-# USERDATA VALIDATION
+# USERDATA VALIDATION ✔️
 @api.route("/userdata/", methods=["GET"])
 @jwt_required()  # automaticamente protege la ruta la cual se le indique
 def user_data_protected():
-    user_id = (get_jwt_identity())
-      # me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
+    user_id = get_jwt_identity()
+    # me trae la info del token junto al id vinculado (identity = user.id), por lo que se puede saber que usuario está haciendo la petición y restringir a que recursos ese usuario va a tener acceso
     # con este id solo se accede a la información de ese usuario y de más nadie
     user = User.query.get(user_id)
 
@@ -163,7 +145,7 @@ def user_data_protected():
             "is_active": user.is_active,
             "user_email": user.email,
             "user_name": user.name + str(" ") + user.surname,
-            "profile_pic": user.profile_picture.image_url(),
+            # "profile_pic": user.profile_picture.image_url(), # genera error
             # aqui se trae la información del rol de cliente
             "role": get_jwt()["role"],
             "msg": "valid token",
@@ -171,7 +153,7 @@ def user_data_protected():
     )
 
 
-# LOGOUT SESSION
+# LOGOUT SESSION ✔️
 @api.route("/logout/", methods=["POST"])
 @jwt_required()
 def user_logout():
@@ -183,7 +165,7 @@ def user_logout():
     return jsonify(msg="JWT revoked")
 
 
-# ALL USERS # ACOMODAR PARA QUE SOLO SEA EL ADMIN EL QUE PUEDA MIRAR TODOS LOS USUARIOS
+# ALL USERS # ACOMODAR PARA QUE SOLO SEA EL ADMIN EL QUE PUEDA MIRAR TODOS LOS USUARIOS ✔️
 @api.route("/users/", methods=["GET"])
 def users():
     users = User.query.filter(User.__tablename__ == "user").all()
@@ -206,7 +188,7 @@ def users():
     return jsonify({"msg": "No have any user"}), 404
 
 
-# USER INTERACTION WITH LIKES
+# USER INTERACTION WITH LIKES ✔️
 @api.route("/likes/<int:post_id>/<int:like_user_id>/", methods=["POST"])
 @jwt_required()
 def generate_likes(post_id, like_user_id):
@@ -239,9 +221,7 @@ def generate_likes(post_id, like_user_id):
     return jsonify({"msg": "login for generate like"})
 
 
-# REMOVE LIKES IN POST
-
-
+# REMOVE LIKES IN POST ✔️
 @api.route("/likes/<post_id>/<int:like_user_id>/", methods=["DELETE"])
 @jwt_required()
 def remove_likes(post_id, like_user_id):
@@ -272,7 +252,7 @@ def remove_likes(post_id, like_user_id):
     return jsonify({"msg": "login for dislike post"})
 
 
-# GET ALL LIKES ### ACOMODAR PARA ADMIN SOLAMENTE
+# GET ALL LIKES ### ACOMODAR PARA ADMIN SOLAMENTE ❌
 @api.route("/likes/", methods=["GET"])
 def likes():
     likes = Likes.query.filter(Likes.__tablename__ == "likes").all()
@@ -288,22 +268,28 @@ def likes():
     return jsonify({"msg": "No have any like"}), 404
 
 
-# LIKES BY POSTS ## NO NECESITA DE JWT PARA QUE TODOS LOS USUARIOS OGEADOS Y NO, PUEDAN MIRAR LAS PUBLICACIONES CON SUS LIKE
-@api.route("/likes/<int:post_id>/")
+# LIKES BY POSTS ## NO NECESITA DE JWT PARA QUE TODOS LOS USUARIOS OGEADOS Y NO, PUEDAN MIRAR LAS PUBLICACIONES CON SUS LIKE ✔️
+@api.route("/likes/<int:post_id>/", methods=["GET"])
 def likes_by_posts(post_id):
     likes = Likes.query.filter(Likes.post_id == post_id).all()
     likes_by_posts = []
 
     if not likes is None:
+
         for i in range(len(likes)):
             likes_by_posts.append(likes[i].serialize())
 
-        return jsonify({"likes by post": likes_by_posts}), 201
+        if len(likes_by_posts) > 0:
+
+            return jsonify({"likes by post": likes_by_posts}), 201
+
+        return jsonify({"msg": "this post doesn't have any like"}), 404
 
     return jsonify({"msg": "this post not have any like"}), 404
 
 
-# USER INTERACTION WITH COMMENTS
+# ESTA RUTA NO SE ACORTA COMO ARNALDO DIJO (SIN EL COMMENT_USER_ID PORQUE CON ESE ID EN LA TABLA SE IMPRIMEN LOS DATOS DE QUIEN COMENTA)
+# USER INTERACTION WITH COMMENTS ✔️
 @api.route("/comments/<int:post_id>/<int:comment_user_id>/", methods=["POST"])
 @jwt_required()
 def post_comments(comment_user_id, post_id):
@@ -330,7 +316,7 @@ def post_comments(comment_user_id, post_id):
     return jsonify({"msg": "login for to generate comments"}), 404
 
 
-# ALL COMMENTS ## ARREGLAR PARA ADMIN
+# ALL COMMENTS ## ARREGLAR PARA ADMIN ✔️
 @api.route("/comments/", methods=["GET"])
 def get_comments():
     comments = Comments.query.filter(Comments.__tablename__ == "comments").all()
@@ -346,12 +332,12 @@ def get_comments():
     return jsonify({"msg": "No have any comment"}), 404
 
 
-# COMMENT BY POST ## TODOS LOS USUARIOS
+# COMMENT BY POST ## TODOS LOS USUARIOS ✔️
 @api.route("/comments/<post_id>/", methods=["GET"])
 def commet_by_post(post_id):
     comments = Comments.query.filter(Comments.post_id == post_id).all()
     comments_by_id = []
-    # no me deja esta validación para cuando el post no exista
+
     if len(comments) > 0:
 
         for i in range(len(comments)):
@@ -393,8 +379,8 @@ def delete_comments(post_id, comment_user_id):
     return jsonify({"msg": "login to be able to delete the comment"})
 
 
-# GENERATE POSTS
-@api.route("/posts/<int:user_id>", methods=["POST"])
+# GENERATE POSTS ✔️
+@api.route("/posts/<int:user_id>/", methods=["POST"])
 @jwt_required()
 def post(user_id):
     jwt_user_id = get_jwt_identity()
@@ -428,7 +414,7 @@ def favorites():
     return jsonify({"msg": "doesn't exists any product like favorite"}), 404
 
 
-# FAVORITES BY USER
+# FAVORITES BY USER ✔️
 @api.route("/favorites/<int:user_id>/", methods=["GET"])
 @jwt_required()
 def user_favorites(user_id):
@@ -452,7 +438,7 @@ def user_favorites(user_id):
     return jsonify({"msg": "log in to see your favorites list"}), 404
 
 
-# ADD PRODUCT TO FAVORITE LIST
+# ADD PRODUCT TO FAVORITE LIST ✔️
 @api.route("/favorites/add/<int:user_id>/<int:product_id>/", methods=["POST"])
 @jwt_required()
 def add_favorites(user_id, product_id):
@@ -481,7 +467,7 @@ def add_favorites(user_id, product_id):
     return jsonify({"msg": "log in to be able to add to favorites"}), 404
 
 
-# ALL SHOPPING CART LIST ### PARA VERIFICACIÓN O PARA ADMINS
+# ALL SHOPPING CART LIST ### PARA VERIFICACIÓN O PARA ADMINS ✔️
 @api.route("/shopping_cart/", methods=["GET"])
 def shopping_cart():
     shoppingcart = ShoppingCart.query.filter(
@@ -499,7 +485,7 @@ def shopping_cart():
     return jsonify({"msg": "shopping cart not have products"}), 404
 
 
-# SHOPPING CART LIST BY USER
+# SHOPPING CART LIST BY USER ✔️
 @api.route("/shopping_cart/<int:user_id>/", methods=["GET"])
 @jwt_required()
 def user_shoppingcart(user_id):
@@ -525,19 +511,19 @@ def user_shoppingcart(user_id):
     return jsonify({"msg": "login to see your shopping cart"}), 404
 
 
-# ADD PRODUCT TO SHOPPING CART
-@api.route("/cart/add/<int:user_id>/<int:product_id>/", methods=["POST"])
+# ADD PRODUCT TO SHOPPING CART ### TERMINAR ESA RUTA Y A RAIZ DE ESTA MEJORAR LAS OTRAS ✔️
+@api.route("/cart/add/<int:product_id>/", methods=["POST"])
 @jwt_required()
-def add_product_to_cart(user_id, product_id):
-    jwt_user_id = get_jwt_identity()
-    user = User.query.filter(User.id == user_id).first()
+def add_product_to_cart(product_id):
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
     product = Products.query.filter(Products.id == product_id).first()
     shoppingcart_id = ShoppingCart.query.filter(
         ShoppingCart.product_id == product_id
     ).first()
     add_shoppingCart = ShoppingCart(user_id=user_id, product_id=product_id)
 
-    if not user is None and jwt_user_id == user_id:
+    if not user is None:
 
         if not product is None and product.avaliable == True:
 
@@ -561,15 +547,16 @@ def add_product_to_cart(user_id, product_id):
     )
 
 
-# GET ALL POSTS (FEED)
+# GET ALL POSTS (FEED) ✔️
 @api.route("/posts/", methods=["GET"])
 @jwt_required()
 def get_post():
     user_id = get_jwt_identity()
+    user = User.query.get(user_id)
     posts = Post.query.filter(Post.__tablename__ == "post").all()
     all_posts = []
 
-    if not posts is None:
+    if not user_id is None:
 
         for i in range(len(posts)):
             all_posts.append(posts[i].serialize())
@@ -578,7 +565,7 @@ def get_post():
 
             return jsonify({"all posts": all_posts}), 200
 
-    return jsonify({"msg": "not exists any post to show"}), 404
+    return jsonify({"msg": "not exists any post to show, please login"}), 404
 
 
 # GET EACH POST
@@ -595,7 +582,7 @@ def each_post(post_id):
     return jsonify({"post": post.serialize()}), 202
 
 
-# (GET) POST BY EACH USER ## PARA MIRAR EL FEED DE CADA USUARIO
+# (GET) POST BY EACH USER ## PARA MIRAR EL FEED DE CADA USUARIO // PUEDEN MIRARLO LOGEADOS O NO ✔️
 @api.route("/feed/user/<int:user_id>/", methods=["GET"])
 def feed_post_user(user_id):
     user = User.query.filter(User.id == user_id).first()
@@ -617,17 +604,15 @@ def feed_post_user(user_id):
     return jsonify({"msg": "This user doesn't exists"}), 404
 
 
-# (GET) OWN POST BY EACH USER
+# (GET) OWN POST BY EACH USER - FEED DEL PERFIL DEL USUARIO ✔️
 @api.route("/posts/user/<int:user_id>/", methods=["GET"])
-@jwt_required()
 def post_user(user_id):
-    jwt_user_id = get_jwt_identity()
     user = User.query.filter(User.id == user_id).first()
     posts = Post.query.filter(Post.user_id == user_id).all()
 
     all_user_post = []
 
-    if not user is None and user_id == jwt_user_id:
+    if not user is None:
 
         if len(posts) > 0:
 
@@ -638,7 +623,29 @@ def post_user(user_id):
 
         return jsonify({"msg": "This user not have posts to show"})
 
-    return jsonify({"msg": "log in to see user posts"}), 404
+    return jsonify({"msg": "This user doesn't exists"}), 404
+
+
+# DELETE POST ✔️
+@api.route("delete/posts/<int:post_id>/", methods=["DELETE"])
+@jwt_required()
+def delete_post(post_id):
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    post = Post.query.filter(Post.id == post_id).filter(Post.user_id == user_id).first()
+
+    if not user is None:
+
+        if not post is None:
+
+            db.session.delete(post)
+            db.session.commit()
+
+            return jsonify({"success": "post has been delete successfully"}), 201
+
+        return jsonify({"msg": "post doesn't exists in this user"}), 404
+
+    return jsonify({"msg": "login to delete this post"}), 404
 
 
 # CATEGORIES ## ABIERTAS PARA LOGEADOS Y NO
@@ -908,46 +915,48 @@ def buy_product(user_id, product_id):
 
     return jsonify({"msg": "log in to get products"}), 404
 
+
 @api.route("/uploadPhoto", methods=["POST"])
 @jwt_required()
 def uploadPhoto():
 
     # Buscamos el usuario en la Db partiendo desde el token
-        user_id=get_jwt_identity()
-        user=User.query.get(user_id)
-        if user is None:
-            return "User not found", 403
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if user is None:
+        return "User not found", 403
 
     # peticion ala rchivo
-        file=request.files['profilePic']
+    file = request.files["profilePic"]
     # Extension del archivo
-        extension=file.filename.split(".")[1]
+    extension = file.filename.split(".")[1]
     # Se genera el nombre del archivo con el id de la imagen y la extension
-        filename="profiles/" + str(user_id) + "." + extension
-        # Guardar el archivo temporalmente
-        temp=tempfile.NamedTemporaryFile(delete=False)
-        file.save(temp.name)
-        # Subir archivo a firebase
-        # Llamar a bucket
-        bucket=storage.bucket(name="sozial-21faf.appspot.com")
-        # Referencia al espacio en bucket
-        resource=bucket.blob(filename)
-        # Se sube el archivo temporal al bucket
-        # Se debe especificar el tipo de contenido dependiendo de la extension
-        resource.upload_from_filename(temp.name, content_type="image/" + extension)
+    filename = "profiles/" + str(user_id) + "." + extension
+    # Guardar el archivo temporalmente
+    temp = tempfile.NamedTemporaryFile(delete=False)
+    file.save(temp.name)
+    # Subir archivo a firebase
+    # Llamar a bucket
+    bucket = storage.bucket(name="sozial-21faf.appspot.com")
+    # Referencia al espacio en bucket
+    resource = bucket.blob(filename)
+    # Se sube el archivo temporal al bucket
+    # Se debe especificar el tipo de contenido dependiendo de la extension
+    resource.upload_from_filename(temp.name, content_type="image/" + extension)
 
     # Guardar imagen en DB si ya no existe
-        if Imagen.query.filter(Imagen.resource_path==filename).first() is None:
-            new_image=Imagen(resource_path=filename, description= "Profile photo of user" + str(user_id))
-            db.session.add(new_image)
-            # Procesar las operaciones en la DB y la mantiene abierta para permitir mas operaciones.
-            db.session.flush()
+    if Imagen.query.filter(Imagen.resource_path == filename).first() is None:
+        new_image = Imagen(
+            resource_path=filename, description="Profile photo of user" + str(user_id)
+        )
+        db.session.add(new_image)
+        # Procesar las operaciones en la DB y la mantiene abierta para permitir mas operaciones.
+        db.session.flush()
 
+    # Atualizar el campo de la foto
+    user.profile_picture_id = new_image.id
+    # Se crea el registro en la DB
+    db.sesion.add(user)
+    db.sessioncommit()
 
-        # Atualizar el campo de la foto
-        user.profile_picture_id=new_image.id
-        # Se crea el registro en la DB
-        db.sesion.add(user)
-        db.sessioncommit()
-
-        return "OK", 200
+    return "OK", 200
