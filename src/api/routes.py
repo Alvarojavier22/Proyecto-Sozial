@@ -100,13 +100,13 @@ def user_login():
         )
         refresh_token = create_refresh_token(identity=user.id)
         return (
-            jsonify({"token": access_token, "refresh": refresh_token, "role": "user"}),
-            200,
+            jsonify({"token": access_token, "refresh": refresh_token, "role": "user", "success":"User login successfully"}),
+            200
         )
 
     else:
         # INVALID PASSWORD
-        return jsonify({"success": "invalid password"}), 401
+        return jsonify({"msg": "invalid password"}), 401
 
 
 # CHANGE PASSWORD ✔️
