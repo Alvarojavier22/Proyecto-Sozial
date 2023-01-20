@@ -18,15 +18,15 @@ const {store, actions}=useContext(Context)
       }, []);
 
     /*fetch signup */
-    const[name,setName]=useState()
-    const[surname,setSurName]=useState()
+    const[name,setName]=useState("")
+    const[surname,setSurName]=useState("")
     const[password,setPassWord]=useState("")
-    const[email,setEmail]=useState()
+    const[email,setEmail]=useState("")
     const[is_active, setIs_active]=useState(true)
     let item = {name,surname,password,email,is_active}
-
+    let inputs = [name,surname, password, email]
     
-    console.log(password)
+   
 
     const mostrar_alerta=()=>{
         return swal({
@@ -35,14 +35,20 @@ const {store, actions}=useContext(Context)
             icon: "error"
         })
     }
-    const checkinputs=(thing)=>{
-        return thing ===""
-        console.log(thing)
+    const checkinputs=(inputs)=>{
+        for(let i = 0; i<inputs.length; i++){
+            if (inputs[i] === ""){
+                return true
+            }
+                
+        }
+        return false
+        
     }
-    console.log(checkinputs(password))
+    
     const[confirmpass,setConfirmPass]=useState()
   
-    console.log(actions.signUp.result)
+    
     /*Ocultar/ mostrar contraseñas */
     const [passHide, setPassHide]=useState(true)
     const [confirmPassHide, setConfirmPassHide]=useState(true)
@@ -54,7 +60,7 @@ const {store, actions}=useContext(Context)
                         <h1>Sign Up</h1>
                         <div className="signup_field">
                             
-                            <input type="text" value={email || ""} onChange={(e)=>setEmail(e.target.value)} className="sign_input" placeholder="E-mail Address"/>
+                            <input type="text" value={email || ""} onChange={(e)=>setEmail(e.target.value)} className="sign_input" placeholder="E-mail Address" />
                             <input type="text" className="sign_input" placeholder="Username"/>
                             <input type="text" value={name || ""} onChange={(e)=>setName(e.target.value)} className="sign_input" placeholder="First Name"/>
                             <input type="text" value={surname || ""} onChange={(e)=>setSurName(e.target.value)}className="sign_input" placeholder="Last Name"/>
@@ -66,7 +72,7 @@ const {store, actions}=useContext(Context)
                         <div className="form-check" id="check">
                             <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
 
-                                <label className="form-check-label" htmlFor="flexCheckDefault"/>
+                                
                                 <label className="form-check-label" htmlFor="flexCheckDefault">
                                      I accept the <Link to="#" id="linksign">terms of use</Link> & <Link to="#" id="linksign">privacy policy</Link>
                                  </label>
@@ -75,7 +81,7 @@ const {store, actions}=useContext(Context)
                             
                             
                             <div className="signbtn">
-                                <Link to={`${password==confirmpass?"/home":"#"}`}><button onClick={checkinputs(password)==false?()=>(actions.signUp(item)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
+                                <Link to={`${password==confirmpass?"/feed":"#"}`}><button onClick={checkinputs(inputs)==false?()=>(actions.signUp(inputs)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
 
                             </div>
                     </form>

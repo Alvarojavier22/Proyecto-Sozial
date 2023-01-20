@@ -6,13 +6,14 @@ import {parse, evaluate} from "mathjs"
 export const Cart=()=>{
 
     /* tomar el resultado de la suma de los productos*/ 
- /*   // crear la varaible para el resultado
+    // crear la varaible para el resultado
+    /*
 const[result, setResult]=useState(0)
  // crear referencias para los divs de los numeros
-const inputRef1 = useRef("")
-const inputRef2 = useRef("")
+const inputRef1 = useRef("1")
+const inputRef2 = useRef("2")
 
-console.log(inputRef1)
+console.log(inputRef1) 
 // useEffect para realizar la operacion
 useEffect(()=>{
     // obtener el contenido de los divs
@@ -27,8 +28,8 @@ useEffect(()=>{
     // settear el resultado dentro de la variable del useState
     setResult(evaluatedValue1 + evaluatedValue2);
 
-}, [inputRef1, inputRef2])
-*/
+}, [inputRef1, inputRef2]) */
+
     return(
        <div className="container-fluid bodycart" >
             <div className="container cart" >
@@ -41,7 +42,7 @@ useEffect(()=>{
                             <div className="container piccontainer">
                                 <div className="description">Item 1</div>
                                 <div className="counter"><span>-</span> 1 <span>+</span></div>
-                                <div className="price" /* ref={inputRef1}*/  >2442</div>
+                                <div className="price"  /*ref={inputRef1} */ >21</div>
                                 <div className="cancelbuy"><span>X</span></div>
                             </div>
                         </div>
@@ -51,7 +52,7 @@ useEffect(()=>{
                             <div className="container piccontainer">
                                 <div className="description"> Item 2 </div>
                                 <div className="counter"><span>-</span> 1 <span>+</span></div>
-                                <div className="price" /*ref={inputRef2}*/>22</div>
+                                <div className="price" /* ref={inputRef2} */>22</div>
                                 <div className="cancelbuy"><span>X</span></div>
                             </div>
                         </div>

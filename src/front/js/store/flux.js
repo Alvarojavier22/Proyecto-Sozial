@@ -25,7 +25,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "POST",
 					body: JSON.stringify(user),
 					headers:{
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": "*"
+
 					}
 				})
 				result= await result.json()
