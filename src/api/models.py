@@ -43,11 +43,13 @@ class Products(db.Model):
     price = db.Column(db.Integer, unique=False, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     avaliable = db.Column(db.Boolean(), unique=False, nullable=False)
+
     categorie_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
     picture_id = db.Column(db.Integer, db.ForeignKey("imagen.id"))
     picture = db.relationship("Imagen")
     # sell_id=db.Column(db.Integer, db.ForeignKey("user.id"))
     # seller=db.relationship("user")
+
 
     def __repr__(self):
         return f"<Products {self.name}>"
@@ -212,6 +214,7 @@ class TokenBlocklist(db.Model):
 
 class Imagen(db.Model):
     __tablename__ = "imagen"
+
     id = db.Column(db.Integer, primary_key=True)
     resource_path = db.Column(db.String(250), unique=True, nullable=False)
     description = db.column(db.String(200))
@@ -234,3 +237,4 @@ class Imagen(db.Model):
             "resource_path": self.resource_path,
             "signed_url": signed_url,
         }
+

@@ -58,7 +58,7 @@ db.init_app(app)
 CORS(app)
 
 # add the admin
-setup_admin(app)
+
 
 # add the admin
 setup_commands(app)
