@@ -58,9 +58,7 @@ db.init_app(app)
 CORS(app)
 
 # add the admin
-
-
-# add the admin
+setup_admin(app)
 setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
