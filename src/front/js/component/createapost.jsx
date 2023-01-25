@@ -1,20 +1,23 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import Image from "./img.jsx";
+import { Context } from "../store/appContext.js";
 export const CreateaPost=(props)=>{
-
-
+  const[post,setPost]=useState("")
+  console.log(post)
+  const {store, actions}=useContext(Context)
     return(props.trigger)?(
         <div className="container">
-                 <div className="dropdown dropdown-post">
+            <div className="dropdown dropdown-post">
               <button className="btn  dropdown-toggle category-select" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                  Select a Category
               </button>
-              </div>
               <ul className="dropdown-menu ul-post" aria-labelledby="dropdownMenu2">
-                  <li><button className="dropdown-item li-post" type="button">Technologie</button></li>
+                  <li><button className="dropdown-item li-post" type="button">Technology</button></li>
                   <li><button className="dropdown-item li-post" type="button">Clothing</button></li>
                   <li><button className="dropdown-item li-post" type="button">Art</button></li>
               </ul>
+            </div>
+              
               <div>
                 <input type="text" placeholder="Title" className="inputpostpro" />
               </div>
@@ -39,7 +42,7 @@ export const CreateaPost=(props)=>{
 
  <h3 id="h3post">Share your thoughts on Sozial!</h3>
  <div>
- <textarea class="form-control text-area" id="exampleFormControlTextarea1" rows="3" placeholder="Text"></textarea>
+ <textarea  onChange={(e)=>setPost(e.target.value)} className="form-control text-area" id="exampleFormControlTextarea1" rows="3" placeholder="Text"></textarea>
  </div>
  <div>
  <Image/>
@@ -48,7 +51,7 @@ export const CreateaPost=(props)=>{
 
  <div className="buttons-products">
    <button className="cancel-product">CANCEL</button>
-   <button className="post-product">POST</button>
+   <button className="post-product" onClick={()=>(actions.GeneratePost({text: post}))}>POST</button>
  </div>
  </div>
 
