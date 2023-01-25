@@ -196,67 +196,57 @@ def users():
 
 
 # USER INTERACTION WITH LIKES ✔️
-@api.route("/likes/<int:post_id>/<int:like_user_id>/", methods=["POST"])
+@api.route("/likes/<int:post_id>/", methods=["POST"])
 @jwt_required()
-def generate_likes(post_id, like_user_id):
+def generate_likes(post_id):
     user_id = get_jwt_identity()
-    like_user = User.query.filter(User.id == user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
     likes_verificator = (
-        Likes.query.filter(Likes.like_user_id == like_user_id)
+        Likes.query.filter(Likes.like_user_id == user_id)
         .filter(Likes.post_id == post_id)
         .first()
     )
     # un like_user_id es el de la ruta el otro es el de la tabla de likes para igualarlos
-    generate_like = Likes(post_id=post_id, like_user_id=like_user_id)
+    generate_like = Likes(post_id=post_id, like_user_id=user_id)
 
-    if not like_user is None and like_user_id == user_id:
+    if not post is None:
 
-        if not post is None:
+        if likes_verificator is None:
 
-            if likes_verificator is None:
+            db.session.add(generate_like)
+            db.session.commit()
 
-                db.session.add(generate_like)
-                db.session.commit()
+            return jsonify({"success": "like has been generated successfully"}), 201
 
-                return jsonify({"success": "like has been generated successfully"}), 201
+        return jsonify({"msg": "this user has already generated as in this post"})
 
-            return jsonify({"msg": "this user has already generated as in this post"})
-
-        return jsonify({"msg": "post doesn't exists"}), 404
-
-    return jsonify({"msg": "login for generate like"})
+    return jsonify({"msg": "post doesn't exists"}), 404
 
 
 # REMOVE LIKES IN POST ✔️
-@api.route("/likes/<post_id>/<int:like_user_id>/", methods=["DELETE"])
+@api.route("/likes/<post_id>/", methods=["DELETE"])
 @jwt_required()
-def remove_likes(post_id, like_user_id):
+def remove_likes(post_id):
     user_id = get_jwt_identity()
-    like_user = User.query.filter(User.id == user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
     likes_verificator = (
         Likes.query.filter(Likes.post_id == post_id)
-        .filter(Likes.like_user_id == like_user_id)
+        .filter(Likes.like_user_id == user_id)
         .first()
     )
 
-    if not like_user is None and like_user_id == user_id:
+    if not post is None:
 
-        if not post is None:
+        if not likes_verificator is None:
 
-            if not likes_verificator is None:
+            db.session.delete(likes_verificator)
+            db.session.commit()
 
-                db.session.delete(likes_verificator)
-                db.session.commit()
+            return jsonify({"success": "like has been remove successfully"}), 201
 
-                return jsonify({"success": "like has been remove successfully"}), 201
+        return jsonify({"msg": "this like doesn't exists"}), 404
 
-            return jsonify({"msg": "this like doesn't exists"}), 404
-
-        return jsonify({"msg": "this post doesn't exists"}), 404
-
-    return jsonify({"msg": "login for dislike post"})
+    return jsonify({"msg": "this post doesn't exists"}), 404
 
 
 # GET ALL LIKES ### ACOMODAR PARA ADMIN SOLAMENTE ❌
@@ -297,30 +287,24 @@ def likes_by_posts(post_id):
 
 # ESTA RUTA NO SE ACORTA COMO ARNALDO DIJO (SIN EL COMMENT_USER_ID PORQUE CON ESE ID EN LA TABLA SE IMPRIMEN LOS DATOS DE QUIEN COMENTA)
 # USER INTERACTION WITH COMMENTS ✔️
-@api.route("/comments/<int:post_id>/<int:comment_user_id>/", methods=["POST"])
+@api.route("/comments/<int:post_id>/", methods=["POST"])
 @jwt_required()
-def post_comments(comment_user_id, post_id):
+def post_comments(post_id):
     user_id = get_jwt_identity()
-    comment_user = User.query.filter(User.id == user_id).first()
     comment = request.json.get("comment")
     generate_comment = Comments(
-        comment=comment, post_id=post_id, comment_user_id=comment_user_id
+        comment=comment, post_id=post_id, comment_user_id=user_id
     )
-    user = User.query.filter(User.id == comment_user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
 
-    if not user is None and comment_user_id == user_id:
+    if not post is None:
 
-        if not post is None:
+        db.session.add(generate_comment)
+        db.session.commit()
 
-            db.session.add(generate_comment)
-            db.session.commit()
+        return jsonify({"success": "comment has been generated successfully"}), 201
 
-            return jsonify({"success": "comment has been generated successfully"}), 201
-
-        return jsonify({"msg": "post doesn't exists"}), 404
-
-    return jsonify({"msg": "login for to generate comments"}), 404
+    return jsonify({"msg": "post doesn't exists"}), 404
 
 
 # ALL COMMENTS ## ARREGLAR PARA ADMIN ✔️
@@ -356,38 +340,34 @@ def commet_by_post(post_id):
 
 
 # DELETE COMMENTS ✔️
-@api.route("/comments/<int:post_id>/<int:comment_user_id>/", methods=["DELETE"])
+# SE CONDICIONA A QUE COMO PARAMETRO EL POST ID Y EL COMMENT ID PARA QUE EL USUARIO PUEDA ELIMINAR UN SOLO COMENTARIO SI TIENE VARIOS
+@api.route("/comments/<int:post_id>/<int:comment_id>/", methods=["DELETE"])
 @jwt_required()
-def delete_comments(post_id, comment_user_id):
+def delete_comments(post_id, comment_id):
     user_id = get_jwt_identity()
-    comment_user = User.query.filter(User.id == comment_user_id).first()
     post = Post.query.filter(Post.id == post_id).first()
-    comments_verificator = (
+    delete_comments = (
         Comments.query.filter(Comments.post_id == post_id)
-        .filter(Comments.comment_user_id == comment_user_id)
+        .filter(Comments.id == comment_id)
         .first()
     )
 
-    if not comment_user is None and comment_user_id == user_id:
+    if not post is None:
 
-        if not post is None:
+        if not delete_comments is None:
 
-            if not comments_verificator is None:
+            db.session.delete(delete_comments)
+            db.session.commit()
 
-                db.session.delete(comments_verificator)
-                db.session.commit()
+            return jsonify({"success": "comment has been remove successfully"}), 201
 
-                return jsonify({"success": "comment has been remove successfully"}), 201
+        return jsonify({"msg": "this comment doesn't exists in this user"}), 404
 
-            return jsonify({"msg": "this comment doesn't exists in this user"}), 404
-
-        return jsonify({"msg": "this post doesn't exists"}), 404
-
-    return jsonify({"msg": "login to be able to delete the comment"})
+    return jsonify({"msg": "this post doesn't exists"}), 404
 
 
 # GENERATE POSTS ✔️
-@api.route("/posts", methods=["POST"])
+@api.route("/posts/", methods=["POST"])
 @jwt_required()
 def post():
     user_id = get_jwt_identity()
@@ -395,14 +375,10 @@ def post():
     print(text)
     post = Post(user_id=user_id, text=text)
 
-    
-
     db.session.add(post)
     db.session.commit()
 
     return jsonify({"success": "publicaction generate successfully"}), 200
-
-    #return jsonify({"msg": "login for to be able generated posts"}), 404
 
 
 # ALL FAVORITES LIST ## SOLO PARA VERIFICAR AUNQUE PUEDE SER FUNCIÓN ADMIN
@@ -446,32 +422,27 @@ def user_favorites(user_id):
 
 
 # ADD PRODUCT TO FAVORITE LIST ✔️
-@api.route("/favorites/add/<int:user_id>/<int:product_id>/", methods=["POST"])
+@api.route("/favorites/add/<int:product_id>/", methods=["POST"])
 @jwt_required()
-def add_favorites(user_id, product_id):
-    jwt_user_id = get_jwt_identity()
-    user = User.query.filter(User.id == user_id).first()
+def add_favorites(product_id):
+    user_id = get_jwt_identity()
     product = Products.query.filter(Products.id == product_id).first()
     # PARA VALIDAR QUE EL PRODUCTO NO SE ENCUENTRA YA COMO FAVORITO
     favorite_id = Favorites.query.filter(Favorites.product_id == product_id).first()
     add_favorites = Favorites(user_id=user_id, product_id=product_id)
 
-    if not user is None and user_id == jwt_user_id:
+    if not product is None and product.avaliable == True:
 
-        if not product is None and product.avaliable == True:
+        if favorite_id is None:
 
-            if favorite_id is None:
+            db.session.add(add_favorites)
+            db.session.commit()
 
-                db.session.add(add_favorites)
-                db.session.commit()
+            return jsonify({"success": "product has been added to favorites"}), 201
 
-                return jsonify({"success": "product has been added to favorites"}), 201
+        return jsonify({"msg": "product already exists in favorites"}), 404
 
-            return jsonify({"msg": "product already exists in favorites"}), 404
-
-        return jsonify({"msg": "product doesn't exists"}), 404
-
-    return jsonify({"msg": "log in to be able to add to favorites"}), 404
+    return jsonify({"msg": "product doesn't exists"}), 404
 
 
 # ALL SHOPPING CART LIST ### PARA VERIFICACIÓN O PARA ADMINS ✔️
@@ -523,35 +494,27 @@ def user_shoppingcart(user_id):
 @jwt_required()
 def add_product_to_cart(product_id):
     user_id = get_jwt_identity()
-    user = User.query.get(user_id)
     product = Products.query.filter(Products.id == product_id).first()
     shoppingcart_id = ShoppingCart.query.filter(
         ShoppingCart.product_id == product_id
     ).first()
     add_shoppingCart = ShoppingCart(user_id=user_id, product_id=product_id)
 
-    if not user is None:
+    if not product is None and product.avaliable == True:
 
-        if not product is None and product.avaliable == True:
+        if shoppingcart_id is None:
 
-            if shoppingcart_id is None:
+            db.session.add(add_shoppingCart)
+            db.session.commit()
 
-                db.session.add(add_shoppingCart)
-                db.session.commit()
+            return (
+                jsonify({"success": "product has been added to shopping cart"}),
+                201,
+            )
 
-                return (
-                    jsonify({"success": "product has been added to shopping cart"}),
-                    201,
-                )
+        return jsonify({"msg": "product already exists in shopping cart"}), 404
 
-            return jsonify({"msg": "product already exists in shopping cart"}), 404
-
-        return jsonify({"msg": "product doesn't exists"}), 404
-
-    return (
-        jsonify({"msg": "login to be able to add products to your shopping cart"}),
-        404,
-    )
+    return jsonify({"msg": "product doesn't exists"}), 404
 
 
 # GET ALL POSTS (FEED) ✔️
@@ -576,10 +539,10 @@ def get_post():
 
 
 # GET EACH POST
-@api.route("/posts/<int:post_id>/")
+@api.route("/posts/<int:post_id>/", methods=["GET"])
 @jwt_required()
 def each_post(post_id):
-    jwt_user_id = get_jwt_identity()
+    user_id = get_jwt_identity()
     post = Post.query.filter(Post.id == post_id).first()
 
     if post is None:
@@ -589,29 +552,7 @@ def each_post(post_id):
     return jsonify({"post": post.serialize()}), 202
 
 
-# (GET) POST BY EACH USER ## PARA MIRAR EL FEED DE CADA USUARIO // PUEDEN MIRARLO LOGEADOS O NO ✔️
-@api.route("/feed/user/<int:user_id>/", methods=["GET"])
-def feed_post_user(user_id):
-    user = User.query.filter(User.id == user_id).first()
-    posts = Post.query.filter(Post.user_id == user_id).all()
-
-    all_user_post = []
-
-    if not user is None:
-
-        if len(posts) > 0:
-
-            for i in range(len(posts)):
-                all_user_post.append(posts[i].serialize())
-
-            return jsonify({"user posts": all_user_post}), 201
-
-        return jsonify({"msg": "This user not have posts to show"})
-
-    return jsonify({"msg": "This user doesn't exists"}), 404
-
-
-# (GET) OWN POST BY EACH USER - FEED DEL PERFIL DEL USUARIO ✔️
+# (GET) OWN POST BY EACH USER - FEED DEL PERFIL DEL USUARIO, TAMBIÉN SIRVE PARA LSO FEED DE LOS USUARIOS ✔️
 @api.route("/posts/user/<int:user_id>/", methods=["GET"])
 def post_user(user_id):
     user = User.query.filter(User.id == user_id).first()
@@ -633,17 +574,30 @@ def post_user(user_id):
     return jsonify({"msg": "This user doesn't exists"}), 404
 
 
-# DELETE POST ✔️
+# DELETE POST ❌ me da error en la linea 588 para poder condicionar a que otro usuario no pueda generar un delete a un post que no sea suyo
+# EN ESTA RUTA ADEMÁS DE ELIMINAR EL POST, ELIMINA TODO LO QUE DERIVA DE ÉL COMO COMENTARIOS Y LIKES
 @api.route("delete/posts/<int:post_id>/", methods=["DELETE"])
 @jwt_required()
 def delete_post(post_id):
     user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-    post = Post.query.filter(Post.id == post_id).filter(Post.user_id == user_id).first()
+    post = Post.query.filter(Post.id == post_id).first()
+    user_post = Post.query.filter(Post.user_id == user_id).first()
+    post_likes = Likes.query.filter(Likes.post_id == post_id).all()
+    post_comments = Comments.query.filter(Comments.post_id == post_id).all()
 
-    if not user is None:
+    if post.user_id == user_id:
 
         if not post is None:
+
+            for i in range(len(post_likes)):
+
+                db.session.delete(post_likes[i])
+                db.session.commit()
+
+            for i in range(len(post_comments)):
+
+                db.session.delete(post_comments[i])
+                db.session.commit()
 
             db.session.delete(post)
             db.session.commit()
@@ -652,7 +606,7 @@ def delete_post(post_id):
 
         return jsonify({"msg": "post doesn't exists in this user"}), 404
 
-    return jsonify({"msg": "login to delete this post"}), 404
+    return jsonify({"msg": "login to you can delete the post"}), 404
 
 
 # CATEGORIES ## ABIERTAS PARA LOGEADOS Y NO
@@ -671,33 +625,29 @@ def categories():
 
 
 # POST PRODUCTS ####### VALIDAR SI ESTA RELACIÓN ESTÁ BUENA PARA VENDEDOR (MIRAR EL MODEL DE POST) ✔️
-@api.route("/products/<int:seller_id>/", methods=["POST"])
+@api.route("/products/", methods=["POST"])
 @jwt_required()
-def post_products(seller_id):
+def post_products():
     name = request.json.get("name")
     description = request.json.get("description")
     price = request.json.get("price")
     quantity = request.json.get("quantity")
     avaliable = request.json.get("avaliable")
+
     user_id = get_jwt_identity()
     post_products = Products(
-        seller_id=seller_id,
+        seller_id=user_id,
         name=name,
         description=description,
         price=price,
         quantity=quantity,
         avaliable=avaliable,
     )
-    user = User.query.filter(User.id == seller_id).first()
 
-    if not user is None and seller_id == user_id:
+    db.session.add(post_products)
+    db.session.commit()
 
-        db.session.add(post_products)
-        db.session.commit()
-
-        return jsonify({"success": "product post successfully"}), 201
-
-    return jsonify({"msg": "log in to post products"}), 404
+    return jsonify({"success": "product post successfully"}), 201
 
 
 # PRODUCTS BY USER ### PARA TODOS QUE PUEDAN VER ✔️
@@ -823,16 +773,30 @@ def delete_products():
     return jsonify({"success": "all products has been delete"}), 201
 
 
-# DELETE EACH PRODUCT ✔️
+# DELETE EACH PRODUCT ❌ linea 786 la misma validación de arriba hecha vaina
 @api.route("/delete/products/<int:product_id>/", methods=["DELETE"])
 @jwt_required()
 def delete_product(product_id):
     user_id = get_jwt_identity()
     products = Products.query.filter(Products.id == product_id).first()
+    favorites_products = Favorites.query.filter(
+        Favorites.product_id == product_id
+    ).all()
+    shopping_cart_products = ShoppingCart.query.filter(
+        ShoppingCart.product_id == product_id
+    ).all()
 
     if products.seller_id == user_id:
 
-        if not products is None and products.avaliable == True:
+        if not products is None:
+
+            for i in range(len(favorites_products)):
+                db.session.delete(favorites_products[i])
+                db.session.commit()
+
+            for i in range(len(shopping_cart_products)):
+                db.session.delete(shopping_cart_products[i])
+                db.session.commit()
 
             db.session.delete(products)
             db.session.commit()
@@ -893,23 +857,18 @@ def purchased_products():
 @jwt_required()
 def user_purchased_products(user_id):
     jwt_user_id = get_jwt_identity()
-    user = User.query.filter(User.id == user_id).first()
     user_purchased_products = Buy.query.filter(Buy.user_id == user_id).all()
 
     user_products = []
 
-    if not user is None and jwt_user_id == user_id:
+    if len(user_purchased_products) > 0:
 
-        if len(user_purchased_products) > 0:
+        for i in range(len(user_purchased_products)):
+            user_products.append(user_purchased_products[i].serialize())
 
-            for i in range(len(user_purchased_products)):
-                user_products.append(user_purchased_products[i].serialize())
+        return jsonify({"user purshased products": user_products}), 201
 
-            return jsonify({"user purshased products": user_products}), 201
-
-        return jsonify({"msg": "this user doesn't has buyed products"})
-
-    return jsonify({"msg": "log in to see your purchased products"}), 404
+    return jsonify({"msg": "this user doesn't has buyed products"})
 
 
 # BUY PRODUCT ✔️
