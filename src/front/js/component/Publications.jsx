@@ -2,7 +2,7 @@ import React from "react";
 
 export const Publications = (props) => {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid col-12">
       <div className="col d-flex justify-content-center">
         <div className="header">
           <div className="photo-header">

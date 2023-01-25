@@ -4,7 +4,7 @@ export const CreateaPost=(props)=>{
 
 
     return(props.trigger)?(
-        <div className="container">
+        <div className="container ">
                  <div className="dropdown dropdown-post">
               <button className="btn  dropdown-toggle category-select" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                  Select a Category
