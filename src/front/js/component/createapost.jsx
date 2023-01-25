@@ -39,7 +39,7 @@ export const CreateaPost=(props)=>{
 
  <h3 id="h3post">Share your thoughts on Sozial!</h3>
  <div>
- <textarea class="form-control text-area" id="exampleFormControlTextarea1" rows="3" placeholder="Text"></textarea>
+ <textarea className="form-control text-area" id="exampleFormControlTextarea1" rows="3" placeholder="Text"></textarea>
  </div>
  <div>
  <Image/>

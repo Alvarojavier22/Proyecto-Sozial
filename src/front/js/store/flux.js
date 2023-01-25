@@ -1,85 +1,83 @@
+/*eslint disabled */
+
 const apiUrl = process.env.BACKEND_URL
 
-const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
+const getState = ({
+    getStore,
+    getActions,
+    setStore
+}) => {
+    return {
+        store: {
+            message: null,
+            demo: [{
+                    title: "FIRST",
+                    background: "white",
+                    initial: "white"
+                },
+                {
+                    title: "SECOND",
+                    background: "white",
+                    initial: "white"
+                }
+            ]
+        },
+        actions: {
 
 
-			signUp: async (user)=>{
-				let result=await fetch(`${apiUrl}/api/signup`,{
-					method: "POST",
-					body: JSON.stringify(user),
-					headers:{
-						"Content-Type": "application/json",
-						"Access-Control-Allow-Origin": "*"
+            signUp: async (user) => {
+                let result = await fetch(`${apiUrl}/api/signup`, {
+                    method: "POST",
+                    body: JSON.stringify(user),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
 
-					}
-				})
-				result= await result.json()
-				console.log("result", result)
-			},
-
-
+                    }
+                })
+                result = await result.json()
+                console.log("result", result)
+            },
 
 
+            // Use getActions to call a function within a fuction
+            exampleFunction: () => {
+                getActions().changeColor(0, "green");
+            },
 
+            getMessage: async () => {
+                try {
+                    // fetching data from the backend
+                    const resp = await fetch(apiUrl)
+                    const data = await resp.json()
+                    setStore({
+                        message: data.message
+                    })
+                    // don't forget to return something, that is how the async resolves
+                    return data;
+                } catch (error) {
+                    console.log("Error loading message from backend", error)
+                }
+                //console.log(process.env.BACKEND_URL)
+            },
+            changeColor: (index, color) => {
+                //get the store
+                const store = getStore();
 
+                //we have to loop the entire demo array to look for the respective index
+                //and change its color
+                const demo = store.demo.map((elm, i) => {
+                    if (i === index) elm.background = color;
+                    return elm;
+                });
 
-
-
-
-
-
-
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(apiUrl)
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-				//console.log(process.env.BACKEND_URL)
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+                //reset the global store
+                setStore({
+                    demo: demo
+                });
+            }
+        }
+    };
 };
 
 export default getState;
