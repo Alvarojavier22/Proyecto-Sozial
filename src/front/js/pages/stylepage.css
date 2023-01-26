@@ -682,9 +682,9 @@ phone: 480px,     sm
 	background:none;
 	padding: 1rem;
 	border: 1px solid #24446c;
-	position: absolute;
+	position: relative;
 	top: 5%;
-	left: 5%;
+	left: 0%;
 
 	width: 90%;
 }
@@ -699,7 +699,7 @@ phone: 480px,     sm
 .category-select{
 	background: #252ba6;
 	color: white;
-	padding: .5rem 5.5rem;
+	padding: .5rem 4rem;
 	margin-bottom:  2rem;	
 }
 
@@ -719,7 +719,7 @@ phone: 480px,     sm
 	justify-content: end;
 }
 .cancel-product, .post-product{
-	padding: .2rem 1rem;
+	padding: .1rem 1rem;
 	border-radius: 1rem;
 	font-size: 1.2rem;
 }
@@ -727,11 +727,61 @@ phone: 480px,     sm
 	border: 2px solid black;
 }
 .post-product{
-	background-color: #38133d;
+	background-color: #a489f6;
 	margin-left: .5rem;
+}
+.cancel-product{
+	background: #5879a0;
+}
+
+.ul-post{
+	background: linear-gradient( #24446c, #5a56b1, #24446c) ;
+	
+}
+.li-post{
+	
+	color: rgb(255, 255, 255)
 }
 
 
+.buttonsozial{
+	display: flex;
+	justify-content: space-around;
+	
+}
+
+.buttonchange{
+	border-radius: 1.5rem;
+	margin-bottom: 1rem;
+	font-size: .9rem;
+	background-color: #953dc8;
+	border: none;
+	padding: .2em .2em;
+}
+
+.text-area{
+	margin-bottom: 1.2rem;
+	margin-top: .3rem;
+	background: none;
+	border: 1px solid #331d47
+}
+.text-area::placeholder{
+	color: white;
+}
+.text-area:focus{
+	color: white;
+	background: none;
+}
+#h3post{
+	color: white;
+}
+#h3post::after{
+	content:"";
+	display: block;
+	height: 1px;
+	width: 50px;
+	color: rgb(0, 0, 0);
+}
 @media (min-width: 480px){
 	.post-pro-container{
 		background:none;
@@ -740,5 +790,75 @@ phone: 480px,     sm
 		margin: auto;
 		position: absolute;
 		width: 90%;
+		left: 5%;
 	}
+	.buttonsozial{
+		justify-content: space-around;
+	}
+	.buttonchange{
+		font-size: 1.3rem;
+		padding: .2rem .3rem;
+	}
+	#h3post{
+		font-size: 1.6rem;
+		margin-bottom: 1rem;
+	}
+	.text-area{
+		height: 7rem;
+		font-size: 1.5rem;
+	}
+	.dropdown-post{
+		display: flex;
+		justify-content: center;	
+	}
+}
+
+@media(min-width: 700px){
+	.post-pro-container{
+		left: 5%;
+		max-width: 900px;
+	}
+}
+
+@media (min-width:1028px){
+	.post-pro-container{
+		left: 15%;
+		
+	}
+}
+
+
+
+
+
+
+
+/* Categories*/
+
+.categories-bckgr{
+	background-color: #000;
+	height: 100vh;
+}
+.categories-holder{
+	background-color: grey;
+	padding: 0;
+}
+.Buttonscategories{
+	display: flex;
+	font-size: 1.3rem;
+	margin-bottom: 1.5em;
+	padding-bottom: 1rem;
+	background-color: rgb(0, 0, 0);
+
+	
+}
+
+.btncat1{
+	margin-right: auto;
+}
+.btncat2{
+	padding-top: .22rem ;
+}
+.btncat3{
+	margin-left: auto;
 }
