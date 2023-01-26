@@ -834,3 +834,31 @@ phone: 480px,     sm
 
 
 /* Categories*/
+
+.categories-bckgr{
+	background-color: #000;
+	height: 100vh;
+}
+.categories-holder{
+	background-color: grey;
+	padding: 0;
+}
+.Buttonscategories{
+	display: flex;
+	font-size: 1.3rem;
+	margin-bottom: 1.5em;
+	padding-bottom: 1rem;
+	background-color: rgb(0, 0, 0);
+
+	
+}
+
+.btncat1{
+	margin-right: auto;
+}
+.btncat2{
+	padding-top: .22rem ;
+}
+.btncat3{
+	margin-left: auto;
+}
