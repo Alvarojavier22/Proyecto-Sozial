@@ -307,7 +307,7 @@ def post_comments(post_id):
     return jsonify({"msg": "post doesn't exists"}), 404
 
 
-# ALL COMMENTS ## ARREGLAR PARA ADMIN ✔️
+# ALL COMMENTS ## ARREGLAR PARA ADMIN ❌
 @api.route("/comments/", methods=["GET"])
 def get_comments():
     comments = Comments.query.filter(Comments.__tablename__ == "comments").all()
@@ -526,19 +526,17 @@ def get_post():
     posts = Post.query.filter(Post.__tablename__ == "post").all()
     all_posts = []
 
-    if not user_id is None:
+    for i in range(len(posts)):
+        all_posts.append(posts[i].serialize())
 
-        for i in range(len(posts)):
-            all_posts.append(posts[i].serialize())
+    if len(all_posts) > 0:
 
-        if len(all_posts) > 0:
+        return jsonify({"all posts": all_posts}), 200
 
-            return jsonify({"all posts": all_posts}), 200
-
-    return jsonify({"msg": "not exists any post to show, please login"}), 404
+    return jsonify({"msg": "not exists any post to show"}), 404
 
 
-# GET EACH POST
+# GET EACH POST ✔️
 @api.route("/posts/<int:post_id>/", methods=["GET"])
 @jwt_required()
 def each_post(post_id):
@@ -574,7 +572,7 @@ def post_user(user_id):
     return jsonify({"msg": "This user doesn't exists"}), 404
 
 
-# DELETE POST ❌ me da error en la linea 588 para poder condicionar a que otro usuario no pueda generar un delete a un post que no sea suyo
+# DELETE POST ✔️
 # EN ESTA RUTA ADEMÁS DE ELIMINAR EL POST, ELIMINA TODO LO QUE DERIVA DE ÉL COMO COMENTARIOS Y LIKES
 @api.route("delete/posts/<int:post_id>/", methods=["DELETE"])
 @jwt_required()
@@ -609,7 +607,7 @@ def delete_post(post_id):
     return jsonify({"msg": "login to you can delete the post"}), 404
 
 
-# CATEGORIES ## ABIERTAS PARA LOGEADOS Y NO
+# CATEGORIES ## ABIERTAS PARA LOGEADOS Y NO ✔️
 @api.route("/products/categories/", methods=["GET"])
 def categories():
     categories = Categories.query.filter(Categories.__tablename__ == "categories").all()
@@ -773,12 +771,12 @@ def delete_products():
     return jsonify({"success": "all products has been delete"}), 201
 
 
-# DELETE EACH PRODUCT ❌ linea 786 la misma validación de arriba hecha vaina
+# DELETE EACH PRODUCT ✔️
 @api.route("/delete/products/<int:product_id>/", methods=["DELETE"])
 @jwt_required()
 def delete_product(product_id):
     user_id = get_jwt_identity()
-    products = Products.query.filter(Products.id == product_id).first()
+    product = Products.query.filter(Products.id == product_id).first()
     favorites_products = Favorites.query.filter(
         Favorites.product_id == product_id
     ).all()
@@ -786,9 +784,9 @@ def delete_product(product_id):
         ShoppingCart.product_id == product_id
     ).all()
 
-    if products.seller_id == user_id:
+    if product.seller_id == user_id:
 
-        if not products is None:
+        if not product is None:
 
             for i in range(len(favorites_products)):
                 db.session.delete(favorites_products[i])
@@ -798,7 +796,7 @@ def delete_product(product_id):
                 db.session.delete(shopping_cart_products[i])
                 db.session.commit()
 
-            db.session.delete(products)
+            db.session.delete(product)
             db.session.commit()
 
             return jsonify({"success": "The product has been delete successfully"}), 201
@@ -872,10 +870,10 @@ def user_purchased_products(user_id):
 
 
 # BUY PRODUCT ✔️
-@api.route("/products/buy/<int:user_id>/<int:product_id>/", methods=["POST"])
+@api.route("/products/buy/<int:product_id>/", methods=["POST"])
 @jwt_required()
 def buy_product(user_id, product_id):
-    jwt_user_id = get_jwt_identity()
+    user_id = get_jwt_identity()
     user = User.query.filter(User.id == user_id).first()
     product = (
         Products.query.filter(Products.id == product_id)
@@ -884,18 +882,14 @@ def buy_product(user_id, product_id):
     )
     buy = Buy(user_id=user_id, product_id=product_id)
 
-    if not user is None and user_id == jwt_user_id:
+    if not product is None:
 
-        if not product is None:
+        db.session.add(buy)
+        db.session.commit()
 
-            db.session.add(buy)
-            db.session.commit()
+        return jsonify({"success": "this product has been buy"}), 201
 
-            return jsonify({"success": "this product has been buy"}), 201
-
-        return jsonify({"msg": "this product doesn't exists"}), 404
-
-    return jsonify({"msg": "log in to get products"}), 404
+    return jsonify({"msg": "this product doesn't exists"}), 404
 
 
 @api.route("/uploadPhoto", methods=["POST"])
