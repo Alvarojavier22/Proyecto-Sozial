@@ -387,22 +387,22 @@ def delete_comments(post_id, comment_user_id):
 
 
 # GENERATE POSTS ✔️
-@api.route("/posts", methods=["POST"])
+@api.route("/posts/<int:user_id>/", methods=["POST"])
 @jwt_required()
-def post():
-    user_id = get_jwt_identity()
+def post(user_id):
+    jwt_user_id = get_jwt_identity()
     text = request.json.get("text")
-    print(text)
+
     post = Post(user_id=user_id, text=text)
 
-    
+    if user_id == jwt_user_id:
 
-    db.session.add(post)
-    db.session.commit()
+        db.session.add(post)
+        db.session.commit()
 
-    return jsonify({"success": "publicaction generate successfully"}), 200
+        return jsonify({"success": "publicaction generate successfully"}), 200
 
-    #return jsonify({"msg": "login for to be able generated posts"}), 404
+    return jsonify({"msg": "login for to be able generated posts"}), 404
 
 
 # ALL FAVORITES LIST ## SOLO PARA VERIFICAR AUNQUE PUEDE SER FUNCIÓN ADMIN
