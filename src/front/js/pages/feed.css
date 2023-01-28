@@ -2,61 +2,71 @@
 
 
 .body {
-  background-color: #f8f9fa;
+    background-color: #f8f9fa;
 }
+
 .left-col {
-  background-color: #f8f9fa;
-  border-radius: 0px 5px 5px 0px;
-  position: relative;
+    background-color: #f8f9fa;
+    border-radius: 0px 5px 5px 0px;
+    position: relative;
 }
+
 .right-col {
-  background-color: #f8f9fa;
-  border-radius: 5px 0px 0px 5px;
-  position: relative;
+    background-color: #f8f9fa;
+    border-radius: 5px 0px 0px 5px;
+    position: relative;
 }
+
 .left-menu {
-  position: fixed;
-  padding-left: 2rem;
-  padding-right: 2rem;
+    position: fixed;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
+
 .right-menu {
-  position: fixed;
-  padding-left: 2rem;
-  padding-right: 2rem;
+    position: fixed;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
+
 .post-dropdown-menu {
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: 5px;
-  display: none;
-  position: absolute;
-  z-index: 1;
-  left: calc(100% - 250px);
-  min-width: 250px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+    position: absolute;
+    z-index: 1;
+    left: calc(100% - 250px);
+    min-width: 250px;
 }
 
 .post-menu-item {
-  border-radius: 5px;
-  padding: 5px;
+    border-radius: 5px;
+    padding: 5px;
 }
+
 .post-menu-item:hover {
-  background-color: #d3d3d3;
+    background-color: #d3d3d3;
 }
+
 .post-dropdown-menu a {
-  color: #000000;
-  text-decoration: none;
-  padding: 2px;
+    color: #000000;
+    text-decoration: none;
+    padding: 2px;
 }
+
 .show {
-  display: block;
+    display: block;
 }
+
 .right-menu-box {
-  background-color: #ffffff;
-  border-radius: 5px;
-  padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 2rem;
 }
+
 .right-menu-box a {
-  color: #000000;
-  text-decoration: none;
-  padding: 2px;
+    color: #000000;
+    text-decoration: none;
+    padding: 2px;
 }
