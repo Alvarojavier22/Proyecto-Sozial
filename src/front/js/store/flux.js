@@ -21,7 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			signUp: async (user)=>{
-				let result=await fetch(`${apiUrl}/api/signup`,{
+				let result=await fetch(`${apiUrl}/api/signup/`,{
 					method: "POST",
 					body: JSON.stringify(user),
 					headers:{
@@ -35,6 +35,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
+			GeneratePost: async(post)=>{
+				let result=await fetch(`${apiUrl}/api/posts/`,{
+					method: "POST",
+					body: JSON.stringify(post),
+					headers:{
+						"Authorization": "Bearer " +"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NDYwOTg1NSwianRpIjoiN2NiY2ZkNDUtMjUzNC00NjE3LWEwNmYtOGJjNGU3MjcyNGFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNjc0NjA5ODU1LCJleHAiOjE2NzQ2MTA3NTUsInJvbGUiOiJ1c2VyIn0.ZRvPrfk-b3FcepDch37KxL_kpZw5g9zBI_t6UtSUmJg",
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": "*"
+					}
+				})
+				result= await result.json()
+				console.log("result", result)
+			},
+
+			login: async(user)=>{
+				let result=await fetch(`${apiUrl}/api/login/`,{
+				method: "POST",
+				body: JSON.stringify(user),
+				headers:{
+					"Content-Type": "application/json",
+					"Access-Control-Allow-Origin": "*"
+				}
+
+				})
+				result= await result.json()
+				console.log("result", result)
+			},
 
 
 

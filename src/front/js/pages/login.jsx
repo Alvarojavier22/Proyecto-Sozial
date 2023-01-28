@@ -1,14 +1,18 @@
-import  React  from "react";
+import  React, { useContext }  from "react";
 import "./stylepage.css"
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Context } from "../store/appContext";
 export const Login=()=>{
+
+const {store, actions}=useContext(Context)	
+
 const [loginPassHide, setLoginPassHide]=useState(true)
-
-
-
+const [email, setEmail]=useState("")
+const [password, setPassword]=useState("")
+let user = {email,password}
 	
-	
+	console.log(user)
     return(
         <div className="container-fluid" id="container">
 	<div className="screen">
@@ -16,14 +20,14 @@ const [loginPassHide, setLoginPassHide]=useState(true)
 			<form className="login">
 				<div className="login__field">
 					<i className="login__icon fas fa-user"></i>
-					<input type="text" className="login__input" placeholder="User name / Email"/>
+					<input type="text" className="login__input" onChange={(e)=>setEmail(e.target.value)} placeholder="User name / Email"/>
 				</div>
 				<div className="login__field">
 					<i className="login__icon fas fa-lock"></i>
-					<input type={`${ loginPassHide==true? "password": "text"}`} className="login__input" placeholder="Password"/>
+					<input type={`${ loginPassHide==true? "password": "text"}`} onChange={(e)=>setPassword(e.target.value)} className="login__input" placeholder="Password"/>
 					<i className={`far fa-eye${ loginPassHide==true? "": "-slash"} `} onClick={()=>loginPassHide==true?setLoginPassHide(false):setLoginPassHide(true)} id="togglePassword" style={{"marginLeft": "-30px", "cursor": "pointer"}}></i>
 				</div>
-				<Link to="/feed" id="linklogin"><button className="button login__submit">
+				<Link to="/feed" id="linklogin"><button onClick={()=>(actions.login(user))} className="button login__submit">
 					<span className="button__text">Log In Now</span>
 					<i className="button__icon fas fa-chevron-right"></i>
 				</button>	</Link>			
