@@ -837,7 +837,7 @@ phone: 480px,     sm
 
 .categories-bckgr{
 	background-color: #000;
-	height: 100vh;
+	height: 100%;
 }
 .categories-holder{
 	background-color: grey;
@@ -861,4 +861,9 @@ phone: 480px,     sm
 }
 .btncat3{
 	margin-left: auto;
+}
+@media(min-width:568px){
+	.categories-bckgr{
+		height:100%;
+	}
 }

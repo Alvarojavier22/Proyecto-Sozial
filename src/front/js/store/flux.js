@@ -21,7 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			signUp: async (user)=>{
-				let result=await fetch(`${apiUrl}/api/signup`,{
+				let result=await fetch(`${apiUrl}/api/signup/`,{
 					method: "POST",
 					body: JSON.stringify(user),
 					headers:{
@@ -48,7 +48,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("result", result)
 			},
 
+			login: async(user)=>{
+				let result=await fetch(`${apiUrl}/api/login/`,{
+				method: "POST",
+				body: JSON.stringify(user),
+				headers:{
+					"Content-Type": "application/json",
+					"Access-Control-Allow-Origin": "*"
+				}
 
+				})
+				result= await result.json()
+				console.log("result", result)
+			},
 
 
 
