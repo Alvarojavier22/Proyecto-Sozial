@@ -50,7 +50,6 @@ class Products(db.Model):
     # sell_id=db.Column(db.Integer, db.ForeignKey("user.id"))
     # seller=db.relationship("user")
 
-
     def __repr__(self):
         return f"<Products {self.name}>"
 
@@ -237,4 +236,3 @@ class Imagen(db.Model):
             "resource_path": self.resource_path,
             "signed_url": signed_url,
         }
-
