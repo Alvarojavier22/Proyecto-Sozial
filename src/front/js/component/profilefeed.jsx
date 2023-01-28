@@ -3,7 +3,7 @@ import { Posts } from "./Posts.jsx";
 import { ProfileInfo } from "./ProfileInfo.jsx";
 import { Publications } from "./Publications.jsx";
 
-export const Feed = () => {
+export const FeedSocial= () => {
   return (
     <div className="container-fluid">
       <div className="row">
