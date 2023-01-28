@@ -740,6 +740,7 @@ phone: 480px,     sm
 		margin: auto;
 		position: absolute;
 		width: 90%;
+	}
 
 	.text-area{
 		height: 7rem;

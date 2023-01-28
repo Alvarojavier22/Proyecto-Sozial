@@ -25,13 +25,13 @@ export const PostFeed = () => {
         </div>
       </div>
       <img 
-        src="images/pexels-imad-clicks-8303561.jpg" 
+        src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/podcasts/thumbnails/2147495873/episodes/5xoXBI7aTg6B1GljjwQL_coverinsta_.jpg"
         className="card-img-top img-fluid" 
         alt="Vacation Picture" 
         style={{borderRadius: '0px'}}
       />
       <div className="card-body">
-        <h5 className="card-title">My Vacation in Hawaii</h5>
+        <h5 className="card-title">My Computer setup</h5>
         <p className="card-text">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, 
           magna id pellentesque blandit, nisl nisl euismod nisi, vel suscipit 
