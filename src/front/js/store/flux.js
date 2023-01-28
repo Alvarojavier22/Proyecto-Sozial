@@ -34,6 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("result", result)
 			},
 
+
 			GeneratePost: async(post)=>{
 				let result=await fetch(`${apiUrl}/api/posts/`,{
 					method: "POST",
