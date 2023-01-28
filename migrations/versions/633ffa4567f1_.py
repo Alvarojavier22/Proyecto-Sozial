@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8ec08ddd1358
+Revision ID: 633ffa4567f1
 Revises: 
-Create Date: 2023-01-20 02:55:30.168692
+Create Date: 2023-01-26 01:41:04.172207
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8ec08ddd1358'
+revision = '633ffa4567f1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,7 +27,6 @@ def upgrade():
     op.create_table('imagen',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('resource_path', sa.String(length=250), nullable=False),
-    sa.Column('description', sa.String(length=200), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('resource_path')
     )
@@ -49,7 +48,9 @@ def upgrade():
     sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('avaliable', sa.Boolean(), nullable=False),
     sa.Column('categorie_id', sa.Integer(), nullable=True),
+    sa.Column('picture_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['categorie_id'], ['categories.id'], ),
+    sa.ForeignKeyConstraint(['picture_id'], ['imagen.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -59,8 +60,8 @@ def upgrade():
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=280), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
-    sa.Column('picture_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['picture_id'], ['imagen.id'], ),
+    sa.Column('profile_picture_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['profile_picture_id'], ['imagen.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
