@@ -381,7 +381,7 @@ def post(user_id):
     db.session.add(post)
     db.session.commit()
 
-        return jsonify({"success": "publicaction generate successfully"}), 200
+    return jsonify({"success": "publicaction generate successfully"}), 200
 
 
 # ALL FAVORITES LIST ## SOLO PARA VERIFICAR AUNQUE PUEDE SER FUNCIÓN ADMIN
