@@ -116,6 +116,7 @@ def user_login():
         return jsonify({"msg": "invalid password"}), 401
 
 
+
 # CHANGE PASSWORD ✔️
 @api.route("/user/change_password/", methods=["PUT"])
 @jwt_required()
