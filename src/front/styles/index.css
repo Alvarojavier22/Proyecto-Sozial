@@ -1,7 +1,7 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
-@import 'feed.css';
+/*@import 'feed.css'; */
 
 .profile-nav {
   display: flex;
@@ -220,6 +220,10 @@
   margin: auto;
   margin-top: 10px;
 }
+.feedcont{
+  margin-top: 2rem;
+}
+
 
 /*@Media query*/
 @media (max-width: 600px) {
@@ -228,4 +232,17 @@
     border: 2px solid rgb(198, 198, 198);
     width: 30rem;
   }
+}
+
+
+
+
+/*navbar*/
+
+.navcont{
+  position:fixed;
+  z-index: 1;
+}
+.feedheader{
+ z-index: 1;
 }

@@ -6,7 +6,7 @@ import { Feed } from "./pages/feed.jsx";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-
+import { Categories } from "./pages/categories.jsx";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Login} from"./pages/login.jsx";
@@ -37,7 +37,8 @@ const Layout = () => {
                         <Route element={<Newpass/>} path="/newpass"/>
                         <Route element={<Profile/>} path="/profile"/>
                         <Route element={<Cart/>} path="/cart"/>
-                        <Route element={<PostProducts/>} path="/postproduct"/> 
+                        <Route element={<PostProducts/>} path="/postproduct"/>
+                        <Route element={<Categories/>} path="/categories"/>
                     </Routes>
              
             </BrowserRouter>

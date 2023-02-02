@@ -773,7 +773,14 @@ phone: 480px,     sm
 
 
 /* Categories*/
-
+.catheader{
+	background-color: #c7bdbd;
+	width: 100%;
+	padding: .5rem;
+	position: fixed;
+	z-index: 2;
+	
+}
 .categories-bckgr{
 	background-color: #000;
 	height: 100%;
@@ -781,26 +788,14 @@ phone: 480px,     sm
 .categories-holder{
 	background-color: grey;
 	padding: 0;
-}
-.Buttonscategories{
-	display: flex;
-	font-size: 1.3rem;
-	margin-bottom: 1.5em;
-	padding-bottom: 1rem;
-	background-color: rgb(0, 0, 0);
-
-	
+	position: relative;
+	z-index:1 ;
 }
 
-.btncat1{
-	margin-right: auto;
+.content{
+	padding-top: 5rem;
 }
-.btncat2{
-	padding-top: .22rem ;
-}
-.btncat3{
-	margin-left: auto;
-}
+
 @media(min-width:568px){
 	.categories-bckgr{
 		height:100%;

@@ -63,11 +63,31 @@
 }
 
 
+/*CATEGORIES*/
 
+.categcontainer h1{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.cardholder{
+    margin-bottom: 2rem;
+    border-radius: .5rem;
+}
 
-
-
-
-
+@media(min-width:480px){
+    .cardholder{
+        max-width: 100%;
+    }
+    .cardholder{
+        max-width: 400px;
+    }
+    .cardcont img{
+        max-width: 400px;
+        
+    }
+    .cardcont{
+        
+    }
+}
 
 
