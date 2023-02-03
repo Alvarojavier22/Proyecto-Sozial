@@ -11,7 +11,7 @@ export const Posts = (props) => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="write a post here"
+                placeholder="What are you thinking?"
                 aria-label="Text input with radio button"
               />
             </div>
