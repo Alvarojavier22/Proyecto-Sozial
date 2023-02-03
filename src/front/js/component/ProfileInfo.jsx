@@ -14,7 +14,7 @@ export const ProfileInfo = (props) => {
       </div>
       <div className="followers d-flex justify-content-center">
         <strong>
-          <p>{props.followersNumber} followers</p>
+          <p>{props.followersNumber} Followers</p>
         </strong>
       </div>
       <div className="d-flex justify-content-center">
