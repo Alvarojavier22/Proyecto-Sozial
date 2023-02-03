@@ -23,33 +23,22 @@ export const ProfileNav = () => {
             </a>
             <h4 style={{ paddingTop: "8px" }}>username</h4>
             <div className="photo-arrow" style={{ marginLeft: "20px" }}>
-              <div>
-                <img
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "100%",
-                  }}
-                  src="https://wl-genial.cf.tsp.li/resize/728x/jpg/91b/430/964a9c5ac9933cc012d0bd80be.jpg"
-                />
-              </div>
+              <img
+                style={{ width: "45px", height: "45px", borderRadius: "100%" }}
+                src="https://wl-genial.cf.tsp.li/resize/728x/jpg/91b/430/964a9c5ac9933cc012d0bd80be.jpg"
+              />
             </div>
-            <div>
-              <form
-                className="d-flex"
-                style={{ marginLeft: "20px", width: "110%" }}
-              >
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search on sozial"
-                  aria-label="Search"
-                />
-                <button className="btn btn-outline-success" type="submit">
-                  Search
-                </button>
-              </form>
-            </div>
+            <form className="d-flex" style={{ marginLeft: "20px", width: "400px" }}>
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search on sozial"
+                aria-label="Search"
+              />
+              <button className="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
           </div>
           <div className="right-nav d-flex justify-content-around">
             <svg
