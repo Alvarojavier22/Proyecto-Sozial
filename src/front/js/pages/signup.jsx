@@ -81,7 +81,7 @@ const {store, actions}=useContext(Context)
                             
                             
                             <div className="signbtn">
-                                <Link to={`${password==confirmpass?"/feed":"#"}`}><button onClick={checkinputs(inputs)==false?()=>(actions.signUp(inputs)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
+                                <Link to={`${password==confirmpass?"/feed":"#"}`}><button onClick={checkinputs(inputs)==false?()=>(actions.signUp(item)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
 
                             </div>
                     </form>

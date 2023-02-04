@@ -27,6 +27,7 @@ function selectContent(content){
                     <Link to="/feed"><button>Home</button></Link>
                     <Link to="/"><button>Login</button></Link>
                     <Link to="/signup"><button>Signup</button></Link>
+                    <Link to="/postproduct"><button>Sell</button></Link>
                     <div class="dropdown ms-auto">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Categories

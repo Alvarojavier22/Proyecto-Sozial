@@ -12,7 +12,8 @@ const [email, setEmail]=useState("")
 const [password, setPassword]=useState("")
 let user = {email,password}
 	
-	console.log(user)
+	
+
     return(
         <div className="container-fluid" id="container">
 	<div className="screen">
