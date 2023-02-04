@@ -9,15 +9,15 @@ const getState = ({
         store: {
             message: null,
             demo: [{
-                title: "FIRST",
-                background: "white",
-                initial: "white",
-            },
-            {
-                title: "SECOND",
-                background: "white",
-                initial: "white",
-            },
+                    title: "FIRST",
+                    background: "white",
+                    initial: "white",
+                },
+                {
+                    title: "SECOND",
+                    background: "white",
+                    initial: "white",
+                },
             ],
         },
         actions: {
@@ -73,7 +73,7 @@ const getState = ({
                     const resp = await fetch(apiUrl);
                     const data = await resp.json();
                     setStore({
-                        message: data.message
+                        message: data.message,
                     });
                     // don't forget to return something, that is how the async resolves
                     return data;
@@ -95,7 +95,7 @@ const getState = ({
 
                 //reset the global store
                 setStore({
-                    demo: demo
+                    demo: demo,
                 });
             },
         },
