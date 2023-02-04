@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
+import { TermsAndConditions } from "./pages/termsandconditions.jsx"
 import { Feed } from "./pages/feed.jsx";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -27,6 +28,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                
                     <Routes>
+                        <Route element={<TermsAndConditions/>} path="/termsandconditions"/>
                         <Route element={<Feed />} path="/feed" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
