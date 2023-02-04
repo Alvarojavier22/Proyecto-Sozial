@@ -74,7 +74,10 @@ const {store, actions}=useContext(Context)
 
                                 
                                 <label className="form-check-label" htmlFor="flexCheckDefault">
-                                     I accept the <Link to="#" id="linksign">terms of use</Link> & <Link to="#" id="linksign">privacy policy</Link>
+                                     I accept the <label className="form-check-label" htmlFor="flexCheckDefault">
+  <Link to="/termsandconditions" id="linksign">terms of use</Link> & <Link to="/termsandconditions" id="linksign">privacy policy</Link>
+</label>
+
                                  </label>
                             </div>
 
