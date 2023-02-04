@@ -260,3 +260,86 @@
 .feedheader {
   z-index: 1;
 }
+
+/*PublicTextPost*/
+
+.principal-div {
+  height: 100%;
+  width: 100%;
+}
+
+.public-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: rgb(0, 0, 0, 0.8);
+  position: fixed;
+  z-index: 2000;
+}
+
+.equis {
+  cursor: pointer;
+}
+
+.public-container-child {
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 600px;
+  background: white;
+}
+
+.public-post-header {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  padding: 0px;
+}
+
+.public-post-header svg {
+  fill: red;
+  cursor: pointer;
+}
+
+#form-control {
+  height: 120px;
+}
+
+.border-header-int {
+  margin: auto;
+  margin-top: 10px;
+  border: solid 1px rgb(198, 198, 198);
+  width: 90%;
+}
+
+.img-post {
+  border-radius: 100%;
+  margin: 5px;
+  height: 8%;
+  width: 8%;
+}
+
+.input-container {
+  height: 120px;
+  border-radius: 10px;
+  border: 1px solid rgb(198, 198, 198);
+  padding: 10px;
+}
+
+.form-container {
+  border: none;
+}
+
+.flexed {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.public-post-button {
+  font-size: 10px;
+  margin-left: 10px;
+}
