@@ -2,7 +2,8 @@ import React from "react";
 
 export const PublicTextPost = ({ display, set }) => {
   const HidePost = (e) => {
-    if (!e.target.classList.contains("public-container-child")) set("none");
+    if (e.target.classList.contains("public-container")) set("none");
+    if (e.target.classList.contains("bi-x")) set("none");
   };
 
   return (
@@ -16,22 +17,23 @@ export const PublicTextPost = ({ display, set }) => {
         <div className="public-post-header">
           <h5>Create post</h5>
           <svg
+            onClick={HidePost}
             xmlns="http://www.w3.org/2000/svg"
             width="30"
             height="30"
             fill="currentColor"
-            class="bi bi-x"
+            className="bi bi-x"
             viewBox="0 0 16 16"
           >
             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
           </svg>
         </div>
         <hr></hr>
-        <div className="input-container">
-          <div className="form-container">
-            <p>¿What are you thinking?</p>
-          </div>
-        </div>
+        <textarea
+          id="form-control"
+          className="form-control"
+          placeholder="¿What are you thinking?"
+        ></textarea>
         <div className="flexed">
           <div className="d-flex align-items-center">
             <img
@@ -46,7 +48,7 @@ export const PublicTextPost = ({ display, set }) => {
               width="30"
               height="30"
               fill="currentColor"
-              class="bi bi-image"
+              className="bi bi-image"
               viewBox="0 0 16 16"
             >
               <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />

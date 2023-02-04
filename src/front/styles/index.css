@@ -279,11 +279,13 @@
   z-index: 2000;
 }
 
+.equis {
+  cursor: pointer;
+}
+
 .public-container-child {
   padding: 20px;
   border-radius: 5px;
-  height: 40%;
-  max-height: 400px;
   width: 80%;
   max-width: 600px;
   background: white;
@@ -298,6 +300,11 @@
 
 .public-post-header svg {
   fill: red;
+  cursor: pointer;
+}
+
+#form-control {
+  height: 120px;
 }
 
 .border-header-int {
