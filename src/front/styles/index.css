@@ -4,228 +4,228 @@
 @import 'feed.css';
 
 .profile-nav {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
-.ProfileInfo-container {
-  border: 1px solid rgb(198, 198, 198);
-  box-shadow: 10px black;
-  font-size: 20px;
-  padding: 40px;
-  width: 90%;
-  margin: 40px 20px;
+i.ProfileInfo-container {
+    border: 1px solid rgb(198, 198, 198);
+    box-shadow: 10px black;
+    font-size: 20px;
+    padding: 40px;
+    width: 90%;
+    margin: 40px 20px;
 }
 
 .ProfileInfo-container * {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .ProfileInfo-container img {
-  border-radius: 100%;
-  height: 100px;
-  width: 100px;
+    border-radius: 100%;
+    height: 100px;
+    width: 100px;
 }
 
 .followers {
-  margin: 0;
-  display: flex;
-  align-items: center;
+    margin: 0;
+    display: flex;
+    align-items: center;
 }
 
 .followers strong {
-  margin: 0;
+    margin: 0;
 }
 
 .followers p {
-  margin: 0;
+    margin: 0;
 }
 
 .editButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid gray;
-  border-radius: 20px;
-  height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid gray;
+    border-radius: 20px;
+    height: 40px;
 }
 
 .editButton:hover {
-  background-color: aqua;
-  color: white;
-  cursor: pointer;
+    background-color: aqua;
+    color: white;
+    cursor: pointer;
 }
 
 .photo-arrow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .right-nav {
-  width: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .right-nav .bi-chat-left-dots {
-  margin: 0;
+    margin: 0;
 }
 
 .right-nav svg {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .info-nav {
-  height: 60px;
-  /*para que no se mueva con el hoover*/
-  padding: 10px;
-  display: flex;
-  justify-content: space-evenly;
+    height: 60px;
+    /*para que no se mueva con el hoover*/
+    padding: 10px;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .info-nav div:hover {
-  border-bottom: 4px solid rgb(198, 198, 198);
-  cursor: pointer;
+    border-bottom: 4px solid rgb(198, 198, 198);
+    cursor: pointer;
 }
 
 .input-post {
-  margin: 40px 60px;
-  border: 2px solid rgb(198, 198, 198);
-  padding: 15px;
-  width: 60%;
+    margin: 40px 60px;
+    border: 2px solid rgb(198, 198, 198);
+    padding: 15px;
+    width: 60%;
 }
 
 .photo-input {
-  padding: 20px;
-  display: flex;
+    padding: 20px;
+    display: flex;
 }
 
 .photo-input img {
-  border-radius: 100%;
-  height: 50px;
-  width: 50px;
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
 }
 
 .input-group {
-  margin-left: 20px;
+    margin-left: 20px;
 }
 
 .post-divider {
-  margin: auto;
-  width: 95%;
-  border-bottom: 2px solid rgb(198, 198, 198);
-  margin-bottom: 10px;
+    margin: auto;
+    width: 95%;
+    border-bottom: 2px solid rgb(198, 198, 198);
+    margin-bottom: 10px;
 }
 
 .feed {
-  width: 100%;
+    width: 100%;
 }
 
 .post-options {
-  margin: 10px 30px;
+    margin: 10px 30px;
 }
 
 .photos-text {
-  justify-content: space-between;
+    justify-content: space-between;
 }
 
 .photos svg {
-  margin: 0 5px;
-  cursor: pointer;
+    margin: 0 5px;
+    cursor: pointer;
 }
 
 #hover:hover {
-  color: orange;
+    color: orange;
 }
 
 .photo-name img {
-  border-radius: 100%;
-  height: 50px;
-  width: 50px;
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
 }
 
 .header {
-  margin: 40px 60px;
-  border: 2px solid rgb(198, 198, 198);
-  padding: 15px;
-  width: 60%;
+    margin: 40px 60px;
+    border: 2px solid rgb(198, 198, 198);
+    padding: 15px;
+    width: 60%;
 }
 
 .photo-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .photo-header img {
-  border-radius: 100%;
-  height: 48px;
-  width: 48px;
+    border-radius: 100%;
+    height: 48px;
+    width: 48px;
 }
 
 .name-details {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 .name-details h4 {
-  margin: 0;
+    margin: 0;
 }
 
 .options svg {
-  margin-right: 20px;
-  cursor: pointer;
+    margin-right: 20px;
+    cursor: pointer;
 }
 
 .post-button {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .header .post-divider {
-  margin: 20px auto;
+    margin: 20px auto;
 }
 
 .post-content img {
-  height: 100%;
-  width: 90%;
-  margin: 15px auto;
+    height: 100%;
+    width: 90%;
+    margin: 15px auto;
 }
 
 .input-comment {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .input-comment svg {
-  margin-left: 20px;
-  margin-bottom: 15px;
-  cursor: pointer;
+    margin-left: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .input-comment img {
-  border-radius: 100%;
-  height: 40px;
-  width: 40px;
-  margin-bottom: 10px;
+    border-radius: 100%;
+    height: 40px;
+    width: 40px;
+    margin-bottom: 10px;
 }
 
 .post-description {
-  display: flex;
-  font-size: 16px;
-  justify-content: center;
-  text-align: justify;
-  width: 95%;
-  margin: auto;
-  margin-top: 10px;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    text-align: justify;
+    width: 95%;
+    margin: auto;
+    margin-top: 10px;
 }
 
 /*@Media query*/
 @media (max-width: 600px) {
-  .input-post {
-    margin: 40px 60px;
-    border: 2px solid rgb(198, 198, 198);
-    width: 30rem;
-  }
+    .input-post {
+        margin: 40px 60px;
+        border: 2px solid rgb(198, 198, 198);
+        width: 30rem;
+    }
 }
