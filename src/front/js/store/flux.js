@@ -19,6 +19,7 @@ const getState = ({
                     initial: "white",
                 },
             ],
+            user: []
         },
         actions: {
             signUp: async (user) => {
@@ -31,16 +32,22 @@ const getState = ({
                     },
                 });
                 result = await result.json();
+                let newStore = {...getStore()}
+                newStore[user]=result
+                setStore(newStore)
                 console.log("result", result);
             },
+
+            
 
             GeneratePost: async (post) => {
                 let result = await fetch(`${apiUrl}/api/posts/`, {
                     method: "POST",
                     body: JSON.stringify(post),
                     headers: {
+                        
                         Authorization: "Bearer " +
-                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NDYwOTg1NSwianRpIjoiN2NiY2ZkNDUtMjUzNC00NjE3LWEwNmYtOGJjNGU3MjcyNGFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNjc0NjA5ODU1LCJleHAiOjE2NzQ2MTA3NTUsInJvbGUiOiJ1c2VyIn0.ZRvPrfk-b3FcepDch37KxL_kpZw5g9zBI_t6UtSUmJg",
+                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3NTU0NDkwNSwianRpIjoiMGQ3N2EyZDYtNTNjNi00NzRhLWEyNzgtOGFlYTQzMWI5MTU5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNjc1NTQ0OTA1LCJleHAiOjE2NzU1NDU4MDUsInJvbGUiOiJ1c2VyIn0.zw6Bplcq9MiWQHwSln5GKwXLr8ZrHnz__7YgWXW_jOw",
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*",
                     },
