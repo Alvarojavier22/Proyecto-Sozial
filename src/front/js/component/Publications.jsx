@@ -2,7 +2,7 @@ import React from "react";
 
 export const Publications = (props) => {
   return (
-    <div className="container-fluid">
+    <div className="cr">
       <div className="col d-flex justify-content-center">
         <div className="header">
           <div className="photo-header">
@@ -40,8 +40,6 @@ export const Publications = (props) => {
               <div className="photos d-flex">
                 <button className="btn btn-primary">Like</button>
                 <button className="btn btn-primary">Comment</button>
-              </div>
-              <div>
                 <button className="btn btn-primary">Share</button>
               </div>
             </div>

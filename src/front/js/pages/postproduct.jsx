@@ -3,6 +3,7 @@ import  Image  from "../component/img.jsx";
 import { SellAProduct } from "../component/sellproduct.jsx";
 import { PostInFeed } from "../component/postinfeed.jsx";
 import "./stylepage.css"
+import { ProfileNav } from "../component/ProfileNav.jsx";
 
 export const PostProducts=()=>{
 const[content, setContent]=useState(0)
@@ -11,15 +12,19 @@ function handleContent(a){
     setContent(a)
  }
     return(
-        <div className="container-fluid post-holder">
-          <div className="container post-pro-container">
-            <h1>Post a Product</h1>
+        <div className="container-fluid post-holder d-block">
+          <ProfileNav/> 
+         
+          
+          <div className="container post-pro-container bg-light">
+            <button className="buttsharepost">Post a Product</button>
             <div className="buttpost mb-3">
             <button onClick={()=>handleContent(1)}>post</button>
             <button onClick={()=>handleContent(0)} >sell</button>
             </div>
               {contents[content]}
             </div>
+            
             </div>
 
 

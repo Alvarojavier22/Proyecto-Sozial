@@ -1,6 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 export const PostFeed = () => {
+
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem("user")));
+  }, []);
   return (
     <div className="card post postcon  ">
       <div className="card-header">
@@ -16,7 +22,7 @@ export const PostFeed = () => {
             </div>
             <div className="col-8">
               <div className="media-body">
-                <h5 className="mt-0" style={{marginBottom: '0px'}}>John Doe</h5>
+                <h5 className="mt-0" style={{marginBottom: '0px'}}>{userData.name}</h5>
                 <p style={{marginTop: '0px'}}>15hr</p>
               </div>
             </div>

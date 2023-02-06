@@ -140,6 +140,7 @@
   margin: 10px 30px;
 }
 
+
 .photos-text {
   justify-content: space-between;
 }
@@ -248,6 +249,16 @@
     margin: 40px 60px;
     border: 2px solid rgb(198, 198, 198);
     width: 30rem;
+  }
+  .post-options {
+    margin: .5rem .5rem;
+  }
+  .header{
+    width: 100%;
+  }
+  .input-post{
+    width: 100%;
+    margin: 0;
   }
 }
 
