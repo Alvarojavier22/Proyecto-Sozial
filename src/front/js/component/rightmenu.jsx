@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 export const RightMenu = () => {
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem("user")));
+  }, []);
   return (
     <div className="right-menu">
       <div className="right-menu-box text-center mb-5">
@@ -9,7 +14,7 @@ export const RightMenu = () => {
           <div className="col-lg-12">
             <img className="align-self-center rounded-circle mr-3 img-fluid" src="https://media.wired.com/photos/5df98d3660d5ad000818260b/16:9/w_2047,h_1151,c_limit/Gear-Decade-10-Best-Products.jpg" alt="Profile Picture" />
             <hr />
-            <h3><a href="#">Jon Doe</a></h3>
+            <h3><a href="#">{userData.name}</a></h3>
             <a href="#">Log Out</a>
           </div>
         </div>

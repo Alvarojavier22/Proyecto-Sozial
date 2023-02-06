@@ -32,10 +32,10 @@ const getState = ({
                     },
                 });
                 result = await result.json();
-                let newStore = {...getStore()}
-                newStore[user]=result
-                setStore(newStore)
-                console.log("result", result);
+                localStorage.setItem("user",JSON.stringify(user));
+                console.log("result", result)
+                
+
             },
 
             

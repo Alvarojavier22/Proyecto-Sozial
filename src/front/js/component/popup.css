@@ -47,7 +47,7 @@
 
 .pdrag{
     border: 1px solid red;
-    color: aliceblue;
+    color: rgb(0, 0, 0);
     width: 18rem;
     height: 7rem;
     position: relative;
@@ -85,9 +85,6 @@
         max-width: 400px;
         
     }
-    .cardcont{
-        
-    }
-}
+}    
 
 
