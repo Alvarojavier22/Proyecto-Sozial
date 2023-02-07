@@ -10,6 +10,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=False, nullable=False)
     surname = db.Column(db.String(50), unique=False, nullable=False)
+    username = db.Column(db.String(50), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(280), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
@@ -23,6 +24,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "username": self.username,
             "surname": self.surname,
             "email": self.email,
             "is_active": self.is_active,

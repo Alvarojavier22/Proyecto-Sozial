@@ -140,7 +140,6 @@
   margin: 10px 30px;
 }
 
-
 .photos-text {
   justify-content: space-between;
 }
@@ -251,12 +250,12 @@
     width: 30rem;
   }
   .post-options {
-    margin: .5rem .5rem;
+    margin: 0.5rem 0.5rem;
   }
-  .header{
+  .header {
     width: 100%;
   }
-  .input-post{
+  .input-post {
     width: 100%;
     margin: 0;
   }
@@ -353,4 +352,65 @@
 .public-post-button {
   font-size: 10px;
   margin-left: 10px;
+}
+
+/*SellProductsDetails*/
+
+.product-carousel {
+  padding: 20px;
+}
+
+.product-info {
+  padding: 10px;
+}
+
+.carousel-inner {
+  height: 100%;
+  margin-bottom: 0;
+}
+
+.user-buttons-interactions button {
+  margin: 2px;
+}
+
+.sell-products-title {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.sell-products-price {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.sell-products-details {
+  margin-top: 40px;
+  padding: 10px;
+}
+
+.sell-products-details h5 {
+  padding-bottom: 10px;
+  border: 1px solid rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.sell-products-details p {
+  text-align: justify;
+  margin: 0;
+}
+
+.end-info-bar {
+  margin: 0;
+  border: 1px solid rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
