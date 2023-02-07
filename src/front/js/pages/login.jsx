@@ -1,6 +1,6 @@
-import  React, { useContext }  from "react";
+import  React, { useContext, }  from "react";
 import "./stylepage.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import { Context } from "../store/appContext";
 export const Login=()=>{
@@ -10,15 +10,32 @@ const {store, actions}=useContext(Context)
 const [loginPassHide, setLoginPassHide]=useState(true)
 const [email, setEmail]=useState("")
 const [password, setPassword]=useState("")
-let user = {email,password}
+const navigate=useNavigate()
+const [route, setRoute]=useState("")
+const handleSubmit = async(event)=>{
+	event.preventDefault();
+	let user = {email, password};
 	
+		let loginResult = await actions.login(user);
+		
+		if (loginResult === undefined){
+			navigate("/feed")
+			console.log(route + "success")
+			
+		}else {
+			console.log("error")
+			console.log(JSON.stringify(loginResult))
+			
+		}
 	
+	}
+
 
     return(
         <div className="container-fluid" id="container">
 	<div className="screen">
 		<div className="screen__content">
-			<form className="login">
+			<form className="login" onSubmit={handleSubmit}>
 				<div className="login__field">
 					<i className="login__icon fas fa-user"></i>
 					<input type="text" className="login__input" onChange={(e)=>setEmail(e.target.value)} placeholder="User name / Email"/>
@@ -28,10 +45,10 @@ let user = {email,password}
 					<input type={`${ loginPassHide==true? "password": "text"}`} onChange={(e)=>setPassword(e.target.value)} className="login__input" placeholder="Password"/>
 					<i className={`far fa-eye${ loginPassHide==true? "": "-slash"} `} onClick={()=>loginPassHide==true?setLoginPassHide(false):setLoginPassHide(true)} id="togglePassword" style={{"marginLeft": "-30px", "cursor": "pointer"}}></i>
 				</div>
-				<Link to="/feed" id="linklogin"><button onClick={()=>(actions.login(user))} className="button login__submit">
+				<button type="submit" className="button login__submit">
 					<span className="button__text">Log In Now</span>
 					<i className="button__icon fas fa-chevron-right"></i>
-				</button>	</Link>			
+				</button>			
 			</form>
 
             <div id="forgotdiv">

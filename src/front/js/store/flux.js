@@ -1,5 +1,5 @@
 const apiUrl = process.env.BACKEND_URL;
-const toKen ="" 
+
 const getState = ({
     getStore,
     getActions,
@@ -19,7 +19,8 @@ const getState = ({
                     initial: "white",
                 },
             ],
-            user: []
+            user: [],
+            
         },
         actions: {
             signUp: async (user) => {
@@ -48,8 +49,9 @@ const getState = ({
                 });
                 result = await result.json();
                 const toKen = result.token
-                console.log(toKen)
                 console.log("result", result);
+                localStorage.setItem("token", toKen)
+                
             },
 
             
@@ -60,13 +62,14 @@ const getState = ({
                     body: JSON.stringify(post),
                     headers: {
                         
-                        Authorization: `Bearer ${toKen}`,
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
                         
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*",
                     },
+
                 });
-                console.log(toKen)
+                console.log(localStorage.getItem("token"))
                 result = await result.json();
                 console.log("result", result);
             },
