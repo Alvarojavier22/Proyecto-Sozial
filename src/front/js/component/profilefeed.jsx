@@ -1,15 +1,21 @@
-import React from "react";
+import React,{ useState, useEffect} from "react";
 import { Posts } from "./Posts.jsx";
 import { ProfileInfo } from "./ProfileInfo.jsx";
 import { Publications } from "./Publications.jsx";
 
-export const FeedSocial= () => {
+export const FeedSocial = ({ set }) => {
+ 
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem("user")));
+  }, []);
   return (
-    <div className="container-fluid">
+    <div className="container-fluid principal-div">
       <div className="row">
         <div className="col-xl-3 col-lg-12">
           <ProfileInfo
-            username={"username"}
+            username={userData.name}
             followersNumber={"0"}
             postsNumber={"0"}
             joinDate={"ene. 20, 2023"}
@@ -17,6 +23,7 @@ export const FeedSocial= () => {
         </div>
         <div className="col-xl-9 col-lg-12">
           <Posts
+            setter={set}
             loginUserPhoto={
               "https://wl-genial.cf.tsp.li/resize/728x/jpg/91b/430/964a9c5ac9933cc012d0bd80be.jpg"
             }

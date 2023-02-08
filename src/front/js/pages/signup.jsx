@@ -23,7 +23,8 @@ const {store, actions}=useContext(Context)
     const[password,setPassWord]=useState("")
     const[email,setEmail]=useState("")
     const[is_active, setIs_active]=useState(true)
-    let item = {name,surname,password,email,is_active}
+    const[username, setUsername]=useState("")
+    let item = {name,username, surname,password,email,is_active}
     let inputs = [name,surname, password, email]
     
    
@@ -61,7 +62,7 @@ const {store, actions}=useContext(Context)
                         <div className="signup_field">
                             
                             <input type="text" value={email || ""} onChange={(e)=>setEmail(e.target.value)} className="sign_input" placeholder="E-mail Address" />
-                            <input type="text" className="sign_input" placeholder="Username"/>
+                            <input type="text"  value={username || ""} onChange={(e)=>setUsername(e.target.value)} className="sign_input" placeholder="Username"/>
                             <input type="text" value={name || ""} onChange={(e)=>setName(e.target.value)} className="sign_input" placeholder="First Name"/>
                             <input type="text" value={surname || ""} onChange={(e)=>setSurName(e.target.value)}className="sign_input" placeholder="Last Name"/>
                             <input type={`${ passHide==true? "password": "text"}`} value={password ||"" } onChange={(e)=>setPassWord(e.target.value)} className="sign_input" placeholder="Password"/>
@@ -74,14 +75,17 @@ const {store, actions}=useContext(Context)
 
                                 
                                 <label className="form-check-label" htmlFor="flexCheckDefault">
-                                     I accept the <Link to="#" id="linksign">terms of use</Link> & <Link to="#" id="linksign">privacy policy</Link>
+                                     I accept the <label className="form-check-label" htmlFor="flexCheckDefault">
+                                             <Link to="/termsandconditions" id="linksign">terms of use</Link> & <Link to="/termsandconditions" id="linksign">privacy policy</Link>
+                                </label>
+
                                  </label>
                             </div>
 
                             
                             
                             <div className="signbtn">
-                                <Link to={`${password==confirmpass?"/feed":"#"}`}><button onClick={checkinputs(inputs)==false?()=>(actions.signUp(inputs)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
+                                <Link to={`${password==confirmpass?"/feed":"#"}`}><button onClick={checkinputs(inputs)==false?()=>(actions.signUp(item)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
 
                             </div>
                     </form>

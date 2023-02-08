@@ -26,6 +26,7 @@ from flask_jwt_extended import (
 )
 from datetime import datetime, timezone  # para el cierre de sesión
 from flask_bcrypt import Bcrypt
+from sqlalchemy import or_
 
 
 api = Blueprint("api", __name__)
@@ -40,7 +41,6 @@ def delete_user(user_id):
     user = User.query.filter(User.id == user_id).first()
 
     if user.is_active == True:
-
         update_users = user
         update_users.is_active = False
 
@@ -55,12 +55,16 @@ def delete_user(user_id):
 # ADMIN LOGIN # VALIDAR SI SE PUEDE HACER ASÍ PARA QUE EL LOGIN SE GENERE CON EL ROL ADMIN ❌
 @api.route("/admin/login/", methods=["POST"])
 def admin_login():
-    email = request.json.get("email")
+    # email = request.json.get("email")
+    username = request.json.get("username")
     password = request.json.get("password")
     user = User.query.filter(User.email == email).first()
+    username = User.query.filter(User.username == username).first()
     # No encuentro Usuario
 
-    if user == None:
+    print(username)
+
+    if username == None:
         return jsonify({"msg": "invalid login"}), 401
 
     # PASSWORDS VALIDATION
@@ -84,8 +88,11 @@ def admin_login():
 def user_login():
     email = request.json.get("email")
     password = request.json.get("password")
-    user = User.query.filter(User.email == email).first()
+    # user = User.query.filter(User.email == email).first()
+    user = User.query.filter(or_(User.username == email, User.email == email)).first()
     # No encuentro Usuario
+
+    print(user)
 
     if user == None:
         return jsonify({"msg": "invalid login"}), 401
@@ -178,9 +185,7 @@ def users():
     users = User.query.filter(User.__tablename__ == "user").all()
     all_users = []
 
-    print(users)
     if not users is None:
-
         for i in range(len(users)):
             if (
                 users[i].is_active == False
@@ -210,9 +215,7 @@ def generate_likes(post_id):
     generate_like = Likes(post_id=post_id, like_user_id=user_id)
 
     if not post is None:
-
         if likes_verificator is None:
-
             db.session.add(generate_like)
             db.session.commit()
 
@@ -236,9 +239,7 @@ def remove_likes(post_id):
     )
 
     if not post is None:
-
         if not likes_verificator is None:
-
             db.session.delete(likes_verificator)
             db.session.commit()
 
@@ -272,12 +273,10 @@ def likes_by_posts(post_id):
     likes_by_posts = []
 
     if not likes is None:
-
         for i in range(len(likes)):
             likes_by_posts.append(likes[i].serialize())
 
         if len(likes_by_posts) > 0:
-
             return jsonify({"likes by post": likes_by_posts}), 201
 
         return jsonify({"msg": "this post doesn't have any like"}), 404
@@ -298,7 +297,6 @@ def post_comments(post_id):
     post = Post.query.filter(Post.id == post_id).first()
 
     if not post is None:
-
         db.session.add(generate_comment)
         db.session.commit()
 
@@ -330,7 +328,6 @@ def commet_by_post(post_id):
     comments_by_id = []
 
     if len(comments) > 0:
-
         for i in range(len(comments)):
             comments_by_id.append(comments[i].serialize())
 
@@ -353,9 +350,7 @@ def delete_comments(post_id, comment_id):
     )
 
     if not post is None:
-
         if not delete_comments is None:
-
             db.session.delete(delete_comments)
             db.session.commit()
 
@@ -368,15 +363,14 @@ def delete_comments(post_id, comment_id):
 
 # GENERATE POSTS ✔️
 
-@api.route("/posts/", methods=["POST"])
 
+@api.route("/posts/", methods=["POST"])
 @jwt_required()
 def post(user_id):
     user_id = get_jwt_identity()
     text = request.json.get("text")
 
     post = Post(user_id=user_id, text=text)
-
 
     db.session.add(post)
     db.session.commit()
@@ -411,9 +405,7 @@ def user_favorites(user_id):
     user_favorites = []
 
     if not user is None and user_id == jwt_user_id:
-
         if len(favorites) > 0:
-
             for i in range(len(favorites)):
                 user_favorites.append(favorites[i].serialize())
 
@@ -435,9 +427,7 @@ def add_favorites(product_id):
     add_favorites = Favorites(user_id=user_id, product_id=product_id)
 
     if not product is None and product.avaliable == True:
-
         if favorite_id is None:
-
             db.session.add(add_favorites)
             db.session.commit()
 
@@ -477,7 +467,6 @@ def user_shoppingcart(user_id):
     user_shoppingcart = []
 
     if jwt_user_id == user_id:
-
         if len(shoppingcart_products) > 0:
             for i in range(len(shoppingcart_products)):
                 user_shoppingcart.append(shoppingcart_products[i].serialize())
@@ -504,9 +493,7 @@ def add_product_to_cart(product_id):
     add_shoppingCart = ShoppingCart(user_id=user_id, product_id=product_id)
 
     if not product is None and product.avaliable == True:
-
         if shoppingcart_id is None:
-
             db.session.add(add_shoppingCart)
             db.session.commit()
 
@@ -533,7 +520,6 @@ def get_post():
         all_posts.append(posts[i].serialize())
 
     if len(all_posts) > 0:
-
         return jsonify({"all posts": all_posts}), 200
 
     return jsonify({"msg": "not exists any post to show"}), 404
@@ -547,7 +533,6 @@ def each_post(post_id):
     post = Post.query.filter(Post.id == post_id).first()
 
     if post is None:
-
         return jsonify({"msg": "post doesn't exists"}), 404
 
     return jsonify({"post": post.serialize()}), 202
@@ -562,9 +547,7 @@ def post_user(user_id):
     all_user_post = []
 
     if not user is None:
-
         if len(posts) > 0:
-
             for i in range(len(posts)):
                 all_user_post.append(posts[i].serialize())
 
@@ -587,16 +570,12 @@ def delete_post(post_id):
     post_comments = Comments.query.filter(Comments.post_id == post_id).all()
 
     if post.user_id == user_id:
-
         if not post is None:
-
             for i in range(len(post_likes)):
-
                 db.session.delete(post_likes[i])
                 db.session.commit()
 
             for i in range(len(post_comments)):
-
                 db.session.delete(post_comments[i])
                 db.session.commit()
 
@@ -660,7 +639,6 @@ def user_products(user_id):
     all_user_products = []
 
     if not user is None:
-
         for i in range(len(products)):
             if products[i].avaliable == True:
                 all_user_products.append(products[i].serialize())
@@ -683,11 +661,8 @@ def deactivate_product(product_id):
     product = Products.query.filter(Products.id == product_id).first()
 
     if product.seller_id == user_id:
-
         if not product is None:
-
             if product.avaliable == True:
-
                 product.avaliable = False
 
                 db.session.add(product)
@@ -711,11 +686,8 @@ def activate_product(product_id):
     product = Products.query.filter(Products.id == product_id).first()
 
     if product.seller_id == user_id:
-
         if not product is None:
-
             if product.avaliable == False:
-
                 product.avaliable = True
 
                 db.session.add(product)
@@ -788,9 +760,7 @@ def delete_product(product_id):
     ).all()
 
     if product.seller_id == user_id:
-
         if not product is None:
-
             for i in range(len(favorites_products)):
                 db.session.delete(favorites_products[i])
                 db.session.commit()
@@ -817,17 +787,18 @@ def signup():
     is_active = request.json.get("is_active")
     name = request.json.get("name")
     surname = request.json.get("surname")
+    username = request.json.get("username")
     signup = User(
         email=email,
         password=cripto.generate_password_hash(password).decode("utf-8"),
         is_active=is_active,
         name=name,
         surname=surname,
+        username=username,
     )
     users = User.query.filter(User.email == email).first()
 
     if not users is None:
-
         return jsonify({"msg": "User already exist"}), 404
 
     db.session.add(signup)
@@ -844,7 +815,6 @@ def purchased_products():
     all_purchased_products = []
 
     if len(purchased_products) > 0:
-
         for i in range(len(purchased_products)):
             all_purchased_products.append(purchased_products[i].serialize())
 
@@ -863,7 +833,6 @@ def user_purchased_products(user_id):
     user_products = []
 
     if len(user_purchased_products) > 0:
-
         for i in range(len(user_purchased_products)):
             user_products.append(user_purchased_products[i].serialize())
 
@@ -886,7 +855,6 @@ def buy_product(user_id, product_id):
     buy = Buy(user_id=user_id, product_id=product_id)
 
     if not product is None:
-
         db.session.add(buy)
         db.session.commit()
 
@@ -898,7 +866,6 @@ def buy_product(user_id, product_id):
 @api.route("/uploadPhoto", methods=["POST"])
 @jwt_required()
 def uploadPhoto():
-
     # Buscamos el usuario en la Db partiendo desde el token
     user_id = get_jwt_identity()
     user = User.query.get(user_id)

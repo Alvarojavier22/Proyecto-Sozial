@@ -674,33 +674,31 @@ phone: 480px,     sm
 
 /* POST PRODUCT*/
 .post-holder{
-	background: linear-gradient( #24446c, #5a56b1, #24446c) ;
+	
 	height: 100vh;
 	display: flex;
 }
 .post-pro-container{
-	background:none;
+	
 	padding: 1rem;
-	border: 1px solid #24446c;
-	position: absolute;
-	top: 5%;
-	left: 5%;
-
+	border: 1px solid #000000;
+	margin-top: 3rem ;
 	width: 90%;
 }
-.post-pro-container h1{
+.buttsharepost{
 	border: 1px solid #24446c;;
 	text-align: center;
 	margin-bottom: 1rem;
 	font-size: 2.5rem;
-	color: whitesmoke;
+	color: rgb(6, 6, 6);
 }
 
 .category-select{
-	background: #252ba6;
+	background: #00089a;
 	color: white;
 	padding: .5rem 5.5rem;
 	margin-bottom:  2rem;	
+	max-width: 19em;
 }
 
 .inputpostpro{
@@ -711,8 +709,10 @@ phone: 480px,     sm
 	
 }
 .inputpostpro::placeholder{
-	color: white;
+	color: rgb(0, 0, 0);
 	font-size: 1.5rem;
+	background-color: rgb(255, 255, 255);
+	
 }
 .buttons-products{
 	display: flex;
@@ -720,15 +720,14 @@ phone: 480px,     sm
 }
 .cancel-product, .post-product{
 	padding: .2rem 1rem;
-	border-radius: 1rem;
+	border-radius: .4rem;
 	font-size: 1.2rem;
 }
-.inputpostpro:hover{
-	border: 2px solid black;
-}
+
 .post-product{
-	background-color: #38133d;
+	background-color: #00089a;
 	margin-left: .5rem;
+	color: white;
 }
 
 
@@ -737,9 +736,10 @@ phone: 480px,     sm
 		background:none;
 		padding: 1rem;
 		border: 1px solid #24446c;
-		margin: auto;
+		margin-top: 1rem;
 		position: absolute;
-		width: 90%;
+		min-width: 60%;
+		max-width:70% ;
 	}
 
 	.text-area{
@@ -755,14 +755,17 @@ phone: 480px,     sm
 @media(min-width: 700px){
 	.post-pro-container{
 		left: 5%;
-		max-width: 900px;
+		max-width: 32rem;
+		margin-top: 1rem;
 	}
 }
 
 @media (min-width:1028px){
 	.post-pro-container{
-		left: 15%;
+		position: relative;
+		margin-left: 0px;
 		
+		margin-top: 1rem;
 	}
 }
 
@@ -773,7 +776,14 @@ phone: 480px,     sm
 
 
 /* Categories*/
-
+.catheader{
+	background-color: #c7bdbd;
+	width: 100%;
+	padding: .5rem;
+	position: fixed;
+	z-index: 2;
+	
+}
 .categories-bckgr{
 	background-color: #000;
 	height: 100%;
@@ -781,26 +791,14 @@ phone: 480px,     sm
 .categories-holder{
 	background-color: grey;
 	padding: 0;
-}
-.Buttonscategories{
-	display: flex;
-	font-size: 1.3rem;
-	margin-bottom: 1.5em;
-	padding-bottom: 1rem;
-	background-color: rgb(0, 0, 0);
-
-	
+	position: relative;
+	z-index:1 ;
 }
 
-.btncat1{
-	margin-right: auto;
+.content{
+	padding-top: 5rem;
 }
-.btncat2{
-	padding-top: .22rem ;
-}
-.btncat3{
-	margin-left: auto;
-}
+
 @media(min-width:568px){
 	.categories-bckgr{
 		height:100%;

@@ -1,7 +1,7 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
-@import 'feed.css';
+/*@import 'feed.css'; */
 
 .profile-nav {
     display: flex;
@@ -25,6 +25,14 @@ i.ProfileInfo-container {
     border-radius: 100%;
     height: 100px;
     width: 100px;
+}
+
+.h4 h4 {
+  margin: 0;
+}
+
+.but button {
+  margin: 0;
 }
 
 .followers {
@@ -119,6 +127,11 @@ i.ProfileInfo-container {
     margin-bottom: 10px;
 }
 
+.post-arrow {
+  margin-right: 10px;
+  fill: green;
+}
+
 .feed {
     width: 100%;
 }
@@ -131,9 +144,16 @@ i.ProfileInfo-container {
     justify-content: space-between;
 }
 
+.photos button {
+  margin: 0 2px;
+  cursor: pointer;
+}
+
 .photos svg {
     margin: 0 5px;
     cursor: pointer;
+  margin: 0 2px;
+  cursor: pointer;
 }
 
 #hover:hover {
@@ -220,12 +240,271 @@ i.ProfileInfo-container {
     margin: auto;
     margin-top: 10px;
 }
+.feedcont {
+  margin-top: 2rem;
+}
 
 /*@Media query*/
 @media (max-width: 600px) {
-    .input-post {
-        margin: 40px 60px;
-        border: 2px solid rgb(198, 198, 198);
-        width: 30rem;
-    }
+  .input-post {
+    margin: 40px 60px;
+    border: 2px solid rgb(198, 198, 198);
+    width: 30rem;
+  }
+  .post-options {
+    margin: 0.5rem 0.5rem;
+  }
+  .header {
+    width: 100%;
+  }
+  .input-post {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+/*navbar*/
+
+.navcont {
+  position: fixed;
+  z-index: 1;
+}
+.feedheader {
+  z-index: 1;
+}
+
+/*PublicTextPost*/
+
+.principal-div {
+  height: 100%;
+  width: 100%;
+}
+
+.public-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: rgb(0, 0, 0, 0.8);
+  position: fixed;
+  z-index: 2000;
+}
+
+.equis {
+  cursor: pointer;
+}
+
+.public-container-child {
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 600px;
+  background: white;
+}
+
+.public-post-header {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  padding: 0px;
+}
+
+.public-post-header svg {
+  fill: red;
+  cursor: pointer;
+}
+
+#form-control {
+  height: 120px;
+}
+
+.border-header-int {
+  margin: auto;
+  margin-top: 10px;
+  border: solid 1px rgb(198, 198, 198);
+  width: 90%;
+}
+
+.img-post {
+  border-radius: 100%;
+  margin: 5px;
+  height: 8%;
+  width: 8%;
+}
+
+.input-container {
+  height: 120px;
+  border-radius: 10px;
+  border: 1px solid rgb(198, 198, 198);
+  padding: 10px;
+}
+
+.form-container {
+  border: none;
+}
+
+.flexed {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.public-post-button {
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+/*SellProductsDetails*/
+
+.product-carousel {
+  padding: 20px;
+}
+
+.product-info {
+  padding: 10px;
+}
+
+.carousel-inner {
+  height: 100%;
+  margin-bottom: 0;
+}
+
+.user-buttons-interactions button {
+  margin: 2px;
+}
+
+.sell-products-title {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.sell-products-price {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.sell-products-details {
+  margin-top: 40px;
+  padding: 10px;
+}
+
+.sell-products-details h5 {
+  padding-bottom: 10px;
+  border: 1px solid rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.sell-products-details p {
+  text-align: justify;
+  margin: 0;
+}
+
+.end-info-bar {
+  margin: 0;
+  border: 1px solid rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+/*EditProfile*/
+.edit-profile-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-profile-fields {
+  background-color: white;
+  width: 40%;
+  min-width: 60%;
+  border-radius: 4px;
+  border: 1px solid white;
+  padding: 20px;
+}
+
+.edit-profile-header {
+  margin: auto;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  border: 1px solid rgb(198, 198, 198);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.edit-profile-image {
+  width: 80%;
+  border: solid 1px rgb(198, 198, 198);
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  padding: 20px;
+  margin-top: 20px;
+  margin: auto;
+}
+
+.edit-profile-image img {
+  border-radius: 100%;
+  height: 180px;
+  width: 180px;
+}
+
+.buttons {
+  padding: 10px;
+}
+
+.buttons button {
+  font-size: 15px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.change-name {
+  margin: auto;
+  width: 80%;
+  padding: 20px;
+  border: solid 1px rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.change-name-buttons {
+  margin-top: 10px;
+}
+
+.success-danger-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.change-name {
+  padding: 20px;
+}
+
+.name {
+  display: flex;
+  justify-content: center;
+}
+
+.change-name-input .form-control {
+  width: 50%;
+  margin: auto;
 }
