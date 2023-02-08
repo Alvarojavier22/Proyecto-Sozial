@@ -1,6 +1,6 @@
 import React from "react";
-import { InfoNav } from "./InfoNav.jsx";
-import { ProfileNav } from "./ProfileNav.jsx";
+import { InfoNav } from "../component/InfoNav.jsx";
+import { ProfileNav } from "../component/ProfileNav.jsx";
 
 export const SellProductsDetails = () => {
   return (

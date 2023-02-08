@@ -18,7 +18,8 @@ import { Profile } from "./pages/perfil.jsx";
 import { Cart } from "./pages/cart.jsx";
 import { PostProducts } from "./pages/postproduct.jsx";
 import { PublicTextPost } from "./component/PublicTextPost.jsx";
-import { SellProductsDetails } from "./component/SellProductsDetails.jsx";
+import { SellProductsDetails } from "./pages/SellProductsDetails.jsx";
+import { EditProfile } from "./pages/EditProfile.jsx";
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -42,6 +43,7 @@ const Layout = () => {
           <Route element={<PostProducts />} path="/postproduct" />
           <Route element={<Categories />} path="/categories" />
           <Route element={<SellProductsDetails />} path="/product-details" />
+          <Route element={<EditProfile />} path="/edit-profile" />
         </Routes>
       </BrowserRouter>
     </div>

@@ -26,6 +26,7 @@ from flask_jwt_extended import (
 )
 from datetime import datetime, timezone  # para el cierre de sesión
 from flask_bcrypt import Bcrypt
+from sqlalchemy import or_
 
 
 api = Blueprint("api", __name__)
@@ -86,10 +87,9 @@ def admin_login():
 @api.route("/login/", methods=["POST"])
 def user_login():
     email = request.json.get("email")
-    username = request.json.get("username")
     password = request.json.get("password")
-    user = User.query.filter(User.email == email).first()
-    username = User.query.filter(User.username == username).first()
+    # user = User.query.filter(User.email == email).first()
+    user = User.query.filter(or_(User.username == email, User.email == email)).first()
     # No encuentro Usuario
 
     print(user)
