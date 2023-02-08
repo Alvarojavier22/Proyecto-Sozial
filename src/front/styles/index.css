@@ -140,7 +140,6 @@
   margin: 10px 30px;
 }
 
-
 .photos-text {
   justify-content: space-between;
 }
@@ -251,12 +250,12 @@
     width: 30rem;
   }
   .post-options {
-    margin: .5rem .5rem;
+    margin: 0.5rem 0.5rem;
   }
-  .header{
+  .header {
     width: 100%;
   }
-  .input-post{
+  .input-post {
     width: 100%;
     margin: 0;
   }
@@ -353,4 +352,157 @@
 .public-post-button {
   font-size: 10px;
   margin-left: 10px;
+}
+
+/*SellProductsDetails*/
+
+.product-carousel {
+  padding: 20px;
+}
+
+.product-info {
+  padding: 10px;
+}
+
+.carousel-inner {
+  height: 100%;
+  margin-bottom: 0;
+}
+
+.user-buttons-interactions button {
+  margin: 2px;
+}
+
+.sell-products-title {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.sell-products-price {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+.sell-products-details {
+  margin-top: 40px;
+  padding: 10px;
+}
+
+.sell-products-details h5 {
+  padding-bottom: 10px;
+  border: 1px solid rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.sell-products-details p {
+  text-align: justify;
+  margin: 0;
+}
+
+.end-info-bar {
+  margin: 0;
+  border: 1px solid rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+/*EditProfile*/
+.edit-profile-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-profile-fields {
+  background-color: white;
+  width: 40%;
+  min-width: 60%;
+  border-radius: 4px;
+  border: 1px solid white;
+  padding: 20px;
+}
+
+.edit-profile-header {
+  margin: auto;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  border: 1px solid rgb(198, 198, 198);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.edit-profile-image {
+  width: 80%;
+  border: solid 1px rgb(198, 198, 198);
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  padding: 20px;
+  margin-top: 20px;
+  margin: auto;
+}
+
+.edit-profile-image img {
+  border-radius: 100%;
+  height: 180px;
+  width: 180px;
+}
+
+.buttons {
+  padding: 10px;
+}
+
+.buttons button {
+  font-size: 15px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.change-name {
+  margin: auto;
+  width: 80%;
+  padding: 20px;
+  border: solid 1px rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.change-name-buttons {
+  margin-top: 10px;
+}
+
+.success-danger-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.change-name {
+  padding: 20px;
+}
+
+.name {
+  display: flex;
+  justify-content: center;
+}
+
+.change-name-input .form-control {
+  width: 50%;
+  margin: auto;
 }
