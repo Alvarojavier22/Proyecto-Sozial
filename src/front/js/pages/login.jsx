@@ -18,9 +18,9 @@ const handleSubmit = async(event)=>{
 	
 		let loginResult = await actions.login(user);
 		
-		if (loginResult === undefined){
+		if (loginResult === "ok"){
 			navigate("/feed")
-			console.log(route + "success")
+			console.log( "success")
 			
 		}else {
 			console.log("error")

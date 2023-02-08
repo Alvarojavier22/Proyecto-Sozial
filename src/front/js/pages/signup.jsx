@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import swal from "sweetalert"
 export const SignUp=()=>{
 
 const {store, actions}=useContext(Context)
+
+
 
 
     /* prueba animacion de pagina*/ 
@@ -24,6 +26,7 @@ const {store, actions}=useContext(Context)
     const[email,setEmail]=useState("")
     const[is_active, setIs_active]=useState(true)
     const[username, setUsername]=useState("")
+    const navigate=useNavigate()
     let item = {name,username, surname,password,email,is_active}
     let inputs = [name,surname, password, email]
     
@@ -47,6 +50,19 @@ const {store, actions}=useContext(Context)
         
     }
     
+    
+
+const handleSubmit= async(event)=>{
+    event.preventDefault();
+    let signupResult = await actions.signUp(item)
+    if (signupResult === "ok"){
+        navigate("/feed")
+        console.log("success")
+    }else{
+        console.log("error")
+    }
+}
+
     const[confirmpass,setConfirmPass]=useState()
   
     
@@ -57,7 +73,7 @@ const {store, actions}=useContext(Context)
         <div className="container-fluid overlay" id="container_signup">
             <div className="signup">
                 <div className="signup-content">
-                    <form  className="signup">
+                    <form  className="signup" onSubmit={handleSubmit}>
                         <h1>Sign Up</h1>
                         <div className="signup_field">
                             
@@ -85,7 +101,7 @@ const {store, actions}=useContext(Context)
                             
                             
                             <div className="signbtn">
-                                <Link to={`${password==confirmpass?"/feed":"#"}`}><button onClick={checkinputs(inputs)==false?()=>(actions.signUp(item)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
+                                <button onClick={checkinputs(inputs)==true?()=>mostrar_alerta():""} type="submit">Sign Up</button>
 
                             </div>
                     </form>
