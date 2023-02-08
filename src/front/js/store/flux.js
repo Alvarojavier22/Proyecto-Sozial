@@ -20,7 +20,7 @@ const getState = ({
                 },
             ],
             user: [],
-            
+
         },
         actions: {
             signUp: async (user) => {
@@ -33,11 +33,11 @@ const getState = ({
                     },
                 });
                 result = await result.json();
-                localStorage.setItem("user",JSON.stringify(user));
+                localStorage.setItem("user", JSON.stringify(user));
                 console.log("result", result)
-                
 
-            },  
+
+            },
             login: async (user) => {
                 let result = await fetch(`${apiUrl}/api/login/`, {
                     method: "POST",
@@ -51,19 +51,19 @@ const getState = ({
                 const toKen = result.token
                 console.log("result", result);
                 localStorage.setItem("token", toKen)
-                
+
             },
 
-            
+
 
             GeneratePost: async (post) => {
                 let result = await fetch(`${apiUrl}/api/posts/`, {
                     method: "POST",
                     body: JSON.stringify(post),
                     headers: {
-                        
+
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        
+
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*",
                     },
@@ -74,7 +74,7 @@ const getState = ({
                 console.log("result", result);
             },
 
-          
+
 
             // Use getActions to call a function within a fuction
             exampleFunction: () => {
@@ -94,7 +94,7 @@ const getState = ({
                 } catch (error) {
                     console.log("Error loading message from backend", error);
                 }
-                //console.log(process.env.BACKEND_URL)
+                console.log(process.env.BACKEND_URL)
             },
             changeColor: (index, color) => {
                 //get the store
