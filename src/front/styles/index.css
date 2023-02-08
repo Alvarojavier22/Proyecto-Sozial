@@ -506,3 +506,8 @@
   width: 50%;
   margin: auto;
 }
+
+#form-control-describe {
+  height: 120px;
+  width: 80%;
+}
