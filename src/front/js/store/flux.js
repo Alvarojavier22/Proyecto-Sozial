@@ -34,7 +34,12 @@ const getState = ({
                 });
                 result = await result.json();
                 localStorage.setItem("user",JSON.stringify(user));
-                console.log("result", result)
+                console.log("result", result);
+                if(result.msg === "User create succefully"){
+                    return "ok"
+                }else{
+                    return "not ok"
+                }
                 
 
             },  
@@ -50,8 +55,12 @@ const getState = ({
                 result = await result.json();
                 const toKen = result.token
                 console.log("result", result);
-                localStorage.setItem("token", toKen)
-                
+                localStorage.setItem("token", toKen);
+                if (toKen != ""){
+                    return "ok"
+                } else{
+                    return "ko"
+                }
             },
 
             
