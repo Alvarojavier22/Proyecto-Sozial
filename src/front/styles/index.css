@@ -579,6 +579,11 @@
   cursor: pointer;
 }
 
+.content-description-price i:hover {
+  height: 20px;
+  color: red;
+}
+
 .content-description-specifications {
   padding: 0 10px;
 }
@@ -589,6 +594,7 @@
 }
 
 .buttons-specifications {
+  margin: auto;
   padding: 0 10px;
   display: flex;
   align-items: center;
