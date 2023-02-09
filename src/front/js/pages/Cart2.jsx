@@ -70,7 +70,7 @@ export const CartTwo = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-4 col-sm-12 checkout-details">
+        <div className="col-lg-4 col-md-11 m-auto col-sm-12 checkout-details">
           <div className="total">
             <h3>TOTAL</h3>
           </div>

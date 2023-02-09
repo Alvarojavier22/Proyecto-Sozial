@@ -69,6 +69,28 @@ const handleSubmit= async(event)=>{
     /*Ocultar/ mostrar contraseñas */
     const [passHide, setPassHide]=useState(true)
     const [confirmPassHide, setConfirmPassHide]=useState(true)
+
+    const[emailverify, setEmailverify]=useState(false)
+    const emailCheck=(email)=>{
+        if(email === ""){
+            return swal({
+                title:"Oops!",
+                text: "Email is required",
+                icon: "error"
+            })
+        
+        }else if (!new RegExp(/\S+@\S+\.\S+/).test(email)){
+            return swal({
+                title:"Oops!",
+                text: "Email format is incorrect",
+                icon: "error"
+            })
+        }
+        else {
+            return ""
+        }
+        }
+
     return(
         <div className="container-fluid overlay" id="container_signup">
             <div className="signup">
@@ -78,7 +100,7 @@ const handleSubmit= async(event)=>{
                         <div className="signup_field">
                             
                             <input type="text" value={email || ""} onChange={(e)=>setEmail(e.target.value)} className="sign_input" placeholder="E-mail Address" />
-                            <input type="text"  value={username || ""} onChange={(e)=>setUsername(e.target.value)} className="sign_input" placeholder="Username"/>
+                            <input type="text"  value={username || ""} onClick={()=>emailCheck(email)} onChange={(e)=>setUsername(e.target.value)} className="sign_input" placeholder="Username"/>
                             <input type="text" value={name || ""} onChange={(e)=>setName(e.target.value)} className="sign_input" placeholder="First Name"/>
                             <input type="text" value={surname || ""} onChange={(e)=>setSurName(e.target.value)}className="sign_input" placeholder="Last Name"/>
                             <input type={`${ passHide==true? "password": "text"}`} value={password ||"" } onChange={(e)=>setPassWord(e.target.value)} className="sign_input" placeholder="Password"/>

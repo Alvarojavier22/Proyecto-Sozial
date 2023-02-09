@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Cardfeed } from './cardfeed.jsx';
 export const PostFeed = () => {
 
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState("");
   const [post, setPost]=useState("")
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("user")));
@@ -61,8 +61,8 @@ export const PostFeed = () => {
       </div>
       
       <Cardfeed
-          text={post.text}
-          name={userData.name}
+          text={post!=null?post.text:""}
+          name={userData!=null?userData.name:""}
       />
 
      
