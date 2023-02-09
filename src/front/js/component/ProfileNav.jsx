@@ -2,10 +2,11 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 
 export const ProfileNav = () => {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState("");
 
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("user")));
+    console.log(userData.name)
   }, []);
   return (
     <div className="container-fluid ">

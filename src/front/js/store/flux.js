@@ -35,6 +35,7 @@ const getState = ({
                 result = await result.json();
                 localStorage.setItem("user",JSON.stringify(user));
                 console.log("result", result);
+                console.log(user)
                 if(result.msg === "User create succefully"){
                     return "ok"
                 }else{
@@ -55,8 +56,9 @@ const getState = ({
                 result = await result.json();
                 const toKen = result.token
                 console.log("result", result);
-                localStorage.setItem("token", toKen);
-                if (toKen != ""){
+                localStorage.setItem("token", JSON.stringify(toKen));
+                
+                if (result.success === "User login successfully"){
                     return "ok"
                 } else{
                     return "ko"
@@ -71,14 +73,15 @@ const getState = ({
                     body: JSON.stringify(post),
                     headers: {
                         
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                         
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*",
                     },
 
                 });
-                console.log(localStorage.getItem("token"))
+                localStorage.setItem("post", JSON.stringify(post))
+                
                 result = await result.json();
                 console.log("result", result);
             },
