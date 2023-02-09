@@ -12,7 +12,7 @@ console.log(postObject)
         <div className="container">
             <div>
                 
-                <textarea value={text||""} onChange={(e)=>setText(e.target.value)} class="form-control mb-3" id="exampleFormControlTextarea1" rows="3" placeholder="Text"></textarea>
+                <textarea value={text||""} onChange={(e)=>setText(e.target.value)} className="form-control mb-3" id="exampleFormControlTextarea1" rows="3" placeholder="Text"></textarea>
                 <Image/>
             </div>
                 <div className="buttpost">
