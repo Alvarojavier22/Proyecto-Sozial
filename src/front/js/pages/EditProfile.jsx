@@ -54,6 +54,23 @@ export const EditProfile = () => {
             </div>
           </div>
         </div>
+        <div className="row change-name d-flex justify-content-center">
+          <div className="col name">
+            <h5>Describe yourself</h5>
+          </div>
+          <div className="change-name-input">
+            <textarea
+              id="form-control-describe"
+              className="form-control"
+              placeholder="Tell something about you..."
+            ></textarea>
+          </div>
+          <div className="row change-name-buttons">
+            <div className="col-sm-12 col-md-12 success-danger-button">
+              <button className="btn btn-success">Send your description</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
