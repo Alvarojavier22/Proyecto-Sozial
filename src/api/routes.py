@@ -883,7 +883,7 @@ def uploadPhoto():
     file.save(temp.name)
     # Subir archivo a firebase
     # Llamar a bucket
-    bucket = storage.bucket(name="sozial-21faf.appspot.com")
+    bucket = storage.bucket(name="project-f71b8.appspot.com")
     # Referencia al espacio en bucket
     resource = bucket.blob(filename)
     # Se sube el archivo temporal al bucket

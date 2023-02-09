@@ -3,7 +3,7 @@ import React from "react";
 export const ProductCart = () => {
   return (
     <div
-      style={{ border: "orange solid 2px" }}
+      
       className="shopping-details-content"
     >
       <div
