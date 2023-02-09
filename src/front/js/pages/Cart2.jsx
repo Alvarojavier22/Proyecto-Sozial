@@ -1,30 +1,43 @@
 import React from "react";
+import { InfoNav } from "../component/InfoNav.jsx";
+import { ProfileNav } from "../component/ProfileNav.jsx";
 
 export const CartTwo = () => {
   return (
     <div className="container-fluid">
+      <ProfileNav />
+      <InfoNav />
       <div className="row shopping-cart-continer">
         <div className="col-md-8 col-sm-12 shopping-details">
           <div className="shopping-details-container">
-            <div className="shopping-details-header">
-              <div>
+            <div className="row shopping-details-header d-flex justify-content-between align-items-center">
+              <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
                 <h2>My shopping cart</h2>
               </div>
-              <div>
+              <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
                 <p>Items are reserved for only 60 minutes</p>
               </div>
             </div>
-            <div className="shopping-details-content">
-              <div className="shopping-details-content-img">
+            <div
+              style={{ border: "orange solid 2px" }}
+              className=" shopping-details-content"
+            >
+              <div
+                style={{ border: "blue solid 2px" }}
+                className="shopping-details-content-img"
+              >
                 <img src="https://http2.mlstatic.com/D_NQ_NP_629893-CBT48890389810_012022-O.jpg" />
               </div>
-              <div className="shopping-details-content-description">
+              <div
+                style={{ border: "red solid 2px" }}
+                className="shopping-details-content-description"
+              >
                 <div className="content-description-price">
                   <div>
                     <p>$20.00</p>
                   </div>
                   <div>
-                    <i class="bi bi-x"></i>
+                    <i className="bi bi-x"></i>
                   </div>
                 </div>
                 <div className="content-description-specifications">
@@ -96,7 +109,7 @@ export const CartTwo = () => {
                 <div className="favorite-button">
                   <button className="btn btn-info">
                     <div>
-                      <i class="bi bi-heart"></i>
+                      <i className="bi bi-heart"></i>
                     </div>
                     <div>For later</div>
                   </button>
@@ -110,15 +123,15 @@ export const CartTwo = () => {
               </div>
             </div>
           </div>
-          <div className="prime-delivery black-delivery d-flex align-items-center justify-content-center">
-            <div>
-              <i class="bi bi-star"></i>
+          <div className="row prime-delivery black-delivery d-flex align-items-center justify-content-around">
+            <div className="col-sm-12 col-md-4 center">
+              <i className="bi bi-star"></i>
             </div>
-            <div>
+            <div className="col-sm-12 col-md-4">
               <h5 id="premiun">PREMIUM DELIVERY</h5>
               <p id="premiun">Get next day delivery for only $9.99</p>
             </div>
-            <div>
+            <div className="col-sm-12 col-md-4 center">
               <div>
                 <input
                   className="form-check-input"
@@ -131,15 +144,15 @@ export const CartTwo = () => {
               </div>
             </div>
           </div>
-          <div className="prime-delivery d-flex align-items-center justify-content-center">
-            <div>
+          <div className="row prime-delivery d-flex align-items-center justify-content-around">
+            <div className="col-sm-12 col-md-4 center">
               <i className="bi bi-truck"></i>
             </div>
-            <div>
+            <div className="col-sm-12 col-md-4">
               <h5 id="premiun">FREE* STANDARD DELIVERY</h5>
               <p id="premiun">Normal delivery option avaliable</p>
             </div>
-            <div>
+            <div className="col-sm-12 col-md-4 center">
               <div>
                 <input
                   className="form-check-input"
@@ -170,7 +183,7 @@ export const CartTwo = () => {
               <strong>
                 <h5>Delivery</h5>
               </strong>
-              <i class="bi bi-info-circle"></i>
+              <i className="bi bi-info-circle"></i>
             </div>
             <div
               className="btn-group delivery-type d-flex justify-content-end"

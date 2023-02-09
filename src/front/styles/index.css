@@ -523,9 +523,8 @@
 }
 
 .shopping-details-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  width: 80%;
+  margin: auto;
   padding: 25px;
   border: solid 1px rgb(198, 198, 198);
   border-left: none;
@@ -533,8 +532,17 @@
   border-right: none;
 }
 
+.shopping-details-header div {
+  margin: 5px 0;
+}
+
+.shopping-details-header * {
+  margin: 0;
+}
+
 .shopping-details-content {
   display: flex;
+  justify-content: space-between;
   padding: 25px;
   border: solid 1px rgb(198, 198, 198);
   border-left: none;
@@ -543,14 +551,16 @@
 }
 
 .shopping-details-content-img img {
-  height: 220px;
+  height: 100%;
   width: 200px;
 }
 
 .shopping-details-content-description {
-  margin: 0 10px;
+  margin: 10px 10px;
   padding: 10px;
   width: 100%;
+  /* border: 1px solid black;
+  box-shadow: 2px black; */
 }
 
 .content-description-price {
@@ -629,11 +639,19 @@
   color: white;
 }
 
+.prime-delivery div {
+  margin: 5px 0;
+}
+
+.prime-delivery .center {
+  display: flex;
+  justify-content: center;
+}
+
 .prime-delivery {
   border: rgb(198, 198, 198) solid 1px;
   margin: 20px 0;
   padding: 20px;
-  gap: 15rem;
 }
 
 .prime-delivery .bi {
@@ -646,7 +664,7 @@
 
 .checkout-details {
   padding: 5px;
-  height: 1000px;
+  /* height: 1000px; */
 }
 
 .total {
