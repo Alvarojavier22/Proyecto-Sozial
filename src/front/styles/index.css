@@ -511,3 +511,183 @@
   height: 120px;
   width: 80%;
 }
+
+/* Cart 2 */
+
+/* .shopping-details {
+  height: 1000px;
+} */
+
+.shopping-cart-continer {
+  padding: 10px;
+}
+
+.shopping-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
+  border: solid 1px rgb(198, 198, 198);
+  border-left: none;
+  border-top: none;
+  border-right: none;
+}
+
+.shopping-details-content {
+  display: flex;
+  padding: 25px;
+  border: solid 1px rgb(198, 198, 198);
+  border-left: none;
+  border-top: none;
+  border-right: none;
+}
+
+.shopping-details-content-img img {
+  height: 220px;
+  width: 200px;
+}
+
+.shopping-details-content-description {
+  margin: 0 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.content-description-price {
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+.content-description-price p {
+  margin: 0;
+}
+
+.content-description-price i {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.content-description-specifications {
+  padding: 0 10px;
+}
+
+.content-description-specifications p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.buttons-specifications {
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.buttons-specifications div {
+  margin: 0 5px;
+}
+
+.buttons-specifications p {
+  margin: 0;
+}
+
+.buttons-specifications .borders {
+  border: solid 1px rgb(198, 198, 198);
+  border-top: none;
+  border-bottom: none;
+}
+
+.favorite-button {
+  padding: 10px;
+}
+
+.favorite-button .btn-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 2px;
+}
+
+.favorite-button .btn-info div {
+  margin: 0 2px;
+}
+
+.shopping-details-footer {
+  padding: 10px 20px;
+  border: solid 1px rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.shopping-details-footer h4 {
+  margin: 0 5px;
+}
+
+.black-delivery {
+  background-color: black;
+  color: white;
+}
+
+.prime-delivery {
+  border: rgb(198, 198, 198) solid 1px;
+  margin: 20px 0;
+  padding: 20px;
+  gap: 15rem;
+}
+
+.prime-delivery .bi {
+  font-size: 35px;
+}
+
+#premiun {
+  margin: 0;
+}
+
+.checkout-details {
+  padding: 5px;
+  height: 1000px;
+}
+
+.total {
+  padding: 25px;
+  border: solid 1px rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.delivery-type {
+  margin: 15px 0 0 0;
+}
+
+.checkout-body {
+  padding: 10px;
+  margin: 30px 0;
+  border: solid 3px rgb(117, 115, 115);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.checkout-button button {
+  font-size: 30px;
+}
+
+.checkout-footer {
+  margin: 10px 0;
+  border: solid 1px rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.checkout-footer p {
+  margin: 0;
+}
+
+.cards img {
+  margin: 5px 5px;
+  height: 40px;
+  width: 40px;
+}
