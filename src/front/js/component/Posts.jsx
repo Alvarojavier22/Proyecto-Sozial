@@ -1,10 +1,6 @@
 import React from "react";
 
 export const Posts = (props) => {
-  const PublicPosts = () => {
-    props.setter("flex");
-  };
-
   return (
     <div className="container-fluid">
       <div className="col d-flex justify-content-center">
@@ -15,9 +11,8 @@ export const Posts = (props) => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Write a post here"
+                placeholder="write a post here"
                 aria-label="Text input with radio button"
-                onClick={PublicPosts}
               />
             </div>
           </div>
