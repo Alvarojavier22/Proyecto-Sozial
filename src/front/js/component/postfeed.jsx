@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
-
+import { Cardfeed } from './cardfeed.jsx';
 export const PostFeed = () => {
 
-  const [userData, setUserData] = useState({});
-
+  const [userData, setUserData] = useState("");
+  const [post, setPost]=useState("")
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("user")));
+    setPost(JSON.parse(localStorage.getItem("post")))
+    console.log(JSON.stringify(post))
   }, []);
   return (
     <div className="card post postcon  ">
@@ -57,6 +59,13 @@ export const PostFeed = () => {
           </button>
         </div>
       </div>
+      
+      <Cardfeed
+          text={post!=null?post.text:""}
+          name={userData!=null?userData.name:""}
+      />
+
+     
     </div>
   );
 };

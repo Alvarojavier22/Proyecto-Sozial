@@ -366,7 +366,7 @@ def delete_comments(post_id, comment_id):
 
 @api.route("/posts/", methods=["POST"])
 @jwt_required()
-def post(user_id):
+def post():
     user_id = get_jwt_identity()
     text = request.json.get("text")
 
@@ -374,7 +374,7 @@ def post(user_id):
 
     db.session.add(post)
     db.session.commit()
-
+    
     return jsonify({"success": "publicaction generate successfully"}), 200
 
 
@@ -883,7 +883,7 @@ def uploadPhoto():
     file.save(temp.name)
     # Subir archivo a firebase
     # Llamar a bucket
-    bucket = storage.bucket(name="sozial-21faf.appspot.com")
+    bucket = storage.bucket(name="project-f71b8.appspot.com")
     # Referencia al espacio en bucket
     resource = bucket.blob(filename)
     # Se sube el archivo temporal al bucket
