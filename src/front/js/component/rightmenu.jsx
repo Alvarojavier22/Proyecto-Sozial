@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+// import { Button } from 'react-bootstrap';
 
 export const RightMenu = () => {
   const [userData, setUserData] = useState({});
@@ -15,7 +16,10 @@ export const RightMenu = () => {
             <img className="align-self-center rounded-circle mr-3 img-fluid" src="https://media.wired.com/photos/5df98d3660d5ad000818260b/16:9/w_2047,h_1151,c_limit/Gear-Decade-10-Best-Products.jpg" alt="Profile Picture" />
             <hr />
             <h3><a href="#">{userData.name}</a></h3>
-            <a href="#">Log Out</a>
+            <Link to="/logout">
+            <button type="button" className="btn btn-outline-secondary">Log Out</button>
+           </Link>
+
           </div>
         </div>
       </div>

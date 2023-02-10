@@ -17,10 +17,12 @@ import { Newpass } from "./pages/newpass.jsx";
 import { Profile } from "./pages/perfil.jsx";
 import { Cart } from "./pages/cart.jsx";
 import { PostProducts } from "./pages/postproduct.jsx";
-import { PublicTextPost } from "./component/PublicTextPost.jsx";
+import { Logout } from "./pages/logout.jsx";
 import { SellProductsDetails } from "./pages/SellProductsDetails.jsx";
 import { EditProfile } from "./pages/EditProfile.jsx";
 import { CartTwo } from "./pages/Cart2.jsx";
+
+import { PostProduct2 } from "./pages/PostProduct2.jsx";
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -33,6 +35,7 @@ const Layout = () => {
           <Route element={<TermsAndConditions />} path="/termsandconditions" />
           <Route element={<Feed />} path="/feed" />
           <Route element={<Demo />} path="/demo" />
+          <Route element={<Logout />} path="/logout" />
           <Route element={<Single />} path="/single/:theid" />
           <Route element={<h1>Not found!</h1>} />
           <Route element={<Login />} path="/" />
@@ -46,6 +49,7 @@ const Layout = () => {
           <Route element={<SellProductsDetails />} path="/product-details" />
           <Route element={<EditProfile />} path="/edit-profile" />
           <Route element={<CartTwo />} path="/cart2" />
+          <Route element={<PostProduct2 />} path="/postproduct2" />
         </Routes>
       </BrowserRouter>
     </div>
