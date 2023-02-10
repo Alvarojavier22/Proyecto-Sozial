@@ -362,8 +362,6 @@ def delete_comments(post_id, comment_id):
 
 
 # GENERATE POSTS ✔️
-
-
 @api.route("/posts/", methods=["POST"])
 @jwt_required()
 def post():
