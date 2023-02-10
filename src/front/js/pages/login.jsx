@@ -3,6 +3,7 @@ import "./stylepage.css"
 import { Link, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import { Context } from "../store/appContext";
+import { Footer } from "../component/footer";
 export const Login=()=>{
 
 const {store, actions}=useContext(Context)	
@@ -62,6 +63,7 @@ const handleSubmit = async(event)=>{
 		</div>		
 		
 	</div>
+	<Footer />
 </div>
     )
 }
