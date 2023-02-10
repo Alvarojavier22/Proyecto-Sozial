@@ -879,7 +879,7 @@ phone: 480px,     sm
 	.categories-bckgr{
 		height:100%;
 	}
-
+}
 
 
 footer {
@@ -889,8 +889,3 @@ footer {
 }
 
 
-@media(min-width:568px) {
-    .categories-bckgr {
-        height: 100%;
-    }
-}
