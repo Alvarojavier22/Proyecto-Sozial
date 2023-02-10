@@ -106,7 +106,7 @@ export const TermsAndConditions = () => {
           <button className="btn btn-danger">Decline</button>
         </Link>
         <Link to="/signup">
-          <button className="btn btn-success">READ</button>
+          <button className="btn btn-success">MARK AS READ</button>
         </Link>
       </div>
           </div>
