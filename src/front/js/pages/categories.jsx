@@ -3,7 +3,7 @@ import { Technology } from "../component/techology.jsx";
 import { Clothing } from "../component/clothing.jsx";
 import { Art } from "../component/art.jsx";
 import { Link } from "react-router-dom";
-
+import { ProfileNav } from "../component/ProfileNav.jsx";
 export const Categories=()=>{
 
 const [content, setContent]=useState(0)
@@ -22,28 +22,11 @@ function selectContent(content){
 }
     return(
         <div className="container-fluid">
-            <div className="container-fluid row catheader ">
-                <div className="navitems d-flex">
-                    <Link to="/feed"><button>Home</button></Link>
-                    <Link to="/"><button>Login</button></Link>
-                    <Link to="/signup"><button>Signup</button></Link>
-
-                    <Link to="/postproduct"><button>Sell</button></Link>
-                    <div className="dropdown ms-auto">
-                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-
-                        Categories
-                    </button>
-                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a className="dropdown-item" href="#" onClick={()=>selectContent(1)}>Art</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={()=>selectContent(0)}>Clothing</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={()=>selectContent(2)}>Technology</a></li>
-                    </ul>
-                    </div>
-                </div>
-            </div>
+            
+               <ProfileNav/>
+            
           
-            <div className="container content">
+            <div className="container content ">
                <div>{contents[content]}</div>
             </div>
         </div>
