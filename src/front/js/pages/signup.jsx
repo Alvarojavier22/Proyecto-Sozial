@@ -70,7 +70,6 @@ const handleSubmit= async(event)=>{
     const [passHide, setPassHide]=useState(true)
     const [confirmPassHide, setConfirmPassHide]=useState(true)
 
-    const[emailverify, setEmailverify]=useState(false)
     const emailCheck=(email)=>{
         if(email === ""){
             return swal({
@@ -91,6 +90,24 @@ const handleSubmit= async(event)=>{
         }
         }
 
+        const passwordCheck=(pass)=>{
+            if(pass.length < 8){
+                return swal({
+                    title:"Oops!",
+                    text: "Pasword should be at least 8 characters",
+                    icon: "error"
+                })
+            }else if (!new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).test(pass))
+            {
+                return swal({
+                    title:"Oops!",
+                    text: "Pasword should contain at least 8 characters including at least 1 letter and 1 number",
+                    icon: "error"
+                })
+            }else{ return""
+        }
+        }
+
     return(
         <div className="container-fluid overlay" id="container_signup">
             <div className="signup">
@@ -105,11 +122,11 @@ const handleSubmit= async(event)=>{
                             <input type="text" value={surname || ""} onChange={(e)=>setSurName(e.target.value)}className="sign_input" placeholder="Last Name"/>
                             <input type={`${ passHide==true? "password": "text"}`} value={password ||"" } onChange={(e)=>setPassWord(e.target.value)} className="sign_input" placeholder="Password"/>
                             <i className={`far fa-eye${ passHide==true? "": "-slash"} `} onClick={()=>passHide==true?setPassHide(false):setPassHide(true)} id="togglePassword" style={{"marginLeft": "-30px", "cursor": "pointer"}}></i>
-                            <input type={`${ confirmPassHide==true? "password": "text"}`} value={confirmpass || ""} onChange={(e)=>setConfirmPass(e.target.value)} className="sign_input" placeholder="Confirm Password"/>
+                            <input onClick={()=>passwordCheck(password)} type={`${ confirmPassHide==true? "password": "text"}`} value={confirmpass || ""} onChange={(e)=>setConfirmPass(e.target.value)} className="sign_input" placeholder="Confirm Password"/>
                             <i className={`far fa-eye${ confirmPassHide==true? "": "-slash"} `} onClick={()=>confirmPassHide==true?setConfirmPassHide(false):setConfirmPassHide(true)} id="togglePassword" style={{"marginLeft": "-30px", "cursor": "pointer"}}></i>
                         </div>
                         <div className="form-check" id="check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                            <input  className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
 
                                 
                                 <label className="form-check-label" htmlFor="flexCheckDefault">

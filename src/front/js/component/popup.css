@@ -74,6 +74,16 @@
     border-radius: .5rem;
 }
 
+.titlecateg::after{
+    content:"";
+    display: flex;
+    width: 7em;
+    height: .2rem;
+    background-color: #000000;
+    margin: auto;
+    margin-top: .8rem;
+}
+
 @media(min-width:480px){
     .cardholder{
         max-width: 100%;
