@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import swal from "sweetalert"
 export const SignUp=()=>{
 
 const {store, actions}=useContext(Context)
+
+
 
 
     /* prueba animacion de pagina*/ 
@@ -23,7 +25,9 @@ const {store, actions}=useContext(Context)
     const[password,setPassWord]=useState("")
     const[email,setEmail]=useState("")
     const[is_active, setIs_active]=useState(true)
-    let item = {name,surname,password,email,is_active}
+    const[username, setUsername]=useState("")
+    const navigate=useNavigate()
+    let item = {name,username, surname,password,email,is_active}
     let inputs = [name,surname, password, email]
     
    
@@ -46,22 +50,57 @@ const {store, actions}=useContext(Context)
         
     }
     
+    
+
+const handleSubmit= async(event)=>{
+    event.preventDefault();
+    let signupResult = await actions.signUp(item)
+    if (signupResult === "ok"){
+        navigate("/feed")
+        console.log("success")
+    }else{
+        console.log("error")
+    }
+}
+
     const[confirmpass,setConfirmPass]=useState()
   
     
     /*Ocultar/ mostrar contraseñas */
     const [passHide, setPassHide]=useState(true)
     const [confirmPassHide, setConfirmPassHide]=useState(true)
+
+    const[emailverify, setEmailverify]=useState(false)
+    const emailCheck=(email)=>{
+        if(email === ""){
+            return swal({
+                title:"Oops!",
+                text: "Email is required",
+                icon: "error"
+            })
+        
+        }else if (!new RegExp(/\S+@\S+\.\S+/).test(email)){
+            return swal({
+                title:"Oops!",
+                text: "Email format is incorrect",
+                icon: "error"
+            })
+        }
+        else {
+            return ""
+        }
+        }
+
     return(
         <div className="container-fluid overlay" id="container_signup">
             <div className="signup">
                 <div className="signup-content">
-                    <form  className="signup">
+                    <form  className="signup" onSubmit={handleSubmit}>
                         <h1>Sign Up</h1>
                         <div className="signup_field">
                             
                             <input type="text" value={email || ""} onChange={(e)=>setEmail(e.target.value)} className="sign_input" placeholder="E-mail Address" />
-                            <input type="text" className="sign_input" placeholder="Username"/>
+                            <input type="text"  value={username || ""} onClick={()=>emailCheck(email)} onChange={(e)=>setUsername(e.target.value)} className="sign_input" placeholder="Username"/>
                             <input type="text" value={name || ""} onChange={(e)=>setName(e.target.value)} className="sign_input" placeholder="First Name"/>
                             <input type="text" value={surname || ""} onChange={(e)=>setSurName(e.target.value)}className="sign_input" placeholder="Last Name"/>
                             <input type={`${ passHide==true? "password": "text"}`} value={password ||"" } onChange={(e)=>setPassWord(e.target.value)} className="sign_input" placeholder="Password"/>
@@ -74,14 +113,17 @@ const {store, actions}=useContext(Context)
 
                                 
                                 <label className="form-check-label" htmlFor="flexCheckDefault">
-                                     I accept the <Link to="#" id="linksign">terms of use</Link> & <Link to="#" id="linksign">privacy policy</Link>
+                                     I accept the <label className="form-check-label" htmlFor="flexCheckDefault">
+                                             <Link to="/termsandconditions" id="linksign">terms of use</Link> & <Link to="/termsandconditions" id="linksign">privacy policy</Link>
+                                </label>
+
                                  </label>
                             </div>
 
                             
                             
                             <div className="signbtn">
-                                <Link to={`${password==confirmpass?"/feed":"#"}`}><button onClick={checkinputs(inputs)==false?()=>(actions.signUp(inputs)):()=>mostrar_alerta()} type="button">Sign Up</button></Link>
+                                <button onClick={checkinputs(inputs)==true?()=>mostrar_alerta():""} type="submit">Sign Up</button>
 
                             </div>
                     </form>
