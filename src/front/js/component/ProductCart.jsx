@@ -2,20 +2,11 @@ import React from "react";
 
 export const ProductCart = () => {
   return (
-    <div
-      
-      className="shopping-details-content"
-    >
-      <div
-        style={{ border: "blue solid 2px" }}
-        className="shopping-details-content-img"
-      >
+    <div className="shopping-details-content">
+      <div className="shopping-details-content-img">
         <img src="https://http2.mlstatic.com/D_NQ_NP_629893-CBT48890389810_012022-O.jpg" />
       </div>
-      <div
-        style={{ border: "red solid 2px" }}
-        className="shopping-details-content-description"
-      >
+      <div className="shopping-details-content-description">
         <div className="content-description-price">
           <div>
             <p>$20.00</p>
