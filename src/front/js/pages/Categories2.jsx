@@ -10,19 +10,19 @@ export const Categories2 = () => {
       <ProfileNav />
       <InfoNav />
       <div className="categories-cont">
-        <Link to={"#"}>
+        <Link to={"/books"}>
           <CategoriesContainer
             text={"Music, books & art"}
             icon={<i class="bi bi-brush-fill"></i>}
           />
         </Link>
-        <Link to={"#"}>
+        <Link to={"/cars"}>
           <CategoriesContainer
             text={"Cars, vehicles and styles"}
             icon={<i class="bi bi-car-front-fill"></i>}
           />
         </Link>
-        <Link to={"/categories"}>
+        <Link to={"/clothes"}>
           <CategoriesContainer
             text={"Clothes and accessories"}
             icon={<i class="bi bi-gem"></i>}
