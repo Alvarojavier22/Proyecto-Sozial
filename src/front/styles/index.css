@@ -690,8 +690,8 @@
   border-right: none;
 }
 
-.checkout-button button {
-  font-size: 30px;
+.checkout-button {
+  padding: 10px;
 }
 
 .checkout-footer {
@@ -859,4 +859,3 @@
     width: 80%;
   }
 }
-

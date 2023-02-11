@@ -1,48 +1,48 @@
 import React from "react";
-import { PayPalScriptProvider, PayPalButtons, BraintreePayPalButtons } from "@paypal/react-paypal-js";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  BraintreePayPalButtons,
+} from "@paypal/react-paypal-js";
 import { Navigate, useNavigate } from "react-router-dom";
 
-
-
-
-export const App=()=> {
-const navigate=useNavigate()
-const client_id=process.env.REACT_PAYPAL_CLIENT_ID
-const initialOptions = {
+export const App = () => {
+  const navigate = useNavigate();
+  const client_id = process.env.REACT_PAYPAL_CLIENT_ID;
+  const initialOptions = {
     "client-id": client_id,
     currency: "USD",
     intent: "capture",
-    "data-client-token": "abc123xyz=="
-};
+    "data-client-token": "abc123xyz==",
+  };
 
-
-
-
-    return (
-        <div>
-        <PayPalScriptProvider  options={{"client-id": "AbZV3MCO5dlLVQ5fFjgwHBiAMhz-tMC6lMEc-HXbsl2LwMtvbiZMQMfIQxkUfyzoV9q9QVjj0gjMcrHA"}}  >
+  return (
+    <div style={{ width: "100%" }}>
+      <PayPalScriptProvider
+        options={{
+          "client-id":
+            "AbZV3MCO5dlLVQ5fFjgwHBiAMhz-tMC6lMEc-HXbsl2LwMtvbiZMQMfIQxkUfyzoV9q9QVjj0gjMcrHA",
+        }}
+      >
         <PayPalButtons
-                createOrder={(data, actions) => {
-                    return actions.order.create({
-                        purchase_units: [
-                            {
-                                amount: {
-                                    value: "1.99",
-                                },
-                            },
-                        ],
-                    });
-                }}
-                onApprove={async (data, actions) => {
-                    const details = await actions.order.capture();
-                    const name = details.payer.name.given_name;
-                    alert(`Transaction completed by ${name}`);
-                    
-                }}
-
-                
-            />
-        </PayPalScriptProvider>
-        </div>
-    );
-}
+          createOrder={(data, actions) => {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: "1.99",
+                  },
+                },
+              ],
+            });
+          }}
+          onApprove={async (data, actions) => {
+            const details = await actions.order.capture();
+            const name = details.payer.name.given_name;
+            alert(`Transaction completed by ${name}`);
+          }}
+        />
+      </PayPalScriptProvider>
+    </div>
+  );
+};
