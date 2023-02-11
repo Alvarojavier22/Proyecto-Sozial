@@ -55,7 +55,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid gray;
+  border: 1px solid rgb(198, 198, 198);
   border-radius: 20px;
   height: 40px;
 }
@@ -103,7 +103,7 @@
 .input-post {
   margin: 40px auto;
   border-radius: 5px;
-  border: 2px solid rgb(198, 198, 198);
+  border: 1px solid rgb(198, 198, 198);
   padding: 15px;
   max-width: 700px;
   width: 100%;
@@ -127,7 +127,7 @@
 .post-divider {
   margin: auto;
   width: 95%;
-  border-bottom: 2px solid rgb(198, 198, 198);
+  border-bottom: 1px solid rgb(198, 198, 198);
   margin-bottom: 10px;
 }
 
@@ -171,7 +171,7 @@
 .header {
   margin: 40px auto;
   border-radius: 5px;
-  border: 2px solid rgb(198, 198, 198);
+  border: 1px solid rgb(198, 198, 198);
   padding: 15px;
   max-width: 700px;
   width: 80%;
@@ -252,7 +252,7 @@
 @media (max-width: 600px) {
   .input-post {
     margin: 40px 60px;
-    border: 2px solid rgb(198, 198, 198);
+    border: 1px solid rgb(198, 198, 198);
     width: 30rem;
   }
   .post-options {
