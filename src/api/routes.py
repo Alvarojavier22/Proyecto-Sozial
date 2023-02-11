@@ -891,16 +891,16 @@ def uploadPhoto():
     # Guardar imagen en DB si ya no existe
     if Imagen.query.filter(Imagen.resource_path == filename).first() is None:
         new_image = Imagen(
-            resource_path=filename, description="Profile photo of user" + str(user_id)
+        resource_path=filename, description="Profile photo of user" + str(user_id)
         )
         db.session.add(new_image)
         # Procesar las operaciones en la DB y la mantiene abierta para permitir mas operaciones.
         db.session.flush()
 
-    # Atualizar el campo de la foto
-    user.profile_picture_id = new_image.id
-    # Se crea el registro en la DB
-    db.sesion.add(user)
-    db.sessioncommit()
+        # Atualizar el campo de la foto
+        user.profile_picture_id = new_image.id
+        # Se crea el registro en la DB
+        db.sesion.add(user)
+        db.sessioncommit()
 
-    return "OK", 200
+        return "OK", 200
