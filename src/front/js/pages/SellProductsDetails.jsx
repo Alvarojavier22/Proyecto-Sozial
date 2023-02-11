@@ -127,7 +127,7 @@ export const SellProductsDetails = () => {
               <i className="bi bi-heart"></i>
             </button>
             <button className="btn btn-primary">
-              <i class="bi bi-three-dots"></i>
+              <i classname="bi bi-three-dots"></i>
             </button>
           </div>
           <div className="sell-products-details">

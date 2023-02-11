@@ -9,12 +9,14 @@
 }
 
 .ProfileInfo-container {
+  border-radius: 5px;
   border: 1px solid rgb(198, 198, 198);
   box-shadow: 10px black;
   font-size: 20px;
   padding: 40px;
-  width: 90%;
-  margin: 40px 20px;
+  max-width: 700px;
+  width: 100%;
+  margin: 40px auto;
 }
 
 .ProfileInfo-container * {
@@ -53,7 +55,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid gray;
+  border: 1px solid rgb(198, 198, 198);
   border-radius: 20px;
   height: 40px;
 }
@@ -99,10 +101,12 @@
 }
 
 .input-post {
-  margin: 40px 60px;
-  border: 2px solid rgb(198, 198, 198);
+  margin: 40px auto;
+  border-radius: 5px;
+  border: 1px solid rgb(198, 198, 198);
   padding: 15px;
-  width: 60%;
+  max-width: 700px;
+  width: 100%;
 }
 
 .photo-input {
@@ -123,7 +127,7 @@
 .post-divider {
   margin: auto;
   width: 95%;
-  border-bottom: 2px solid rgb(198, 198, 198);
+  border-bottom: 1px solid rgb(198, 198, 198);
   margin-bottom: 10px;
 }
 
@@ -165,10 +169,12 @@
 }
 
 .header {
-  margin: 40px 60px;
-  border: 2px solid rgb(198, 198, 198);
+  margin: 40px auto;
+  border-radius: 5px;
+  border: 1px solid rgb(198, 198, 198);
   padding: 15px;
-  width: 60%;
+  max-width: 700px;
+  width: 80%;
 }
 
 .photo-header {
@@ -246,7 +252,7 @@
 @media (max-width: 600px) {
   .input-post {
     margin: 40px 60px;
-    border: 2px solid rgb(198, 198, 198);
+    border: 1px solid rgb(198, 198, 198);
     width: 30rem;
   }
   .post-options {
@@ -417,18 +423,28 @@
 
 /*EditProfile*/
 .edit-profile-container {
-  width: 100vw;
-  height: 100vh;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
   background-color: rgb(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.edit-profile-container .bi-x-lg {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.edit-profile-container .bi-x-lg:hover {
+  color: red;
+}
+
 .edit-profile-fields {
   background-color: white;
-  width: 40%;
-  min-width: 60%;
+  width: 100%;
+  max-width: 500px;
   border-radius: 4px;
   border: 1px solid white;
   padding: 20px;
@@ -503,13 +519,22 @@
 }
 
 .change-name-input .form-control {
-  width: 50%;
+  width: 100%;
   margin: auto;
 }
 
 #form-control-describe {
   height: 120px;
+  width: 100%;
+}
+
+.end-edit {
+  background-color: #1a9f28;
+  color: white;
+  border-radius: 5px;
+  margin: 10px auto;
   width: 80%;
+  padding: 10px 20px;
 }
 
 /* Cart 2 */
@@ -690,8 +715,8 @@
   border-right: none;
 }
 
-.checkout-button button {
-  font-size: 30px;
+.checkout-button {
+  padding: 10px;
 }
 
 .checkout-footer {
@@ -860,3 +885,28 @@
   }
 }
 
+/* Cateogories2 */
+
+.categories-cont {
+  margin-top: 80px;
+}
+.categories-container {
+  padding: 10px 20px;
+  margin: 10px auto;
+  border-radius: 5px;
+  background-color: #9b59b6;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  max-width: 800px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.categories-container * {
+  padding: 0px 5px;
+}
+
+Link {
+  border: none;
+}

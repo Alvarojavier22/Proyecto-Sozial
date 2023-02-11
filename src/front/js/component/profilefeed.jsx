@@ -1,10 +1,9 @@
-import React,{ useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Posts } from "./Posts.jsx";
 import { ProfileInfo } from "./ProfileInfo.jsx";
 import { Publications } from "./Publications.jsx";
 
 export const FeedSocial = ({ set }) => {
- 
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
@@ -13,7 +12,7 @@ export const FeedSocial = ({ set }) => {
   return (
     <div className="container-fluid principal-div">
       <div className="row">
-        <div className="col-xl-3 col-lg-12">
+        <div className="col-xl-4 col-lg-12">
           <ProfileInfo
             username={userData.name}
             followersNumber={"0"}
@@ -21,7 +20,7 @@ export const FeedSocial = ({ set }) => {
             joinDate={"ene. 20, 2023"}
           />
         </div>
-        <div className="col-xl-9 col-lg-12">
+        <div className="col-xl-8 col-lg-12">
           <Posts
             setter={set}
             loginUserPhoto={

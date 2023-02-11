@@ -2,6 +2,7 @@ import React from "react";
 import { InfoNav } from "../component/InfoNav.jsx";
 import { ProductCart } from "../component/ProductCart.jsx";
 import { ProfileNav } from "../component/ProfileNav.jsx";
+import { App } from "./app.jsx";
 
 export const CartTwo = () => {
   return (
@@ -117,7 +118,7 @@ export const CartTwo = () => {
             </div>
           </div>
           <div className="checkout-button d-flex justify-content-center">
-            <button className="btn btn-success">CHECKOUT</button>
+            <App />
           </div>
           <div className="checkout-footer">
             <div>
