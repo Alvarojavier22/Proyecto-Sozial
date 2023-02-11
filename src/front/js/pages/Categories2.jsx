@@ -28,7 +28,7 @@ export const Categories2 = () => {
             icon={<i class="bi bi-gem"></i>}
           />
         </Link>
-        <Link to={"#"}>
+        <Link to={"/tecnology"}>
           <CategoriesContainer
             text={"Tecnology"}
             icon={<i class="bi bi-earbuds"></i>}

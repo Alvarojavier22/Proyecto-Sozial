@@ -910,3 +910,34 @@
 Link {
   border: none;
 }
+
+/* ProductCard */
+
+.store-container {
+  padding: 10px;
+  margin: 20px auto;
+}
+
+.categories-header {
+  margin: auto;
+  padding: 10px;
+  width: 100%;
+  max-width: 40%;
+  border: solid 1px rgb(198, 198, 198);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.product-card {
+  height: 100%;
+  width: 450px;
+  margin: auto;
+  /*   max-height: 250px;
+  min-width: 490px; */
+}
+
+.product-card img {
+  height: 100%;
+  width: 100%;
+}
