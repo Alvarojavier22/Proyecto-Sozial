@@ -519,13 +519,13 @@
 }
 
 .change-name-input .form-control {
-  width: 50%;
+  width: 100%;
   margin: auto;
 }
 
 #form-control-describe {
   height: 120px;
-  width: 80%;
+  width: 100%;
 }
 
 .end-edit {
