@@ -61,15 +61,14 @@ export const TechCategorie = () => {
       <ProfileNav />
       <InfoNav />
       <div className="categories-header d-flex justify-content-center align-items-center">
-        <h2>Tech category</h2>
+        <h2>Technology</h2>
       </div>
       <div className="row store-container">
         {console.log(info)}
         {info.map((item) => (
           <div
             key={item.id}
-            style={{ margin: "10px auto" }}
-            className="col-sm-12 col-md-4 d-flex justify-content-center"
+            className="col-sm-12 col-md-4 d-flex justify-content-center product-card-div"
           >
             <ProductCard
               img={item.img}
