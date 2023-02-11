@@ -5,11 +5,14 @@ import {
   BraintreePayPalButtons,
 } from "@paypal/react-paypal-js";
 import { Navigate, useNavigate } from "react-router-dom";
+import swal from "sweetalert"
 
-export const App = () => {
-  const navigate = useNavigate();
-  const client_id = process.env.REACT_PAYPAL_CLIENT_ID;
-  const initialOptions = {
+
+
+export const App=()=> {
+const navigate=useNavigate()
+const client_id=process.env.REACT_PAYPAL_CLIENT_ID
+const initialOptions = {
     "client-id": client_id,
     currency: "USD",
     intent: "capture",
@@ -25,24 +28,32 @@ export const App = () => {
         }}
       >
         <PayPalButtons
-          createOrder={(data, actions) => {
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: "1.99",
-                  },
-                },
-              ],
-            });
-          }}
-          onApprove={async (data, actions) => {
-            const details = await actions.order.capture();
-            const name = details.payer.name.given_name;
-            alert(`Transaction completed by ${name}`);
-          }}
-        />
-      </PayPalScriptProvider>
-    </div>
-  );
-};
+                createOrder={(data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [
+                            {
+                                amount: {
+                                    value: "1.99",
+                                },
+                            },
+                        ],
+                    });
+                }}
+                onApprove={async (data, actions) => {
+                    const details = await actions.order.capture();
+                    const name = details.payer.name.given_name;
+                    
+                    swal({
+                        title:"Great!",
+                        text: `Transaction completed by ${name}`,
+                        icon: "success"
+                    })
+                    
+                }}
+
+                
+            />
+        </PayPalScriptProvider>
+        </div>
+    );
+}
