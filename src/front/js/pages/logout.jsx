@@ -25,10 +25,10 @@ export const Logout = () => {
         <div className="logout-box text-center">
         <h3 className="mb-4">Are you sure you want to log out?</h3>
         <div className="d-flex justify-content-around w-100">
-        <Link to="/feed">
+        <Link to={-1}>
         <button className="btn btn-lilac mr-3">No</button>
         </Link>
-        <Link to="/signup">
+        <Link to="/">
         <button className="btn btn-deep-blue">Yes</button>
         </Link>
         </div>

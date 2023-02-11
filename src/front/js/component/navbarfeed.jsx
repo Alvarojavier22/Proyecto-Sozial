@@ -102,6 +102,10 @@ export const NavBarFeed = () => {
             </div>
          </div>
       </nav>
+
+    </div>  
+    
     </div>  );
+
 }
 

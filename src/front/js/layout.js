@@ -21,7 +21,7 @@ import { Logout } from "./pages/logout.jsx";
 import { SellProductsDetails } from "./pages/SellProductsDetails.jsx";
 import { EditProfile } from "./pages/EditProfile.jsx";
 import { CartTwo } from "./pages/Cart2.jsx";
-
+import { App } from "./pages/app.jsx";
 import { PostProduct2 } from "./pages/PostProduct2.jsx";
 //create your first component
 const Layout = () => {
@@ -50,6 +50,7 @@ const Layout = () => {
           <Route element={<EditProfile />} path="/edit-profile" />
           <Route element={<CartTwo />} path="/cart2" />
           <Route element={<PostProduct2 />} path="/postproduct2" />
+          <Route element={<App/>} path="/app"/>
         </Routes>
       </BrowserRouter>
     </div>
