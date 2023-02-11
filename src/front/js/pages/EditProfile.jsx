@@ -4,8 +4,14 @@ export const EditProfile = () => {
   return (
     <div className="edit-profile-container">
       <div className="row edit-profile-fields">
-        <div className="edit-profile-header">
-          <h3>Edit profile</h3>
+        <div className="edit-profile-header d-flex justify-content-between align-items-center">
+          <div></div>
+          <div>
+            <h3>Edit profile</h3>
+          </div>
+          <div>
+            <i class="bi bi-x-lg"></i>
+          </div>
         </div>
         <div className="row edit-profile-image d-flex align-items-center justify-content-evenly">
           <div className="col-sm-12 col-md-6 d-flex justify-content-center">
@@ -70,6 +76,9 @@ export const EditProfile = () => {
               <button className="btn btn-success">Send your description</button>
             </div>
           </div>
+        </div>
+        <div className="end-edit d-flex justify-content-center align-items-center">
+          Finish edit
         </div>
       </div>
     </div>
