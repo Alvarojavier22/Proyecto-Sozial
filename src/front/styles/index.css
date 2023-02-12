@@ -91,12 +91,19 @@
   height: 60px;
   /*para que no se mueva con el hoover*/
   padding: 10px;
+  margin: auto;
   display: flex;
   justify-content: space-evenly;
 }
 
-.info-nav div:hover {
-  border-bottom: 4px solid rgb(198, 198, 198);
+.info-nav .col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-nav .col:hover {
+  border-bottom: 1px solid rgb(198, 198, 198);
   cursor: pointer;
 }
 
@@ -571,6 +578,10 @@
   padding: 25px;
 }
 
+.shopping-details-content-img {
+  margin-right: 10px;
+}
+
 .shopping-details-content-img img {
   height: 100%;
   width: 200px;
@@ -580,7 +591,8 @@
   margin: 10px 10px;
   padding: 10px;
   width: 100%;
-  /* border: 1px solid black;
+  border: 1px solid rgb(198, 198, 198);
+  /* 
   box-shadow: 2px black; */
 }
 
@@ -622,7 +634,7 @@
 }
 
 .buttons-specifications div {
-  margin: 0 5px;
+  margin: 2px 5px;
 }
 
 .buttons-specifications p {

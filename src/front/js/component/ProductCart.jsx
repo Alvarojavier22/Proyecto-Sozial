@@ -19,12 +19,12 @@ export const ProductCart = () => {
           <p>OTAKU DESIGN Slim mid lenght start t-shirt</p>
           <p>Black Silk</p>
         </div>
-        <div className="buttons-specifications">
-          <div>
+        <div className="row buttons-specifications">
+          <div className="col d-flex justify-content-center">
             <p>Black Silk</p>
           </div>
           {/* mapear estos botones */}
-          <div className="borders">
+          <div className="col borders d-flex justify-content-center">
             <div className="btn-group" role="group">
               <button
                 id="btnGroupDrop1"
@@ -49,7 +49,7 @@ export const ProductCart = () => {
               </ul>
             </div>
           </div>
-          <div>
+          <div className="col d-flex justify-content-center">
             <div className="btn-group" role="group">
               <button
                 id="btnGroupDrop1"
