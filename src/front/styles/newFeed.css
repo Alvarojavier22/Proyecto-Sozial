@@ -1,0 +1,69 @@
+.feed-row #left-menu,
+.feed-row #right-menu {
+  padding: 20px;
+}
+
+/* left menu */
+
+.left-menu-container,
+.right-menu-container {
+  background-color: #f8f9fa;
+}
+
+.left-menu-container {
+  padding: 20px;
+}
+
+.left-menu-container * {
+  color: #0d6efd;
+}
+
+div .bi {
+  font-size: 25px;
+}
+
+.profile * {
+  font-size: 15px;
+}
+
+.options {
+  margin-left: 10px;
+}
+
+.options * {
+  font-size: 15px;
+}
+
+.center-icons {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+/* right menu */
+
+.photo .picture {
+  border-radius: 100%;
+  height: 200px;
+  width: 200px;
+}
+
+.divider {
+  margin: 20px auto;
+  width: 20%;
+  border-bottom: solid 1px rgb(198, 198, 198);
+}
+
+.logout-button {
+  margin-top: 10px;
+}
+
+.right-store {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+}
+
+.right-store .bi {
+  font-size: 35px;
+}

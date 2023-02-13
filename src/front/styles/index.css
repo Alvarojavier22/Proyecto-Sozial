@@ -3,6 +3,8 @@
 */
 /*@import 'feed.css'; */
 
+@import "newFeed.css";
+
 .profile-nav {
   display: flex;
   justify-content: space-between;
@@ -88,15 +90,15 @@
 }
 
 .info-nav {
-  height: 60px;
   /*para que no se mueva con el hoover*/
-  padding: 10px;
+  padding: 20px;
   margin: auto;
   display: flex;
   justify-content: space-evenly;
 }
 
 .info-nav .col {
+  width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -783,6 +785,7 @@
 .post-product-container {
   border: solid rgb(198, 198, 198) 1px;
   border-radius: 5px;
+  padding: 10px;
   margin: 30px auto;
   width: 90%;
   max-width: 600px;
@@ -808,7 +811,7 @@
 }
 
 .photos {
-  padding: 10px 30px;
+  padding: 10px 0px;
 }
 
 .add-photos-container {

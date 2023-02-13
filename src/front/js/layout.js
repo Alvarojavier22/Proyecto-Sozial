@@ -28,6 +28,7 @@ import { TechCategorie } from "./pages/TechCategorie.jsx";
 import { ClothesCategory } from "./pages/ClothesAccesories.jsx";
 import { CarsCategory } from "./pages/Cars.jsx";
 import { BooksCategory } from "./pages/Books.jsx";
+import { Feed2 } from "./pages/Feed2.jsx";
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -39,6 +40,7 @@ const Layout = () => {
         <Routes>
           <Route element={<TermsAndConditions />} path="/termsandconditions" />
           <Route element={<Feed />} path="/feed" />
+          <Route element={<Feed2 />} path="/feed2" />
           <Route element={<Demo />} path="/demo" />
           <Route element={<Logout />} path="/logout" />
           <Route element={<Single />} path="/single/:theid" />
@@ -51,11 +53,11 @@ const Layout = () => {
           <Route element={<Cart />} path="/cart" />
           <Route element={<PostProducts />} path="/postproduct" />
           <Route element={<Categories />} path="/categories" />
+          <Route element={<Categories2 />} path="/categories2" />
           <Route element={<SellProductsDetails />} path="/product-details" />
           <Route element={<EditProfile />} path="/edit-profile" />
           <Route element={<CartTwo />} path="/cart2" />
           <Route element={<PostProduct2 />} path="/postproduct2" />
-          <Route element={<Categories2 />} path="/categories2" />
           <Route element={<TechCategorie />} path="/tecnology" />
           <Route element={<ClothesCategory />} path="/clothes" />
           <Route element={<CarsCategory />} path="/cars" />

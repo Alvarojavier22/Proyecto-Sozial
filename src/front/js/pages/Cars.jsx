@@ -64,7 +64,6 @@ export const CarsCategory = () => {
         <h2>Cars, vehicles and styles</h2>
       </div>
       <div className="row store-container">
-        {console.log(info)}
         {info.map((item) => (
           <div
             key={item.id}

@@ -5,7 +5,7 @@ export const InfoNav = () => {
   return (
     <div
       className="row info-nav container-fluid d-flex justify-content-center"
-      style={{ margin: "5px" }}
+      style={{ margin: "10px" }}
     >
       <div className="col col-sm-4">
         <h5>POSTS</h5>
