@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const Publications = (props) => {
-  /* HACER EL EVENTO PARA QUE PUEDA MARARSE COMO LIKEADO EL BOTON DE LIKE */
-  const likeButton = () => {};
+  const [like, setLike] = useState(false);
+
+  const Like = () => {
+    setLike(!like);
+  };
 
   return (
     <div className="cr">
@@ -42,10 +45,16 @@ export const Publications = (props) => {
             <div className="photos-text d-flex">
               <div className="photos d-flex">
                 <button
-                  onClick={true}
+                  onClick={Like}
                   className="btn btn-primary pub-buttons d-flex"
                 >
-                  <i className="bi bi-hand-thumbs-up"></i>
+                  <i
+                    className={
+                      like
+                        ? "bi bi-hand-thumbs-up-fill"
+                        : "bi bi-hand-thumbs-up"
+                    }
+                  ></i>
                   <p>Like</p>
                 </button>
                 <button className="btn btn-primary pub-buttons d-flex">
