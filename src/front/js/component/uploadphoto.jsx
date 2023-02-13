@@ -25,14 +25,10 @@ const {actions,store}=useContext(Context)
         console.log(response)
         
     }
-    const [pic, setPic]=useState("")
-    useEffect(()=>{
-        setPic(JSON.parse(localStorage.getItem("picture")))
-        console.log(JSON.stringify(pic))
-    }, [])
+    const pic = localStorage.getItem("url")
     return(
         <div className="container">
-            <img src={""} />      
+            <img src={pic} />      
             <label htmlFor="formfile" className="form-label">
                 input example
             </label>      

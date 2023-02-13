@@ -78,8 +78,9 @@ const getState = ({
                 const pictureData = await response.json();
                 const pictureUrl = pictureData.pictureUrl;
                 localStorage.setItem("picture", JSON.stringify(pictureData))
-                setStore({profilePic: pictureData})
-                
+                setStore({profilePic: pictureUrl})
+                localStorage.setItem("url", JSON.stringify(pictureUrl.signed_url))
+                console.log(localStorage.getItem("url"))
                 console.log(pictureUrl)
             
             },
