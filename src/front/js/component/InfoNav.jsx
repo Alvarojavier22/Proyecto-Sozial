@@ -3,15 +3,24 @@ import { Link } from "react-router-dom";
 
 export const InfoNav = () => {
   return (
-    <div className="info-nav container-fluid d-flex" style={{ margin: "5px" }}>
-      <div>
-        <h5>POSTS</h5>
+    <div
+      className="row info-nav container-fluid d-flex justify-content-center"
+      style={{ margin: "10px" }}
+    >
+      <div className="col col-sm-4">
+        <Link to="/feed2">
+          <h5>POSTS</h5>
+        </Link>
       </div>
-      <div>
-        <h5>STORE</h5>
+      <div className="col col-sm-4">
+        <Link to="/store">
+          <h5>STORE</h5>
+        </Link>
       </div>
-      <div>
-       <Link to="/categories"><h5>CATEGORIES</h5></Link> 
+      <div className="col col-sm-4">
+        <Link to="/categories2">
+          <h5>CATEGORIES</h5>
+        </Link>
       </div>
     </div>
   );

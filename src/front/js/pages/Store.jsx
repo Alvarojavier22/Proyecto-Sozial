@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { InfoNav } from "../component/InfoNav.jsx";
+import { Posts } from "../component/Posts.jsx";
 import { ProductCard } from "../component/ProductCard.jsx";
 import { ProfileNav } from "../component/ProfileNav.jsx";
 
-export const CarsCategory = () => {
+export const Store = () => {
   const [info, setInfo] = useState([
     {
       id: 1,
@@ -11,6 +12,27 @@ export const CarsCategory = () => {
       alt: "sozial-store-product",
       title: "Cars store example",
       description: "Cars store",
+    },
+    {
+      id: 2,
+      img: "https://cf.shopee.com.co/file/d3419be8258e34747d8777f590152a0f",
+      alt: "sozial-store-product",
+      title: "Amazon Basics",
+      description: "Amazon Basics item",
+    },
+    {
+      id: 4,
+      img: "https://media.wired.com/photos/5df98d3660d5ad000818260b/16:9/w_2047,h_1151,c_limit/Gear-Decade-10-Best-Products.jpg",
+      alt: "sozial-store-product",
+      title: "Amazon Basics",
+      description: "Amazon Basics item",
+    },
+    {
+      id: 4,
+      img: "https://media.wired.com/photos/5df98d3660d5ad000818260b/16:9/w_2047,h_1151,c_limit/Gear-Decade-10-Best-Products.jpg",
+      alt: "sozial-store-product",
+      title: "Amazon Basics",
+      description: "Amazon Basics item",
     },
     {
       id: 2,
@@ -49,10 +71,24 @@ export const CarsCategory = () => {
     },
     {
       id: 4,
+      img: "https://template.canva.com/EADtutwov_Q/1/0/256w-nJr37FPJeZs.jpg",
+      alt: "sozial-store-product",
+      title: "Amazon Basics",
+      description: "Amazon Basics item",
+    },
+    {
+      id: 4,
       img: "https://media.autoexpress.co.uk/image/private/s--A0y0ksLZ--/f_auto,t_primary-image-desktop@1/v1562246883/autoexpress/2018/09/customer_on_forecourt_0.jpg",
       alt: "sozial-store-product",
       title: "Cars store example",
       description: "Cars store",
+    },
+    {
+      id: 4,
+      img: "https://template.canva.com/EADwi4xAG6I/1/0/256w-JBWCAd5q564.jpg",
+      alt: "sozial-store-product",
+      title: "Amazon Basics",
+      description: "Amazon Basics item",
     },
   ]);
 
@@ -61,8 +97,13 @@ export const CarsCategory = () => {
       <ProfileNav />
       <InfoNav />
       <div className="categories-header d-flex justify-content-center align-items-center">
-        <h2>Cars, vehicles and styles</h2>
+        <h2>Store</h2>
       </div>
+      <Posts
+        loginUserPhoto={
+          "https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"
+        }
+      />
       <div className="row store-container">
         {info.map((item) => (
           <div
