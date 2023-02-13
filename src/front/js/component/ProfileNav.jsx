@@ -28,13 +28,21 @@ export const ProfileNav = () => {
                 />
               </svg>
             </Link>
-            <h4 style={{ paddingTop: "8px" }}>{userData.name}</h4>
+            <Link to={"/profile"}>
+              <h4 style={{ paddingTop: "8px" }}>{userData.name}</h4>
+            </Link>
 
             <div className="photo-arrow" style={{ marginLeft: "20px" }}>
-              <img
-                style={{ width: "45px", height: "45px", borderRadius: "100%" }}
-                src="https://wl-genial.cf.tsp.li/resize/728x/jpg/91b/430/964a9c5ac9933cc012d0bd80be.jpg"
-              />
+              <Link to={"/profile"}>
+                <img
+                  style={{
+                    width: "45px",
+                    height: "45px",
+                    borderRadius: "100%",
+                  }}
+                  src="https://wl-genial.cf.tsp.li/resize/728x/jpg/91b/430/964a9c5ac9933cc012d0bd80be.jpg"
+                />
+              </Link>
             </div>
           </div>
 

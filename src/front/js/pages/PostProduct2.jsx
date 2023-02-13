@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { InfoNav } from "../component/InfoNav.jsx";
 import { ProfileNav } from "../component/ProfileNav.jsx";
 
 export const PostProduct2 = () => {
+  const [categories, setCategories] = useState([
+    "Music, books, art",
+    "Cars, vehicles and style",
+    "Clothes and accessories",
+    "Technology",
+  ]);
+
   return (
     <div className="container-fluid">
       <ProfileNav />
@@ -45,30 +52,27 @@ export const PostProduct2 = () => {
             <button
               id="btnGroupDrop1"
               type="button"
-              className="btn btn-muted dropdown-toggle"
+              className="btn btn-warning dropdown-toggle"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
               Category
             </button>
             <ul className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <li>
-                <a className="dropdown-item" href="#">
-                  Tecnologie
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Clothes
-                </a>
-              </li>
+              {categories.map((category, index) => (
+                <li>
+                  <a key={index} className="dropdown-item" href="#">
+                    {category}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="btn-group d-flex justify-content-start" role="group">
             <button
               id="btnGroupDrop1"
               type="button"
-              className="btn btn-muted dropdown-toggle"
+              className="btn btn-warning dropdown-toggle"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
