@@ -1,6 +1,9 @@
 import React from "react";
 
 export const Publications = (props) => {
+  /* HACER EL EVENTO PARA QUE PUEDA MARARSE COMO LIKEADO EL BOTON DE LIKE */
+  const likeButton = () => {};
+
   return (
     <div className="cr">
       <div className="col d-flex justify-content-center">
@@ -38,9 +41,21 @@ export const Publications = (props) => {
           <div className="post-options">
             <div className="photos-text d-flex">
               <div className="photos d-flex">
-                <button className="btn btn-primary">Like</button>
-                <button className="btn btn-primary">Comment</button>
-                <button className="btn btn-primary">Share</button>
+                <button
+                  onClick={true}
+                  className="btn btn-primary pub-buttons d-flex"
+                >
+                  <i className="bi bi-hand-thumbs-up"></i>
+                  <p>Like</p>
+                </button>
+                <button className="btn btn-primary pub-buttons d-flex">
+                  <i className="bi bi-chat-dots"></i>
+                  <p>Comment</p>
+                </button>
+                <button className="btn btn-primary pub-buttons d-flex">
+                  <i className="bi bi-arrow-90deg-right"></i>
+                  <p>Share</p>
+                </button>
               </div>
             </div>
             <div className="post-divider"></div>

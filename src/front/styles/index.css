@@ -167,6 +167,14 @@
   cursor: pointer;
 }
 
+.pub-buttons {
+  padding: 5px;
+}
+
+.pub-buttons * {
+  margin: 0 5px;
+}
+
 #hover:hover {
   color: orange;
 }
@@ -846,7 +854,7 @@
 .public-product-inputs .form-control,
 .public-product-inputs .btn-group {
   margin: auto;
-  width: 90%;
+  width: 100%;
 }
 
 .public-button {

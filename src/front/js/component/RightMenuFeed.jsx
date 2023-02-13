@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const RightMenuFeed = () => {
   return (
@@ -26,7 +27,9 @@ export const RightMenuFeed = () => {
             <i class="bi bi-shop"></i>
           </div>
           <div className="name d-flex justify-content-center align-items-center">
-            <h4>Store</h4>
+            <Link to="/store">
+              <button className="btn btn-info">Go to store</button>
+            </Link>
           </div>
         </div>
       </div>
