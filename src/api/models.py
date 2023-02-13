@@ -28,7 +28,9 @@ class User(db.Model):
             "surname": self.surname,
             "email": self.email,
             "is_active": self.is_active,
-            "password": self.password,  # para las pruebas del cambio de clave
+            "password": self.password,
+            
+              # para las pruebas del cambio de clave
         }
 
     # para solo traer información específica
@@ -228,12 +230,10 @@ class Imagen(db.Model):
         }
 
     def image_url(self):
-        bucket = storage.bucket(name="sozial-21faf.appspot.com")
+        bucket = storage.bucket(name="project-f71b8.appspot.com")
         resource = bucket.blob(self.resource_path)
-        signed_url = resource.generate_signed_url(
-            version="v4", expiration=datetime.timedelta(minutes=15), methods=["GET"]
-        )
-        return {
+        signed_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=15), method="GET")
+        return{
             "id": self.id,
             "resource_path": self.resource_path,
             "signed_url": signed_url,

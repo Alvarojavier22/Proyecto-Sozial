@@ -24,12 +24,16 @@ import { CartTwo } from "./pages/Cart2.jsx";
 import { App } from "./pages/app.jsx";
 import { PostProduct2 } from "./pages/PostProduct2.jsx";
 import { Categories2 } from "./pages/Categories2.jsx";
+
+import { UploadPhoto } from "./component/uploadphoto.jsx";
+
 import { TechCategorie } from "./pages/TechCategorie.jsx";
 import { ClothesCategory } from "./pages/ClothesAccesories.jsx";
 import { CarsCategory } from "./pages/Cars.jsx";
 import { BooksCategory } from "./pages/Books.jsx";
 import { Feed2 } from "./pages/Feed2.jsx";
 import { Store } from "./pages/Store.jsx";
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -65,6 +69,7 @@ const Layout = () => {
           <Route element={<CarsCategory />} path="/cars" />
           <Route element={<BooksCategory />} path="/books" />
           <Route element={<App />} path="/app" />
+          <Route element={<UploadPhoto/>} path="/uploadphoto"/>
         </Routes>
       </BrowserRouter>
     </div>
