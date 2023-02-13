@@ -7,13 +7,13 @@ export const RightMenuFeed = () => {
         <div className="photo d-flex justify-content-center align-items-center">
           <img
             className="picture"
-            src="https://media.wired.com/photos/5df98d3660d5ad000818260b/16:9/w_2047,h_1151,c_limit/Gear-Decade-10-Best-Products.jpg"
+            src="https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"
           />
         </div>
         <div className="divider"></div>
         <div className="name-logout">
           <div className="name">
-            <h2>username</h2>
+            <h4>username</h4>
           </div>
           <div className="logout-button d-flex justify-content-center">
             <button className="btn btn-danger">logout</button>

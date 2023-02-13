@@ -8,10 +8,14 @@ export const InfoNav = () => {
       style={{ margin: "10px" }}
     >
       <div className="col col-sm-4">
-        <h5>POSTS</h5>
+        <Link to="/feed2">
+          <h5>POSTS</h5>
+        </Link>
       </div>
       <div className="col col-sm-4">
-        <h5>STORE</h5>
+        <Link to="/store">
+          <h5>STORE</h5>
+        </Link>
       </div>
       <div className="col col-sm-4">
         <Link to="/categories2">
