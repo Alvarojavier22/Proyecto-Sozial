@@ -48,7 +48,7 @@ export const Publications = (props) => {
               <img src={props.onlineUserPhoto} />
               <div className="input-group mb-3">
                 <input
-                  placeholder="comment post here"
+                  placeholder="comment here"
                   type="text"
                   className="form-control"
                   aria-label="Sizing example input"

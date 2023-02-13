@@ -4,7 +4,7 @@ import { ProfileNav } from "../component/ProfileNav.jsx";
 
 export const SellProductsDetails = () => {
   return (
-    <div className="container-fluid">
+    <div className="container">
       <div className="row">
         <ProfileNav />
         <InfoNav />
@@ -127,7 +127,7 @@ export const SellProductsDetails = () => {
               <i className="bi bi-heart"></i>
             </button>
             <button className="btn btn-primary">
-              <i classname="bi bi-three-dots"></i>
+              <i className="bi bi-three-dots"></i>
             </button>
           </div>
           <div className="sell-products-details">
