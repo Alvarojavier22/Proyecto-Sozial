@@ -27,8 +27,8 @@ from flask_jwt_extended import (
 from datetime import datetime, timezone  # para el cierre de sesión
 from flask_bcrypt import Bcrypt
 from sqlalchemy import or_
-
-
+import tempfile
+from firebase_admin import credentials, storage
 api = Blueprint("api", __name__)
 
 cripto = Bcrypt(Flask(__name__))
@@ -874,14 +874,15 @@ def uploadPhoto():
     file = request.files["profilePic"]
     # Extension del archivo
     extension = file.filename.split(".")[1]
-    # Se genera el nombre del archivo con el id de la imagen y la extension
-    filename = "profiles/" + str(user_id) + "." + extension
+    
     # Guardar el archivo temporalmente
     temp = tempfile.NamedTemporaryFile(delete=False)
     file.save(temp.name)
     # Subir archivo a firebase
     # Llamar a bucket
     bucket = storage.bucket(name="project-f71b8.appspot.com")
+    # Se genera el nombre del archivo con el id de la imagen y la extension
+    filename = "profiles/" + str(user_id) + "." + extension
     # Referencia al espacio en bucket
     resource = bucket.blob(filename)
     # Se sube el archivo temporal al bucket
@@ -900,7 +901,21 @@ def uploadPhoto():
         # Atualizar el campo de la foto
         user.profile_picture_id = new_image.id
         # Se crea el registro en la DB
-        db.sesion.add(user)
-        db.sessioncommit()
+        db.session.add(user)
+        db.session.commit()
 
         return "OK", 200
+
+
+
+@api.route('/getphoto', methods=["GET"])
+@jwt_required()
+def getPhoto():
+    #Buscamos el usuario en la BD partiendo del token
+    user= User.query.get(get_jwt_identity())
+    if user is None:
+        return "User not found", 403
+
+    url=user.profile_picture.image_url()
+   
+    return jsonify({"pictureUrl": url}), 200

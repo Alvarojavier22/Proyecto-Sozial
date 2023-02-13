@@ -20,7 +20,7 @@ const getState = ({
                 },
             ],
             user: [],
-            
+            profilePic:[]
         },
         actions: {
             signUp: async (user) => {
@@ -65,7 +65,24 @@ const getState = ({
                 }
             },
 
+            getImage: async()=>{
+               
+                const response = await fetch(`${apiUrl}/api/getphoto`, {
+                    headers: {
+                        Authorization:  `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                    },
+                });
             
+                
+              
+                const pictureData = await response.json();
+                const pictureUrl = pictureData.pictureUrl;
+                localStorage.setItem("picture", JSON.stringify(pictureData))
+                setStore({profilePic: pictureData})
+                
+                console.log(pictureUrl)
+            
+            },
 
             GeneratePost: async (post) => {
                 let result = await fetch(`${apiUrl}/api/posts/`, {
@@ -81,7 +98,7 @@ const getState = ({
 
                 });
                 localStorage.setItem("post", JSON.stringify(post))
-                
+               
                 result = await result.json();
                 console.log("result", result);
             },
