@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import swal from "sweetalert";
 
-export const EditProfile = () => {
-  return (
+
+export const EditProfile = (props) => {
+const showalert=()=>{
+  return swal({
+    title:"Great!",
+    text: "Profile updated",
+    icon: "success"
+})
+}
+const handleClick=()=>{
+  props.setTrigger(false)
+  showalert()
+}
+  
+
+  return (props.trigger)?(
     <div className="edit-profile-container">
       <div className="row edit-profile-fields">
         <div className="edit-profile-header d-flex justify-content-center align-items-center">
@@ -73,10 +88,10 @@ export const EditProfile = () => {
             </div>
           </div>
         </div>
-        <div className="end-edit d-flex justify-content-center align-items-center">
+        <button onClick={()=>handleClick()} className="end-edit d-flex justify-content-center align-items-center">
           Finish edit
-        </div>
+        </button>
       </div>
     </div>
-  );
+  ):"";
 };

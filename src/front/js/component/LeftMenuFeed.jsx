@@ -1,13 +1,20 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 export const LeftMenuFeed = () => {
+
+  
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem("user")));
+  }, []);
   return (
     <div className="left-menu-container d-none d-md-block">
       <div className="profile d-flex">
         <div id="left-icons">
           <i className="bi bi-person"></i>
         </div>
-        <div className="center-icons">username</div>
+        <div className="center-icons">{userData.name}</div>
       </div>
       <div className="options">
         <div className="friends d-flex">
