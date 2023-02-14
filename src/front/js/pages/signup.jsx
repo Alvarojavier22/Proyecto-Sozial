@@ -86,7 +86,7 @@ const handleSubmit= async(event)=>{
             })
         }
         else {
-            return ""
+            return 
         }
         }
 
@@ -116,7 +116,11 @@ const handleSubmit= async(event)=>{
                         <h1>Sign Up</h1>
                         <div className="signup_field">
                             
-                            <input type="text" value={email || ""} onChange={(e)=>setEmail(e.target.value)} className="sign_input" placeholder="E-mail Address" />
+                            <input 
+                            type="text" 
+                            value={email || ""} 
+                            onChange={(e)=>setEmail(e.target.value)} 
+                            className="sign_input" placeholder="E-mail Address" />
                             <input type="text"  value={username || ""} onClick={()=>emailCheck(email)} onChange={(e)=>setUsername(e.target.value)} className="sign_input" placeholder="Username"/>
                             <input type="text" value={name || ""} onChange={(e)=>setName(e.target.value)} className="sign_input" placeholder="First Name"/>
                             <input type="text" value={surname || ""} onChange={(e)=>setSurName(e.target.value)}className="sign_input" placeholder="Last Name"/>

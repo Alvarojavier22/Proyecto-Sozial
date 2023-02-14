@@ -28,7 +28,7 @@ const {actions,store}=useContext(Context)
     const pic = localStorage.getItem("url")
     return(
         <div className="container">
-            <img src={pic} />      
+            <img src={pic.toString()} />      
             <label htmlFor="formfile" className="form-label">
                 input example
             </label>      
