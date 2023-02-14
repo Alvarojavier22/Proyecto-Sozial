@@ -192,6 +192,13 @@ const getState = ({
                 console.log("result", result);
             },
 
+            saveProducts: (post)=>{
+                let newStore=getStore()
+                setStore({...newStore,
+                   products:[...newStore.products, post]
+            })
+            },
+
           
 
             // Use getActions to call a function within a fuction

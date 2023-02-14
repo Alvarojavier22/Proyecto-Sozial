@@ -68,6 +68,7 @@ function Image(props) {
     <section className="container">
       <div {...getRootProps({className: 'dropzone'})}>
         <input {...getInputProps()} />
+        <h3 className='d-flex justify-content-center'>Add photos</h3>
         <p className='pdrag'>Drag and drop images here, or click to select files</p>
       </div>
       <aside style={thumbsContainer}>

@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 
 export const RightMenuFeed = () => {
+  const user = JSON.parse(localStorage.getItem("user"))
   return (
     <div className="right-menu-container d-none d-md-block">
       <div className="photo-name">
@@ -14,7 +15,7 @@ export const RightMenuFeed = () => {
         <div className="divider"></div>
         <div className="name-logout">
           <div className="name">
-            <h4>username</h4>
+            <h4>{user.name}</h4>
           </div>
           <div className="logout-button d-flex justify-content-center">
             <button className="btn btn-danger">logout</button>
