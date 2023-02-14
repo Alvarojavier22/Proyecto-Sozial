@@ -2,7 +2,7 @@ import React from "react";
 
 export const LeftMenuFeed = () => {
   return (
-    <div className="left-menu-container">
+    <div className="left-menu-container d-none d-md-block">
       <div className="profile d-flex">
         <div id="left-icons">
           <i className="bi bi-person"></i>

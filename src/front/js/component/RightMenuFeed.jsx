@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const RightMenuFeed = () => {
   return (
-    <div className="right-menu-container">
+    <div className="right-menu-container d-none d-md-block">
       <div className="photo-name">
         <div className="photo d-flex justify-content-center align-items-center">
           <img

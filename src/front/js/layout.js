@@ -19,7 +19,6 @@ import { Cart } from "./pages/cart.jsx";
 import { PostProducts } from "./pages/postproduct.jsx";
 import { Logout } from "./pages/logout.jsx";
 import { SellProductsDetails } from "./pages/SellProductsDetails.jsx";
-import { EditProfile } from "./pages/EditProfile.jsx";
 import { CartTwo } from "./pages/Cart2.jsx";
 import { App } from "./pages/app.jsx";
 import { Categories2 } from "./pages/Categories2.jsx";
@@ -60,7 +59,6 @@ const Layout = () => {
           <Route element={<Categories2 />} path="/categories2" />
           <Route element={<Store />} path="/store" />
           <Route element={<SellProductsDetails />} path="/product-details" />
-          <Route element={<EditProfile />} path="/edit-profile" />
           <Route element={<CartTwo />} path="/cart2" />
           <Route element={<TechCategorie />} path="/tecnology" />
           <Route element={<ClothesCategory />} path="/clothes" />

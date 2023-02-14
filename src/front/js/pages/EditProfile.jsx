@@ -4,13 +4,9 @@ export const EditProfile = () => {
   return (
     <div className="edit-profile-container">
       <div className="row edit-profile-fields">
-        <div className="edit-profile-header d-flex justify-content-between align-items-center">
-          <div></div>
+        <div className="edit-profile-header d-flex justify-content-center align-items-center">
           <div>
             <h3>Edit profile</h3>
-          </div>
-          <div>
-            <i class="bi bi-x-lg"></i>
           </div>
         </div>
         <div className="row edit-profile-image d-flex align-items-center justify-content-evenly">
