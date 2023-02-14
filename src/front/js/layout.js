@@ -22,7 +22,6 @@ import { SellProductsDetails } from "./pages/SellProductsDetails.jsx";
 import { EditProfile } from "./pages/EditProfile.jsx";
 import { CartTwo } from "./pages/Cart2.jsx";
 import { App } from "./pages/app.jsx";
-import { PostProduct2 } from "./pages/PostProduct2.jsx";
 import { Categories2 } from "./pages/Categories2.jsx";
 
 import { UploadPhoto } from "./component/uploadphoto.jsx";
@@ -63,13 +62,12 @@ const Layout = () => {
           <Route element={<SellProductsDetails />} path="/product-details" />
           <Route element={<EditProfile />} path="/edit-profile" />
           <Route element={<CartTwo />} path="/cart2" />
-          <Route element={<PostProduct2 />} path="/postproduct2" />
           <Route element={<TechCategorie />} path="/tecnology" />
           <Route element={<ClothesCategory />} path="/clothes" />
           <Route element={<CarsCategory />} path="/cars" />
           <Route element={<BooksCategory />} path="/books" />
           <Route element={<App />} path="/app" />
-          <Route element={<UploadPhoto/>} path="/uploadphoto"/>
+          <Route element={<UploadPhoto />} path="/uploadphoto" />
         </Routes>
       </BrowserRouter>
     </div>

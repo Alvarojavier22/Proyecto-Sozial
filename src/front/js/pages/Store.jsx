@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { InfoNav } from "../component/InfoNav.jsx";
-import { Posts } from "../component/Posts.jsx";
+import { PostProductContainer } from "../component/PostProductContainer.jsx";
 import { ProductCard } from "../component/ProductCard.jsx";
 import { ProfileNav } from "../component/ProfileNav.jsx";
 
@@ -99,11 +99,7 @@ export const Store = () => {
       <div className="categories-header d-flex justify-content-center align-items-center">
         <h2>Store</h2>
       </div>
-      <Posts
-        loginUserPhoto={
-          "https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"
-        }
-      />
+      <PostProductContainer />
       <div className="row store-container">
         {info.map((item) => (
           <div
