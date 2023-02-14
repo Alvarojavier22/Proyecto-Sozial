@@ -4,6 +4,7 @@
 /*@import 'feed.css'; */
 
 @import "newFeed.css";
+@import "PostProductContainer.css";
 
 .profile-nav {
   display: flex;

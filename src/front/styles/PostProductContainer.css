@@ -1,0 +1,21 @@
+.post-product-container-click {
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 350px;
+  width: 100%;
+  border: solid 1px rgb(198, 198, 198);
+  cursor: pointer;
+}
+
+.post-product-container-click .bi {
+  font-size: 30px;
+}
+
+.public-product .bi-plus-square {
+  color: rgb(17, 146, 17);
+}
+
+.public-product .bi-x-square {
+  color: red;
+}
