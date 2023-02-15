@@ -56,7 +56,7 @@ const handleSubmit= async(event)=>{
     event.preventDefault();
     let signupResult = await actions.signUp(item)
     if (signupResult === "ok"){
-        navigate("/feed2")
+        navigate("/")
         console.log("success")
     }else{
         console.log("error")
@@ -107,6 +107,21 @@ const handleSubmit= async(event)=>{
             }else{ return""
         }
         }
+        const alertaok=()=>{
+            return swal({
+                title: "Great",
+                text: "User created succesfully",
+                icon:"success"
+            })
+        }
+
+        function handleSignup(){
+            if(checkinputs(inputs)==true){
+                mostrar_alerta()
+            }else{
+                alertaok()
+            }
+        }
 
     return(
         <div className="container-fluid overlay" id="container_signup">
@@ -144,7 +159,7 @@ const handleSubmit= async(event)=>{
                             
                             
                             <div className="signbtn">
-                                <button onClick={checkinputs(inputs)==true?()=>mostrar_alerta():""} type="submit">Sign Up</button>
+                                <button onClick={handleSignup} type="submit">Sign Up</button>
 
                             </div>
                     </form>
