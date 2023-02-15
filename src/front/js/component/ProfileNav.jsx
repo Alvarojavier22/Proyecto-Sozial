@@ -40,7 +40,7 @@ export const ProfileNav = () => {
                     height: "45px",
                     borderRadius: "100%",
                   }}
-                  src="https://wl-genial.cf.tsp.li/resize/728x/jpg/91b/430/964a9c5ac9933cc012d0bd80be.jpg"
+                  src="https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"
                 />
               </Link>
             </div>
