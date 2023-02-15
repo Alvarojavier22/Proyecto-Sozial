@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { TermsAndConditions } from "./pages/termsandconditions.jsx";
-import { Feed } from "./pages/feed.jsx";
+import { Friends } from "./pages/friends.jsx";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
@@ -42,7 +42,7 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <Routes>
           <Route element={<TermsAndConditions />} path="/termsandconditions" />
-          <Route element={<Feed />} path="/feed" />
+          <Route element={<Friends />} path="/friends" />
           <Route element={<Feed2 />} path="/feed2" />
           <Route element={<Demo />} path="/demo" />
           <Route element={<Logout />} path="/logout" />
