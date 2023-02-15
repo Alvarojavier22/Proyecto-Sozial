@@ -6,6 +6,18 @@
 @import "newFeed.css";
 @import "PostProductContainer.css";
 
+.link {
+  text-decoration: none;
+}
+
+.link * {
+  margin: 0;
+}
+
+.public-post-header h5 {
+  margin: 0;
+}
+
 .profile-nav {
   display: flex;
   justify-content: space-between;
@@ -99,7 +111,7 @@
   padding: 20px;
   margin: auto;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .info-nav .col {
@@ -107,6 +119,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid white;
 }
 
 .info-nav .col:hover {
@@ -562,7 +575,7 @@
   margin: 10px auto;
   width: 80%;
   padding: 10px 20px;
-  border: none
+  border: none;
 }
 
 /* Cart 2 */
