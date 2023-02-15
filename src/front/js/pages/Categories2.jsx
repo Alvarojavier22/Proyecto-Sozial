@@ -13,25 +13,25 @@ export const Categories2 = () => {
         <Link to={"/books"}>
           <CategoriesContainer
             text={"Music, books & art"}
-            icon={<i class="bi bi-brush-fill"></i>}
+            icon={<i className="bi bi-brush-fill"></i>}
           />
         </Link>
         <Link to={"/cars"}>
           <CategoriesContainer
             text={"Cars, vehicles and styles"}
-            icon={<i class="bi bi-car-front-fill"></i>}
+            icon={<i className="bi bi-car-front-fill"></i>}
           />
         </Link>
         <Link to={"/clothes"}>
           <CategoriesContainer
             text={"Clothes and accessories"}
-            icon={<i class="bi bi-gem"></i>}
+            icon={<i className="bi bi-gem"></i>}
           />
         </Link>
         <Link to={"/tecnology"}>
           <CategoriesContainer
             text={"Tecnology"}
-            icon={<i class="bi bi-earbuds"></i>}
+            icon={<i className="bi bi-earbuds"></i>}
           />
         </Link>
       </div>

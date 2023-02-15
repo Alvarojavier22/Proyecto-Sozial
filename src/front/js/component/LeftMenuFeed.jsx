@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import { Link } from 'react-router-dom';
 
 export const LeftMenuFeed = () => {
   const [userData, setUserData] = useState({});
@@ -22,8 +22,10 @@ export const LeftMenuFeed = () => {
           <div id="left-icons">
             <i className="bi bi-person-fill-add"></i>
           </div>
-          <div className="center-icons">Friends</div>
-        </div>
+          <div className="center-icons">
+        <Link to="/friends">Friends</Link>
+      </div>
+      </div>
         <div className="groups d-flex">
           <div id="left-icons">
             <i className="bi bi-people-fill"></i>

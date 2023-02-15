@@ -27,7 +27,7 @@ export const RightMenuFeed = () => {
       <div className="right-store">
         <div>
           <div className="icon d-flex justify-content-center align-items-center">
-            <i class="bi bi-shop"></i>
+            <i className="bi bi-shop"></i>
           </div>
           <div className="name d-flex justify-content-center align-items-center">
             <Link to="/store">
