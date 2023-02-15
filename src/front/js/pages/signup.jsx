@@ -56,7 +56,7 @@ const handleSubmit= async(event)=>{
     event.preventDefault();
     let signupResult = await actions.signUp(item)
     if (signupResult === "ok"){
-        navigate("/feed")
+        navigate("/feed2")
         console.log("success")
     }else{
         console.log("error")
