@@ -54,7 +54,7 @@ export const PostProductContainer = () => {
         <div className="container-fluid">
           <div className="post-product-container">
             <div className="product-header d-flex">
-              <div className="img">
+              <div className="d-flex align-items-center justify-content-center img">
                 <img src="https://wl-genial.cf.tsp.li/resize/728x/jpg/91b/430/964a9c5ac9933cc012d0bd80be.jpg" />
               </div>
               <div className="buyer-info">

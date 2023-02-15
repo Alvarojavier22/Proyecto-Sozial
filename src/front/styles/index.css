@@ -6,12 +6,31 @@
 @import "newFeed.css";
 @import "PostProductContainer.css";
 
+nav {
+  width: 100%;
+  background-color: #26466f;
+}
+
 .link {
   text-decoration: none;
 }
 
 .link * {
   margin: 0;
+}
+
+.nav-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 20px;
+  border-radius: 5px;
+  background-color: #9b59b6;
+}
+
+.nav-name h4 {
+  margin: 0;
+  color: white;
 }
 
 .link h5 {
@@ -22,9 +41,19 @@
   margin: 0;
 }
 
+.navbar .nav-light .bg-light {
+  background-color: #26466f;
+}
+
 .profile-nav {
+  padding: 10px;
+  background-color: #26466f;
   display: flex;
   justify-content: space-between;
+}
+
+.profile-nav * {
+  color: white;
 }
 
 .nav-margin * {
@@ -132,7 +161,7 @@
 }
 
 .info-nav .col:hover {
-  background-color: #a987ff;
+  background-color: #9b59b6;
   color: white;
   border: white 1px solid;
   /*   border-bottom: 1px solid rgb(198, 198, 198); */
@@ -142,10 +171,29 @@
 .input-post {
   margin: 40px auto;
   border-radius: 5px;
-  border: 1px solid rgb(198, 198, 198);
+  border: 1px solid #26466f;
   padding: 15px;
   max-width: 700px;
   width: 100%;
+}
+
+.nav-link span {
+  margin-left: 0;
+}
+
+.navbar-toggler-icon {
+  color: white;
+}
+
+.btn-outline-success {
+  border-color: #9b59b6;
+  background-color: #9b59b6;
+}
+
+.btn-outline-success:hover {
+  border-color: #9b59b6;
+  background-color: white;
+  color: #26466f;
 }
 
 .photo-input {
@@ -166,7 +214,7 @@
 .post-divider {
   margin: auto;
   width: 95%;
-  border-bottom: 1px solid rgb(198, 198, 198);
+  border-bottom: 1px solid #26466f;
   margin-bottom: 10px;
 }
 
@@ -218,7 +266,7 @@
 .header {
   margin: 40px auto;
   border-radius: 5px;
-  border: 1px solid rgb(198, 198, 198);
+  border: 1px solid #26466f;
   padding: 15px;
   max-width: 700px;
   width: 80%;
@@ -571,6 +619,10 @@
   justify-content: center;
 }
 
+.form-control {
+  border-color: #26466f;
+}
+
 .change-name-input .form-control {
   width: 100%;
   margin: auto;
@@ -828,7 +880,7 @@
 /* PostProduct2 */
 
 .post-product-container {
-  border: solid rgb(198, 198, 198) 1px;
+  border: solid #26466f 1px;
   border-radius: 5px;
   padding: 10px;
   margin: 30px auto;
@@ -841,8 +893,8 @@
 }
 
 .img img {
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
   border-radius: 100%;
 }
 
@@ -951,6 +1003,7 @@
   margin-top: 80px;
 }
 .categories-container {
+  text-decoration: none;
   padding: 10px 20px;
   margin: 10px auto;
   border-radius: 5px;
@@ -994,6 +1047,7 @@ Link {
 }
 
 .product-card {
+  border: #26466f solid 1px;
   height: 100%;
   width: 450px;
   margin: auto;
@@ -1007,12 +1061,20 @@ Link {
 }
 
 .center-container {
+  margin: auto;
+  border-radius: 5px;
+  border: solid #26466f 2px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 40vh;
+  width: 40vw;
 }
 
 .add-friend-btn {
   margin: 0 auto; /* Centers the button horizontally */
+}
+
+.btn-secondary:hover {
+  background-color: red;
 }
