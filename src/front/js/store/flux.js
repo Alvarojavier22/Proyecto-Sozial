@@ -173,6 +173,21 @@ const getState = ({
             
             },
 
+            UploadPhoto: async (photo)=>{
+                let result = await fetch (`${apiUrl}/api/uploadPhoto/`, {
+                    body: photo,
+                    method: "POST",
+                    headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                "Access-Control-Allow-Origin": "*",
+
+                }
+            });
+            let newStore=getStore()
+                setStore({...newStore,
+                profilePic:[...newStore.profilePic, photo]})
+            },
+
             GeneratePost: async (post) => {
                 let result = await fetch(`${apiUrl}/api/posts/`, {
                     method: "POST",
@@ -199,6 +214,11 @@ const getState = ({
             })
             },
 
+            postProduct: async(product)=>{
+                let result = await fetch(`${apiUrl}/api/products/`,{
+
+                })
+            },
           
 
             // Use getActions to call a function within a fuction

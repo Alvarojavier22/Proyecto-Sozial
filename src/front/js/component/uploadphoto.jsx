@@ -25,15 +25,27 @@ const {actions,store}=useContext(Context)
         console.log(response)
         
     }
-    const pic = localStorage.getItem("url")
+   
+    const handleSubmit=async(event)=>{
+       
+        event.preventDefault(); 
+        const formData = new FormData(event.target);
+        let result = await actions.UploadPhoto(formData)
+        console.log(result)
+    }
+    const[pic,setPic]=useState("")
+    useEffect(()=>{
+        actions.getImage()
+        setPic(store.profilePic.signed_url)
+    }, [])
     return(
         <div className="container">
-            <img src={pic} />      
+            <img src={pic ||""} style={{maxWidth:"300px"}}/>      
             <label htmlFor="formfile" className="form-label">
                 input example
             </label>      
             <form 
-            onSubmit={submitPhoto}>
+            onSubmit={handleSubmit}>
                 <input 
             className="form-control" 
             type="file"
