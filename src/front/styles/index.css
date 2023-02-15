@@ -14,6 +14,10 @@
   margin: 0;
 }
 
+.link h5 {
+  color: white;
+}
+
 .public-post-header h5 {
   margin: 0;
 }
@@ -116,14 +120,22 @@
 
 .info-nav .col {
   width: 20%;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid white;
+  border-radius: 5px;
+  background-color: #26466f;
+  color: white;
+  border: #2c3e50 solid 2px;
+  margin: 0 2px;
 }
 
 .info-nav .col:hover {
-  border-bottom: 1px solid rgb(198, 198, 198);
+  background-color: #a987ff;
+  color: white;
+  border: white 1px solid;
+  /*   border-bottom: 1px solid rgb(198, 198, 198); */
   cursor: pointer;
 }
 
@@ -263,6 +275,7 @@
   margin-left: 20px;
   margin-bottom: 15px;
   cursor: pointer;
+  fill: #26466f;
 }
 
 .input-comment img {
@@ -886,7 +899,7 @@
   border-radius: 5px;
   padding: 20px;
   color: white;
-  background-color: green;
+  background-color: #9b59b6;
   width: 90%;
   max-width: 600px;
 }

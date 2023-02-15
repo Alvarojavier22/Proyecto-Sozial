@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export const RightMenuFeed = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   return (
+    <div></div> /*
     <div className="right-menu-container d-none d-md-block">
       <div className="photo-name">
         <div className="photo d-flex justify-content-center align-items-center">
@@ -37,5 +38,6 @@ export const RightMenuFeed = () => {
         </div>
       </div>
     </div>
+ */
   );
 };

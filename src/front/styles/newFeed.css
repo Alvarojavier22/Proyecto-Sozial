@@ -22,6 +22,26 @@
   font-size: 25px;
 }
 
+.profile {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #26466f;
+}
+
+.friends,
+.groups,
+.store {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #a987ff;
+  margin: 5px;
+}
+
+#left-icons *,
+.center-icons {
+  color: white;
+}
+
 .profile * {
   font-size: 15px;
 }
@@ -69,4 +89,37 @@
 
 .right-store .bi {
   font-size: 35px;
+}
+
+.btn-primary {
+  background-color: #26466f;
+  color: white;
+  border: #26466f 1px solid;
+}
+.btn-primary:hover {
+  background-color: #a987ff;
+  color: white;
+  border: white 1px solid;
+}
+
+.btn-danger {
+  background-color: transparent;
+  color: red;
+}
+
+.btn-warning {
+  border: #26466f;
+  background-color: #26466f;
+  color: white;
+}
+
+.btn-warning:hover {
+  border: white;
+  background-color: #a987ff;
+  color: white;
+}
+
+.public-button {
+  background-color: #a987ff;
+  color: white;
 }
