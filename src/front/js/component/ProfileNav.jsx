@@ -13,7 +13,7 @@ export const ProfileNav = () => {
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid profile-nav">
           <div className="d-flex">
-            <Link className="navbar-brand" to={-1}>
+            <Link className="navbar-brand link" to={-1}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="36"
@@ -28,7 +28,7 @@ export const ProfileNav = () => {
                 />
               </svg>
             </Link>
-            <Link to={"/profile"}>
+            <Link className="link" to={"/profile"}>
               <h4 style={{ paddingTop: "8px" }}>{userData.name}</h4>
             </Link>
 
