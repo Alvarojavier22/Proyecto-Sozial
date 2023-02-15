@@ -34,7 +34,7 @@ export const LeftMenuFeed = () => {
           <div id="left-icons">
             <i className="bi bi-shop"></i>
           </div>
-          <Link className="link" to={"/store"}>
+          <Link className="link center-icons" to={"/store"}>
             <div className="center-icons">Store</div>
           </Link>
         </div>
