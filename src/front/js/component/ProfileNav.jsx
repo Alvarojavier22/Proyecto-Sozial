@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
+import { Context } from "../store/appContext";
 export const ProfileNav = () => {
   const [userData, setUserData] = useState("");
-
+  const{actions, store}=useContext(Context)
+  const [pic, setPic]=useState("")
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("user")));
     console.log(userData.name);
+    actions.getImage()
+    setPic(store.profilePic.signed_url)
   }, []);
   return (
     <div className="container-fluid profile-nav-container">
@@ -40,7 +44,7 @@ export const ProfileNav = () => {
                     height: "45px",
                     borderRadius: "100%",
                   }}
-                  src="https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"
+                  src={pic}
                 />
               </Link>
             </div>

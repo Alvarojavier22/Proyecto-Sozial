@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { EditProfile } from "../pages/EditProfile.jsx";
+import React, { useState,useEffect,useContext } from "react";
 
+import { EditProfile } from "../pages/EditProfile.jsx";
+import { Context } from "../store/appContext.js";
 export const ProfileInfo = (props) => {
   const [edit, setEdit] = useState(false);
   const[triggerbutton, setTriggerbutton]=useState(false)
@@ -24,13 +25,18 @@ export const ProfileInfo = (props) => {
     }
 
   }
-
+  const{actions,store}=useContext(Context)
+  const[pic, setPic]=useState("")
+  useEffect(()=>{
+    actions.getImage()
+    setPic(store.profilePic.signed_url)
+  },[])
 
   return (
     <div className="container">
       <div className="container-fluid ProfileInfo-container">
         <div className="d-flex justify-content-center">
-          <img src="https://wl-genial.cf.tsp.li/resize/728x/jpg/91b/430/964a9c5ac9933cc012d0bd80be.jpg" />
+          <img src={pic} />
         </div>
         <div className="d-flex justify-content-center but">
           {triggerbutton==false ? (
