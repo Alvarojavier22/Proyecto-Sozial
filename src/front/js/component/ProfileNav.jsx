@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 export const ProfileNav = () => {
   const [userData, setUserData] = useState("");
-  const{actions, store}=useContext(Context)
-  const [pic, setPic]=useState("")
+  const { actions, store } = useContext(Context);
+  const [pic, setPic] = useState("");
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("user")));
     console.log(userData.name);
-    actions.getImage()
-    setPic(store.profilePic.signed_url)
+    actions.getImage();
+    setPic(store.profilePic.signed_url);
   }, []);
   return (
     <div className="container-fluid profile-nav-container">
@@ -32,9 +32,13 @@ export const ProfileNav = () => {
                 />
               </svg>
             </Link>
-            <Link className="link" to={"/profile"}>
-              <h4 style={{ paddingTop: "8px" }}>{userData.name}</h4>
-            </Link>
+            <div className="link nav-name">
+              <Link className="link" to={"/profile"}>
+                <strong>
+                  <h4>{userData.name}</h4>
+                </strong>
+              </Link>
+            </div>
 
             <div className="photo-arrow" style={{ marginLeft: "20px" }}>
               <Link to={"/profile"}>
@@ -77,6 +81,7 @@ export const ProfileNav = () => {
               <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
               <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
             </svg>
+            {/* 
             <a className="navbar-brand" href="#">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -88,11 +93,11 @@ export const ProfileNav = () => {
               >
                 <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
               </svg>
-            </a>
+            </a> */}
           </div>
 
           <button
-            className="navbar-toggler d-md-none ms-auto "
+            className="navbar-toggler d-md-none ms-auto navbar-toggler-button"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -110,7 +115,7 @@ export const ProfileNav = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
-                    fill="currentColor"
+                    fill="white"
                     className="bi bi-person-plus-fill"
                     viewBox="0 0 16 16"
                   >
@@ -120,7 +125,7 @@ export const ProfileNav = () => {
                       d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"
                     />
                   </svg>
-                  Friends
+                  <span>Friends</span>
                 </a>
               </li>
               <li className="nav-item align-items-center d-flex">
@@ -129,13 +134,13 @@ export const ProfileNav = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
-                    fill="currentColor"
+                    fill="white"
                     className="bi bi-people-fill"
                     viewBox="0 0 16 16"
                   >
                     <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
                   </svg>
-                  Groups
+                  <span>Groups</span>
                 </a>
               </li>
               <li className="nav-item align-items-center d-flex">
@@ -144,13 +149,13 @@ export const ProfileNav = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
-                    fill="currentColor"
+                    fill="white"
                     className="bi bi-shop"
                     viewBox="0 0 16 16"
                   >
                     <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
                   </svg>
-                  Store
+                  <span>Store</span>
                 </Link>
               </li>
               <li className="nav-item align-items-center d-flex">
@@ -159,7 +164,7 @@ export const ProfileNav = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
-                    fill="currentColor"
+                    fill="white"
                     className="bi bi-box-arrow-left"
                     viewBox="0 0 16 16"
                   >
@@ -172,7 +177,7 @@ export const ProfileNav = () => {
                       d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"
                     />
                   </svg>
-                  Log out
+                  <span>Log out</span>
                 </Link>
               </li>
             </ul>

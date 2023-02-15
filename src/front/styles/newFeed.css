@@ -15,7 +15,7 @@
 }
 
 .left-menu-container * {
-  color: #0d6efd;
+  color: white;
 }
 
 #left-icons .bi {
@@ -33,12 +33,12 @@
 .store {
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: #a987ff;
+  background-color: #9b59b6;
   margin: 5px;
 }
 
 #left-icons *,
-.center-icons {
+.center-icons * {
   color: white;
 }
 
@@ -96,8 +96,9 @@
   color: white;
   border: #26466f 1px solid;
 }
+
 .btn-primary:hover {
-  background-color: #a987ff;
+  background-color: #9b59b6;
   color: white;
   border: white 1px solid;
 }
@@ -115,11 +116,11 @@
 
 .btn-warning:hover {
   border: white;
-  background-color: #a987ff;
+  background-color: #9b59b6;
   color: white;
 }
 
 .public-button {
-  background-color: #a987ff;
+  background-color: #9b59b6;
   color: white;
 }
