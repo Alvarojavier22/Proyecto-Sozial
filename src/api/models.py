@@ -232,7 +232,7 @@ class Imagen(db.Model):
     def image_url(self):
         bucket = storage.bucket(name="project-f71b8.appspot.com")
         resource = bucket.blob(self.resource_path)
-        signed_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=15), method="GET")
+        signed_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(hours=15), method="GET")
         return{
             "id": self.id,
             "resource_path": self.resource_path,

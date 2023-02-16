@@ -1,23 +1,52 @@
-import React from "react";
-
+import React, {useState, useEffect, useContext} from "react";
+import { Context } from "../store/appContext";
 export const Posts = (props) => {
   const PublicPosts = () => {
     props.setter("flex");
   };
+  const {actions, store}= useContext(Context)
+  const[pic, setPic]=useState(null)
+  useEffect(() => {
+    let isMounted = true;
+  
+    async function fetchImage() {
+      try {
+        await actions.getImage();
+        if (isMounted) {
+          setPic(store.profilePic.signed_url);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  
+    fetchImage();
+  
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
+  const [text, setText]=useState("")
+  const [user_id, setUser_id]=useState(1)
+  const post= {text, user_id}
+  console.log(post)
+  
+  
   return (
     <div className="container-fluid">
       <div className="col d-flex justify-content-center">
         <div className="input-post">
           <div className="photo-input">
-            <img src={props.loginUserPhoto} />
+            <img src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"} />
             <div className="input-group">
               <input
                 type="text"
                 className="form-control"
                 placeholder="Write a post here"
                 aria-label="Text input with radio button"
-                onClick={PublicPosts}
+                
+                onChange={(e)=>setText(e.target.value)}
               />
             </div>
           </div>
@@ -48,7 +77,7 @@ export const Posts = (props) => {
                   <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
                 </svg>
               </div>
-              <button
+              <button onClick={()=>actions.GeneratePost(post)}
                 type="button"
                 className="btn btn-outline-primary post-button"
               >

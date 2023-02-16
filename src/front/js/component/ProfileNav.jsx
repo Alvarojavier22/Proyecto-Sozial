@@ -5,12 +5,30 @@ import { Context } from "../store/appContext";
 export const ProfileNav = () => {
   const [userData, setUserData] = useState("");
   const { actions, store } = useContext(Context);
-  const [pic, setPic] = useState("");
+  const [pic, setPic] = useState(null);
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("user")));
-    console.log(userData.name);
-    actions.getImage();
-    setPic(store.profilePic.signed_url);
+   
+  }, []);
+  useEffect(() => {
+    let isMounted = true;
+  
+    async function fetchImage() {
+      try {
+        await actions.getImage();
+        if (isMounted) {
+          setPic(store.profilePic.signed_url);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  
+    fetchImage();
+  
+    return () => {
+      isMounted = false;
+    };
   }, []);
   return (
     <div className="container-fluid profile-nav-container">
@@ -35,7 +53,7 @@ export const ProfileNav = () => {
             <div className="link nav-name">
               <Link className="link" to={"/profile"}>
                 <strong>
-                  <h4>{userData.name}</h4>
+                  <h4>{userData.username}</h4>
                 </strong>
               </Link>
             </div>
@@ -48,7 +66,7 @@ export const ProfileNav = () => {
                     height: "45px",
                     borderRadius: "100%",
                   }}
-                  src={pic}
+                  src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"}
                 />
               </Link>
             </div>
