@@ -29,8 +29,7 @@ class User(db.Model):
             "email": self.email,
             "is_active": self.is_active,
             "password": self.password,
-            
-              # para las pruebas del cambio de clave
+            # para las pruebas del cambio de clave
         }
 
     # para solo traer información específica
@@ -126,6 +125,7 @@ class Post(db.Model):
     __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     text = db.Column(db.String(1000), unique=False, nullable=False)
+    picture = db.Column(db.String(1000), unique=False, nullable=True)
     # date = db.Column(db.datetime(), default=datetime.now()) # mirar como colocar la fecha para los posts
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user = db.relationship(User)
@@ -139,6 +139,7 @@ class Post(db.Model):
             "text": self.text,
             "post_id": self.id,
             "user_id": self.user_id,
+            "picture": self.picture,
             "user_name": self.user.name + str(" ") + self.user.surname,
         }
 
@@ -232,8 +233,10 @@ class Imagen(db.Model):
     def image_url(self):
         bucket = storage.bucket(name="project-f71b8.appspot.com")
         resource = bucket.blob(self.resource_path)
-        signed_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(hours=15), method="GET")
-        return{
+        signed_url = resource.generate_signed_url(
+            version="v4", expiration=datetime.timedelta(hours=15), method="GET"
+        )
+        return {
             "id": self.id,
             "resource_path": self.resource_path,
             "signed_url": signed_url,
