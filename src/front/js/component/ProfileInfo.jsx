@@ -26,17 +26,33 @@ export const ProfileInfo = (props) => {
 
   }
   const{actions,store}=useContext(Context)
-  const[pic, setPic]=useState("")
-  useEffect(()=>{
-    actions.getImage()
-    setPic(store.profilePic.signed_url)
-  },[])
+  const[pic, setPic]=useState(null)
+  useEffect(() => {
+    let isMounted = true;
+  
+    async function fetchImage() {
+      try {
+        await actions.getImage();
+        if (isMounted) {
+          setPic(store.profilePic.signed_url);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  
+    fetchImage();
+  
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="container">
       <div className="container-fluid ProfileInfo-container">
         <div className="d-flex justify-content-center">
-          <img src={pic} />
+          <img src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"} />
         </div>
         <div className="d-flex justify-content-center but">
           {triggerbutton==false ? (
