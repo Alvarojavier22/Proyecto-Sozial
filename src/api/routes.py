@@ -29,6 +29,7 @@ from flask_bcrypt import Bcrypt
 from sqlalchemy import or_
 import tempfile
 from firebase_admin import credentials, storage
+
 api = Blueprint("api", __name__)
 
 cripto = Bcrypt(Flask(__name__))
@@ -367,12 +368,13 @@ def delete_comments(post_id, comment_id):
 def post():
     user_id = get_jwt_identity()
     text = request.json.get("text")
+    picture = request.json.get("picture")
 
-    post = Post(user_id=user_id, text=text)
+    post = Post(user_id=user_id, text=text, picture=picture)
 
     db.session.add(post)
     db.session.commit()
-    
+
     return jsonify({"success": "publicaction generate successfully"}), 200
 
 
@@ -874,7 +876,7 @@ def uploadPhoto():
     file = request.files["profilePic"]
     # Extension del archivo
     extension = file.filename.split(".")[1]
-    
+
     # Guardar el archivo temporalmente
     temp = tempfile.NamedTemporaryFile(delete=False)
     file.save(temp.name)
@@ -892,7 +894,7 @@ def uploadPhoto():
     # Guardar imagen en DB si ya no existe
     if Imagen.query.filter(Imagen.resource_path == filename).first() is None:
         new_image = Imagen(
-        resource_path=filename, description="Profile photo of user" + str(user_id)
+            resource_path=filename, description="Profile photo of user" + str(user_id)
         )
         db.session.add(new_image)
         # Procesar las operaciones en la DB y la mantiene abierta para permitir mas operaciones.
@@ -907,15 +909,14 @@ def uploadPhoto():
         return "OK", 200
 
 
-
-@api.route('/getphoto', methods=["GET"])
+@api.route("/getphoto", methods=["GET"])
 @jwt_required()
 def getPhoto():
-    #Buscamos el usuario en la BD partiendo del token
-    user= User.query.get(get_jwt_identity())
+    # Buscamos el usuario en la BD partiendo del token
+    user = User.query.get(get_jwt_identity())
     if user is None:
         return "User not found", 403
 
-    url=user.profile_picture.image_url()
-   
+    url = user.profile_picture.image_url()
+
     return jsonify({"pictureUrl": url}), 200
