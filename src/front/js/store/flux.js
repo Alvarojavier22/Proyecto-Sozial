@@ -255,12 +255,20 @@ const getState = ({
             },
 
             
-
-            postProduct: async(product)=>{
-                let result = await fetch(`${apiUrl}/api/products/`,{
-
-                })
+            GetPosts:async()=>{
+                const response = await fetch(`${apiUrl}/api/posts/`, {
+                    headers: {
+                        Authorization:  `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                    },
+                });
+                const posts = await response.json()
+                setStore({...newStore,
+                    posts:[...newStore.posts, posts]})
+                    
+                    console.log("result", result);
+            
             },
+           
           
 
             // Use getActions to call a function within a fuction
