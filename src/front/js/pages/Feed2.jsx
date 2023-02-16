@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { ProfileNav } from "../component/ProfileNav.jsx";
 import { InfoNav } from "../component/InfoNav.jsx";
@@ -10,7 +10,9 @@ import { RightMenuFeed } from "../component/RightMenuFeed.jsx";
 export const Feed2 = () => {
   const{actions, store}=useContext(Context)
   
-
+useEffect(()=>{
+  actions.GetPosts()
+},[])
   return (
     <div className="container-fluid">
       <ProfileNav />
