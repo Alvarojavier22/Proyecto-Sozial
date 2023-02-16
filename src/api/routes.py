@@ -63,8 +63,6 @@ def admin_login():
     username = User.query.filter(User.username == username).first()
     # No encuentro Usuario
 
-    print(username)
-
     if username == None:
         return jsonify({"msg": "invalid login"}), 401
 
@@ -92,8 +90,6 @@ def user_login():
     # user = User.query.filter(User.email == email).first()
     user = User.query.filter(or_(User.username == email, User.email == email)).first()
     # No encuentro Usuario
-
-    print(user)
 
     if user == None:
         return jsonify({"msg": "invalid login"}), 401
@@ -610,6 +606,7 @@ def categories():
 def post_products():
     name = request.json.get("name")
     description = request.json.get("description")
+    pictures = request.json.get("pictures")
     price = request.json.get("price")
     quantity = request.json.get("quantity")
     avaliable = request.json.get("avaliable")
@@ -619,6 +616,7 @@ def post_products():
         seller_id=user_id,
         name=name,
         description=description,
+        pictures=pictures,
         price=price,
         quantity=quantity,
         avaliable=avaliable,
