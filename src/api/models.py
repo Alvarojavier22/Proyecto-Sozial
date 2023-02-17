@@ -43,10 +43,10 @@ class Products(db.Model):
     seller_id = db.Column(db.Integer, unique=False, nullable=False)
     name = db.Column(db.String(50), unique=False, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
+    pictures = db.Column(db.String(1000), unique=False, nullable=True)
     price = db.Column(db.Integer, unique=False, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     avaliable = db.Column(db.Boolean(), unique=False, nullable=False)
-
     categorie_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
     picture_id = db.Column(db.Integer, db.ForeignKey("imagen.id"))
     picture = db.relationship("Imagen")
@@ -63,6 +63,7 @@ class Products(db.Model):
             "seller_info": user.serialize_cart(),
             "name": self.name,
             "description": self.description,
+            "pictures": self.pictures,
             "price": self.price,
             "quantity": self.quantity,
             "avaliable": self.avaliable,

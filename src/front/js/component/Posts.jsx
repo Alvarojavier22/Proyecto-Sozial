@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 
 export const Posts = (props) => {
   const PublicPosts = () => {
     props.setter("flex");
   };
-  const {actions, store}= useContext(Context)
-  const[pic, setPic]=useState(null)
+  const { actions, store } = useContext(Context);
+  const [pic, setPic] = useState(null);
   useEffect(() => {
     let isMounted = true;
-  
+
     async function fetchImage() {
       try {
         await actions.getImage();
@@ -20,13 +20,14 @@ export const Posts = (props) => {
         console.error(error);
       }
     }
-  
+
     fetchImage();
-  
+
     return () => {
       isMounted = false;
     };
   }, []);
+
   const[postimage, setPostImage]=useState(null)
   const [text, setText]=useState("")
   const [user_id, setUser_id]=useState(1)
@@ -74,51 +75,38 @@ export const Posts = (props) => {
    
   
 
+
   return (
     <div className="container-fluid">
       <div className="col d-flex justify-content-center">
         <div className="input-post">
           <div className="photo-input">
-            <img src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"} />
+            <img
+              src={
+                pic != null
+                  ? pic
+                  : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+              }
+            />
             <div className="input-group">
               <input
                 type="text"
                 className="form-control"
                 placeholder="Write a post here"
                 aria-label="Text input with radio button"
-                
-                onChange={(e)=>setText(e.target.value)}
+                onChange={(e) => setText(e.target.value)}
               />
             </div>
           </div>
           <div className="post-divider"></div>
           <div className="post-options">
-            <div className="photos-text d-flex">
+            <div className="photos-text d-flex align-items-center">
               <div className="photos d-flex">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  fill="gray"
-                  className="bi bi-card-image"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                  <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z" />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  fill="gray"
-                  className="bi bi-card-text"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                  <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
-                </svg>
+                <i class="bi bi-list-nested"></i>
+                <i class="bi bi-images"></i>
               </div>
-              <button onClick={()=>actions.GeneratePost(post)}
+              <button
+                onClick={() => actions.GeneratePost(post)}
                 type="button"
                 className="btn btn-outline-primary post-button"
               >

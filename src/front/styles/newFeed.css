@@ -91,13 +91,13 @@
   font-size: 35px;
 }
 
-.btn-primary {
+.pub-buttons {
   background-color: #26466f;
   color: white;
   border: #26466f 1px solid;
 }
 
-.btn-primary:hover {
+.pub-buttons:hover {
   background-color: #9b59b6;
   color: white;
   border: white 1px solid;
