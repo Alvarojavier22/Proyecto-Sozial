@@ -21,7 +21,10 @@ export const Publications = (props) => {
               <img src={props.profilePhoto} />
               <div className="name-details">
                 <h4>{props.postUsername}</h4>
-                <small>{props.hourPost}{props.name}</small>
+
+
+                <small>{props.hourPost} • Sozial</small>
+
               </div>
             </div>
             <div className="options">
@@ -43,7 +46,9 @@ export const Publications = (props) => {
           </div>
           <div className="post-description">
             <p>
+
               <strong>{props.postUsername}</strong>: {props.postDescription}
+
             </p>
           </div>
           <div className="post-options">

@@ -8,11 +8,10 @@ export const ProfileNav = () => {
   const [pic, setPic] = useState(null);
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("user")));
-   
   }, []);
   useEffect(() => {
     let isMounted = true;
-  
+
     async function fetchImage() {
       try {
         await actions.getImage();
@@ -23,9 +22,9 @@ export const ProfileNav = () => {
         console.error(error);
       }
     }
-  
+
     fetchImage();
-  
+
     return () => {
       isMounted = false;
     };
@@ -66,7 +65,11 @@ export const ProfileNav = () => {
                     height: "45px",
                     borderRadius: "100%",
                   }}
-                  src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"}
+                  src={
+                    pic != null
+                      ? pic
+                      : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+                  }
                 />
               </Link>
             </div>
@@ -87,7 +90,7 @@ export const ProfileNav = () => {
             </button>
           </form>
 
-          <div className="right-nav d-flex justify-content-around d-none d-md-flex">
+          <div className="right-nav d-flex align-items-center justify-content-around d-none d-md-flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="22"
@@ -99,6 +102,10 @@ export const ProfileNav = () => {
               <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
               <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
             </svg>
+            <Link className="link" to={"/cart2"}>
+              <i className="bi bi-cart"></i>
+            </Link>
+
             {/* 
             <a className="navbar-brand" href="#">
               <svg

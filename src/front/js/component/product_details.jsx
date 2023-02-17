@@ -1,15 +1,15 @@
-import React, {useContext} from "react";
+import React, { useContext, useState } from "react";
 import { InfoNav } from "../component/InfoNav.jsx";
 import { ProfileNav } from "../component/ProfileNav.jsx";
 import { Context } from "../store/appContext.js";
 
-
-
-
 export const ProductDetail = (props) => {
+  const [favorite, setFavorite] = useState(false);
 
-  
-   
+  const Favorite = () => {
+    setFavorite(!favorite);
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -129,19 +129,24 @@ export const ProductDetail = (props) => {
             <h5>Price: $2000.00</h5>
           </div>
           <div className="user-buttons-interactions">
-            <button className="btn btn-primary">Send a message</button>
-            <button className="btn btn-primary">
-              <i className="bi bi-heart"></i>
+            <button className="btn btn-primary pub-buttons">
+              Send a message
             </button>
-            <button className="btn btn-primary">
+            {/* button== */}
+            <button onClick={Favorite} className="btn btn-primary pub-buttons">
+              {favorite ? (
+                <i class="bi bi-heart-fill"></i>
+              ) : (
+                <i className="bi bi-heart"></i>
+              )}
+            </button>
+            <button className="btn btn-primary pub-buttons">
               <i className="bi bi-three-dots"></i>
             </button>
           </div>
           <div className="sell-products-details">
             <h5>Details</h5>
-            <p>
-             {props.description}
-            </p>
+            <p>{props.description}</p>
           </div>
           <div className="end-info-bar"></div>
         </div>
