@@ -6,13 +6,22 @@ import { Posts } from "../component/Posts.jsx";
 import { LeftMenuFeed } from "../component/LeftMenuFeed.jsx";
 import { Publications } from "../component/Publications.jsx";
 import { RightMenuFeed } from "../component/RightMenuFeed.jsx";
+import propTypes from "prop-types";
 
 export const Feed2 = () => {
   const{actions, store}=useContext(Context)
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem("user")));
+   
+  }, []);
   
 useEffect(()=>{
   actions.GetPosts()
 },[])
+
+
   return (
     <div className="container-fluid">
       <ProfileNav />
@@ -29,11 +38,12 @@ useEffect(()=>{
           />
           {store.posts.map((post) => (
             <Publications
+              name={userData.username}
+              text={post.text}
               profilePhoto={post.img}
               postUsername={post.username}
               hourPost={post.hour}
-              postImage={post.postimage}
-              postDescription={post.text}
+              postImage={post.postimage!=null?post.postimage:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEX///+nxBvIAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"}              postDescription={post.text}
               onlineUserPhoto={
                 "https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"
               }

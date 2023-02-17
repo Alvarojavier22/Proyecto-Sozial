@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import { Context } from "../store/appContext";
+
 export const Posts = (props) => {
   const PublicPosts = () => {
     props.setter("flex");
@@ -26,13 +27,53 @@ export const Posts = (props) => {
       isMounted = false;
     };
   }, []);
-
+  const[postimage, setPostImage]=useState(null)
   const [text, setText]=useState("")
   const [user_id, setUser_id]=useState(1)
-  const post= {text, user_id}
+
+  const post= {text, user_id, postimage}
   console.log(post)
   
+  const[image, setImage]=useState(null)
+  const handleImageChange = (event) =>{
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setPostImage(event.target.result);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+
+
+
+
+
+  async function handlePost() {
+
+    await actions.UploadPhoto(photo);
+    await actions.getImage();
+    setPostImage(store.profilePic.signed_url);
+    await actions.GeneratePost(post);
+  }
   
+  const handleSubmit=async()=>{
+    if(image!=null){
+      await actions.UploadPhoto(image);
+      console.log("success")
+      await actions.getImage()
+      setPostImage(store.profilePic.signed_url)
+      let result = await actions.GeneratePost(post)
+      console.log(result)
+    }else{
+      return
+    }
+  }
+  
+   
+  
+
   return (
     <div className="container-fluid">
       <div className="col d-flex justify-content-center">
@@ -84,6 +125,18 @@ export const Posts = (props) => {
                 Post
               </button>
             </div>
+            <form onSubmit={handleSubmit}>
+            <input 
+            type="file"
+            name="profilePic"
+            id="form-file"
+            onChange={handleImageChange}
+
+            />
+            {postimage && <img style={{maxWidth:"200px"}} src={postimage} alt="Uploaded image" />}
+            <button type="submit">a</button>
+            </form>
+          
           </div>
         </div>
       </div>
