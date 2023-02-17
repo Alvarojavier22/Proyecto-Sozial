@@ -103,6 +103,14 @@
   border: white 1px solid;
 }
 
+.pub-buttons:focus,
+.pub-buttons:active {
+  box-shadow: none;
+  background-color: #26466f;
+  color: white;
+  border: #26466f 1px solid;
+}
+
 .btn-danger {
   background-color: transparent;
   color: red;
@@ -117,6 +125,13 @@
 .btn-warning:hover {
   border: white;
   background-color: #9b59b6;
+  color: white;
+}
+
+.btn-warning:focus {
+  box-shadow: none;
+  border: #26466f;
+  background-color: #26466f;
   color: white;
 }
 
