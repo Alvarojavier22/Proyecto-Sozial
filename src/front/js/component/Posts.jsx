@@ -65,13 +65,19 @@ export const Posts = (props) => {
       setPostImage(store.profilePic.signed_url)
       if (post.text!=null){
       let result = await actions.GeneratePost(post)
+      
       console.log(result)}
     }else{
       return
 
     }
   };
-
+  const handlePost=(post)=>{
+    actions.GeneratePost(post)
+    setPostImage(null)
+    setShowPostImage(false)
+    setText("")
+  }
   return (
     <div className="container-fluid">
       <div className="col d-flex justify-content-center">
@@ -90,7 +96,8 @@ export const Posts = (props) => {
                 className="form-control"
                 placeholder="Write a post here"
                 aria-label="Text input with radio button"
-                onChange={(e) => setText(e.target.value)}
+                value={text}
+                onChange={e => setText(e.target.value)}
               />
             </div>
           </div>
@@ -102,7 +109,7 @@ export const Posts = (props) => {
                 <i onClick={showPost} className="bi bi-images"></i>
               </div>
               <button
-                onClick={post.text!=null?() => actions.GeneratePost(post):""}
+                onClick={post.text!=null?() => handlePost(post):""}
                 type="button"
                 className="btn btn-outline-primary post-button"
               >
@@ -116,6 +123,7 @@ export const Posts = (props) => {
                   type="file"
                   name="profilePic"
                   id="form-file"
+                  value={image}
                   onChange={handleImageChange}
                 />
                 {postimage && (
