@@ -232,7 +232,13 @@ nav {
 }
 
 .photos-text {
+  padding: 0;
   justify-content: space-between;
+}
+
+.photos {
+  padding: 0;
+  margin: 0;
 }
 
 .photos button {
@@ -1099,4 +1105,11 @@ Link {
 
 .btn-secondary:hover {
   background-color: red;
+}
+
+#form-file {
+  width: 100%;
+  padding: 20px;
+  border-radius: 5px;
+  border: solid #26466f 1px;
 }
