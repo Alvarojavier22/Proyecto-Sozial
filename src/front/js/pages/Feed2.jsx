@@ -6,7 +6,7 @@ import { Posts } from "../component/Posts.jsx";
 import { LeftMenuFeed } from "../component/LeftMenuFeed.jsx";
 import { Publications } from "../component/Publications.jsx";
 import { RightMenuFeed } from "../component/RightMenuFeed.jsx";
-import propTypes from "prop-types";
+
 
 export const Feed2 = () => {
   const{actions, store}=useContext(Context)
@@ -17,9 +17,7 @@ export const Feed2 = () => {
    
   }, []);
   
-useEffect(()=>{
-  actions.GetPosts()
-},[])
+
 const [pic, setPic]=useState(null)
 useEffect(() => {
   let isMounted = true;
@@ -29,6 +27,7 @@ useEffect(() => {
       await actions.getImage();
       if (isMounted) {
         setPic(store.profilePic.signed_url);
+        actions.GetPosts()
       }
     } catch (error) {
       console.error(error);
@@ -66,7 +65,7 @@ useEffect(() => {
 
               text={post.text}
               profilePhoto={post.img!=null?post.img:( pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg")}
-              postUsername={userData.username}
+              postUsername={post.username || userData.username}
               hourPost={post.hour}
               postImage={post.postimage!=null?post.postimage:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEX///+nxBvIAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"}              
               postDescription={post.text}

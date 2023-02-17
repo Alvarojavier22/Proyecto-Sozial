@@ -15,7 +15,7 @@ export const PostProductContainer = () => {
 
   const showForm = () => {
     setShow(true);
-    console.log(show);
+    
   };
 
   const hideForm = () => {
