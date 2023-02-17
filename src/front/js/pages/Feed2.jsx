@@ -6,6 +6,7 @@ import { Posts } from "../component/Posts.jsx";
 import { LeftMenuFeed } from "../component/LeftMenuFeed.jsx";
 import { Publications } from "../component/Publications.jsx";
 import { RightMenuFeed } from "../component/RightMenuFeed.jsx";
+import { index } from "mathjs";
 
 export const Feed2 = () => {
   const{actions, store}=useContext(Context)
@@ -27,8 +28,9 @@ useEffect(()=>{
               "https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"
             }
           />
-          {store.posts.map((post) => (
+          {store.posts.map((post, index) => (
             <Publications
+              key={index}
               profilePhoto={post.img}
               postUsername={post.username}
               hourPost={post.hour}
