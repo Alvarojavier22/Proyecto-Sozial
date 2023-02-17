@@ -240,9 +240,22 @@ nav {
   cursor: pointer;
 }
 
-.photos svg {
-  margin: 0 2px;
+.photos .bi-list-nested,
+.photos .bi-images {
+  font-size: 25px;
   cursor: pointer;
+  color: #26466f;
+}
+
+.photos .bi-list-nested:hover,
+.photos .bi-images:hover {
+  font-size: 25px;
+  cursor: pointer;
+  color: #9b59b6;
+}
+
+.bi-list-nested {
+  margin-right: 10px;
 }
 
 .pub-buttons {
@@ -300,7 +313,16 @@ nav {
 }
 
 .post-button {
-  font-size: 12px;
+  height: 50%;
+  background-color: #26466f;
+  border-color: #26466f;
+  color: white;
+}
+
+.post-button:hover {
+  background-color: #9b59b6;
+  border-color: white;
+  color: white;
 }
 
 .header .post-divider {
