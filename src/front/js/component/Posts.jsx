@@ -34,9 +34,11 @@ export const Posts = (props) => {
     };
   }, []);
 
-  const [postimage, setPostImage] = useState(null);
-  const [text, setText] = useState("");
-  const [user_id, setUser_id] = useState(1);
+
+  const[postimage, setPostImage]=useState(null)
+  const [text, setText]=useState(null)
+  const [user_id, setUser_id]=useState(1)
+
 
   const post = { text, user_id, postimage };
   console.log(post);
@@ -52,23 +54,21 @@ export const Posts = (props) => {
     reader.readAsDataURL(file);
   };
 
-  async function handlePost() {
-    await actions.UploadPhoto(photo);
-    await actions.getImage();
-    setPostImage(store.profilePic.signed_url);
-    await actions.GeneratePost(post);
-  }
 
-  const handleSubmit = async () => {
-    if (image != null) {
+
+  
+  const handleSubmit=async()=>{
+    if(image!=null){
       await actions.UploadPhoto(image);
-      console.log("success");
-      await actions.getImage();
-      setPostImage(store.profilePic.signed_url);
-      let result = await actions.GeneratePost(post);
-      console.log(result);
-    } else {
-      return;
+      console.log("success")
+      await actions.getImage()
+      setPostImage(store.profilePic.signed_url)
+      if (post.text!=null){
+      let result = await actions.GeneratePost(post)
+      console.log(result)}
+    }else{
+      return
+
     }
   };
 
@@ -102,13 +102,14 @@ export const Posts = (props) => {
                 <i onClick={showPost} className="bi bi-images"></i>
               </div>
               <button
-                onClick={() => actions.GeneratePost(post)}
+                onClick={post.text!=null?() => actions.GeneratePost(post):""}
                 type="button"
                 className="btn btn-outline-primary post-button"
               >
                 Post
               </button>
             </div>
+
             {showPostImage ? (
               <form onSubmit={handleSubmit}>
                 <input
@@ -128,6 +129,7 @@ export const Posts = (props) => {
             ) : (
               ""
             )}
+
           </div>
         </div>
       </div>

@@ -601,7 +601,7 @@ def categories():
 
 
 # POST PRODUCTS ####### VALIDAR SI ESTA RELACIÓN ESTÁ BUENA PARA VENDEDOR (MIRAR EL MODEL DE POST) ✔️
-@api.route("/products/", methods=["POST"])
+@api.route("/postproducts/", methods=["POST"])
 @jwt_required()
 def post_products():
     name = request.json.get("name")
