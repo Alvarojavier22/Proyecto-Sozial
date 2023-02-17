@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ProductCart = () => {
+export const ProductCart = (props) => {
   return (
     <div className="shopping-details-content">
       <div className="shopping-details-content-img">
@@ -9,19 +9,19 @@ export const ProductCart = () => {
       <div className="shopping-details-content-description">
         <div className="content-description-price">
           <div>
-            <p>$20.00</p>
+            <p>{props.price}</p>
           </div>
           <div>
             <i className="bi bi-x"></i>
           </div>
         </div>
         <div className="content-description-specifications">
-          <p>OTAKU DESIGN Slim mid lenght start t-shirt</p>
-          <p>Black Silk</p>
+          <p>{props.productTitle}</p>
+          <p>{props.productSubTitle}</p>
         </div>
         <div className="row buttons-specifications">
           <div className="col d-flex justify-content-center">
-            <p>Black Silk</p>
+            <p>{props.productSubTitle}</p>
           </div>
           {/* mapear estos botones */}
           <div className="col borders d-flex justify-content-center">
