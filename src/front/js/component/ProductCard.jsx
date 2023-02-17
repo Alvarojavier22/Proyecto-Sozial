@@ -10,7 +10,7 @@ description
 export const ProductCard = (props) => {
   return (
     <div>
-      {console.log(props)}
+      
       <div className="card product-card">
         <img
           src={props.img}

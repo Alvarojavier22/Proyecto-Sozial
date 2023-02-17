@@ -20,7 +20,27 @@ export const Feed2 = () => {
 useEffect(()=>{
   actions.GetPosts()
 },[])
+const [pic, setPic]=useState(null)
+useEffect(() => {
+  let isMounted = true;
 
+  async function fetchImage() {
+    try {
+      await actions.getImage();
+      if (isMounted) {
+        setPic(store.profilePic.signed_url);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  fetchImage();
+
+  return () => {
+    isMounted = false;
+  };
+}, []);
 
   return (
     <div className="container-fluid">
@@ -38,12 +58,13 @@ useEffect(()=>{
           />
           {store.posts.map((post) => (
             <Publications
-              name={userData.username}
+             
               text={post.text}
-              profilePhoto={post.img}
-              postUsername={post.username}
+              profilePhoto={post.img!=null?post.img:( pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg")}
+              postUsername={userData.username}
               hourPost={post.hour}
-              postImage={post.postimage!=null?post.postimage:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEX///+nxBvIAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"}              postDescription={post.text}
+              postImage={post.postimage!=null?post.postimage:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEX///+nxBvIAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"}              
+              postDescription={post.text}
               onlineUserPhoto={
                 "https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"
               }

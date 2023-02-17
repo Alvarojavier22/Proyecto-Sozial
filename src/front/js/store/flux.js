@@ -269,6 +269,27 @@ const getState = ({
                     console.log("result", result);
             
             },
+            PostProducts:async(product)=>{
+                const response = await fetch(`${apiUrl}/api/postproducts`, {
+                    headers: {
+                        method: "POST",
+                        body: JSON.stringify(product),
+                        headers: {
+                        
+                            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                            
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*",
+                        },
+                    },
+                });
+              
+                let newStore=getStore()
+                setStore({...newStore,
+                    products:[product, ...newStore.products]})
+                      console.log(response)
+                    
+            },
            
           
 

@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect,useContext } from "react";
+import { Context } from "../store/appContext";
 export const PostProductContainer = () => {
+  const [userData, setUserData]=useState("")
+  const [pic, setPic]=useState(null)
+  const{actions, store}=useContext(Context)
   const [categories, setCategories] = useState([
     "Music, books, art",
     "Cars, vehicles and style",
@@ -18,7 +21,39 @@ export const PostProductContainer = () => {
   const hideForm = () => {
     setShow(false);
   };
-
+  const [name, setName]=useState("")
+  const [description, setDescription]=useState("")
+  const [price, setPrice]=useState(1)
+  const[quantity, setQuantity]=useState(1)
+  const [image_url, setImage_url]=useState("")
+  const available=true
+  const [seller_id, setSeller_id]=useState(1)
+  const product= {image_url,name, description, price, quantity, available, seller_id}
+  console.log(product)
+  useEffect(() => {
+    let isMounted = true;
+  
+    async function fetchImage() {
+      try {
+        await actions.getImage();
+        if (isMounted) {
+          setPic(store.profilePic.signed_url);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  
+    fetchImage();
+  
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+ /*useEffect(()=>{
+    setSeller_id(localStorage.getItem("token"))
+    console.log(seller_id)
+  }, [])*/
   return (
     <div className="container-fluid">
       {!show ? (
@@ -55,11 +90,11 @@ export const PostProductContainer = () => {
           <div className="post-product-container">
             <div className="product-header d-flex">
               <div className="d-flex align-items-center justify-content-center img">
-                <img src="https://wl-genial.cf.tsp.li/resize/728x/jpg/91b/430/964a9c5ac9933cc012d0bd80be.jpg" />
+                <img src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"} />
               </div>
               <div className="buyer-info">
                 <strong>
-                  <p>username</p>
+                  <p>{userData.username}</p>
                 </strong>
                 <small>post in sozial market</small>
               </div>
@@ -82,9 +117,9 @@ export const PostProductContainer = () => {
               </div>
             </div>
             <div className="public-product-inputs">
-              <input placeholder="Title" className="form-control"></input>
-              <input placeholder="Price" className="form-control"></input>
-              <input placeholder="Desciption" className="form-control"></input>
+              <input placeholder="Title" className="form-control" onChange={(e)=>setName(e.target.value)}></input>
+              <input placeholder="Price" className="form-control" onChange={(e)=>setPrice(e.target.value)}></input>
+              <input placeholder="Desciption" className="form-control" onChange={(e)=>setDescription(e.target.value)}></input>
               <div
                 className="btn-group d-flex justify-content-start"
                 role="group"
@@ -137,7 +172,7 @@ export const PostProductContainer = () => {
             </div>
           </div>
           <div className="public-button">
-            <h5>Public product</h5>
+            <button onClick={()=>actions. PostProducts(product)}><h5>Public product</h5></button>
           </div>
         </div>
       ) : (

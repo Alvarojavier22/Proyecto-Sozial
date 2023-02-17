@@ -29,7 +29,7 @@ export const Posts = (props) => {
   }, []);
 
   const[postimage, setPostImage]=useState(null)
-  const [text, setText]=useState("")
+  const [text, setText]=useState(null)
   const [user_id, setUser_id]=useState(1)
 
   const post= {text, user_id, postimage}
@@ -51,13 +51,7 @@ export const Posts = (props) => {
 
 
 
-  async function handlePost() {
 
-    await actions.UploadPhoto(photo);
-    await actions.getImage();
-    setPostImage(store.profilePic.signed_url);
-    await actions.GeneratePost(post);
-  }
   
   const handleSubmit=async()=>{
     if(image!=null){
@@ -65,8 +59,9 @@ export const Posts = (props) => {
       console.log("success")
       await actions.getImage()
       setPostImage(store.profilePic.signed_url)
+      if (post.text!=null){
       let result = await actions.GeneratePost(post)
-      console.log(result)
+      console.log(result)}
     }else{
       return
     }
@@ -106,7 +101,7 @@ export const Posts = (props) => {
                 <i class="bi bi-images"></i>
               </div>
               <button
-                onClick={() => actions.GeneratePost(post)}
+                onClick={post.text!=null?() => actions.GeneratePost(post):""}
                 type="button"
                 className="btn btn-outline-primary post-button"
               >
@@ -122,7 +117,7 @@ export const Posts = (props) => {
 
             />
             {postimage && <img style={{maxWidth:"200px"}} src={postimage} alt="Uploaded image" />}
-            <button type="submit">a</button>
+            
             </form>
           
           </div>
