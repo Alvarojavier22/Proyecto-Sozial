@@ -20,7 +20,11 @@ export const CartTwo = () => {
                 <p>Items are reserved for only 60 minutes</p>
               </div>
             </div>
-            <ProductCart />
+            <ProductCart
+              price={"$20.00"}
+              productTitle={"OTAKU DESIGN Slim mid lenght start t-shirt"}
+              productSubTitle={"Black Silk"}
+            />
             <div className="shopping-details-footer d-flex justify-content-end">
               <div className="footer-price d-flex">
                 <h4>Sub Total:</h4>
