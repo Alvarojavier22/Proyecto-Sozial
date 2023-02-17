@@ -249,7 +249,7 @@ const getState = ({
                 
                 let newStore=getStore()
                 setStore({...newStore,
-                posts:[...newStore.posts, post]})
+                posts:[post, ...newStore.posts ]})
                 result = await result.json();
                 console.log("result", result);
             },
@@ -262,8 +262,9 @@ const getState = ({
                     },
                 });
                 const posts = await response.json()
+                let newStore=getStore()
                 setStore({...newStore,
-                    posts:[...newStore.posts, posts]})
+                    posts:[posts, ...newStore.posts]})
                     
                     console.log("result", result);
             
