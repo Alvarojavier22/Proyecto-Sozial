@@ -20,23 +20,31 @@ export const Feed2 = () => {
   }, []);
 
   const [pic, setPic] = useState(null);
+
+
+
   useEffect(() => {
     let isMounted = true;
-  async function fetchImage() {
-    try {
-      await actions.getImage();
-      if (isMounted) {
-        setPic(store.profilePic.signed_url);
-
+  
+    async function fetchImage() {
+      try {
+        await actions.GetImage();
+        if (isMounted) {
+          setPic(store.profilePic.signed_url)
+  
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
-
+  
     fetchImage();
-
-  return () => {
-    isMounted = false;
-  };
-}, []);
+  
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+  
 const [posts,setPosts]=useState([])
 
 useEffect(() => {
