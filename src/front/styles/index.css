@@ -1102,7 +1102,7 @@ Link {
 .product-card {
   border: #26466f solid 1px;
   height: 100%;
-  max-width: 450px;
+  max-width: 20rem;
   margin: auto;
   /*   max-height: 250px;
   min-width: 490px; */
