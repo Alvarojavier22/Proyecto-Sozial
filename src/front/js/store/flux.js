@@ -259,10 +259,44 @@ const getState = ({ getStore, getActions, setStore }) => {
               localStorage.getItem("token")
             )}`,
 
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        });
+            
+            GetPosts:async()=>{
+                const response = await fetch(`${apiUrl}/api/posts/`, {
+                    headers: {
+                        Authorization:  `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                    },
+                });
+                const posts = await response.json()
+                let newStore=getStore()
+                setStore({...newStore,
+                    posts:[posts, ...newStore.posts]})
+                    
+                    console.log("result", response);
+            
+            },
+            PostProducts:async(product)=>{
+                const response = await fetch(`${apiUrl}/api/postproducts`, {
+                    headers: {
+                        method: "POST",
+                        body: JSON.stringify(product),
+                        headers: {
+                        
+                            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                            
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*",
+                        },
+                    },
+                });
+              
+                let newStore=getStore()
+                setStore({...newStore,
+                    products:[product, ...newStore.products]})
+                      console.log(response)
+                    
+            },
+           
+         
 
         let newStore = getStore();
         setStore({ ...newStore, posts: [post, ...newStore.posts] });

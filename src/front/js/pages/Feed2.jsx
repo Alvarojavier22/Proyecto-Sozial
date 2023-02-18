@@ -22,25 +22,44 @@ export const Feed2 = () => {
   const [pic, setPic] = useState(null);
   useEffect(() => {
     let isMounted = true;
+  async function fetchImage() {
+    try {
+      await actions.getImage();
+      if (isMounted) {
+        setPic(store.profilePic.signed_url);
 
-    async function fetchImage() {
-      try {
-        await actions.getImage();
-        if (isMounted) {
-          setPic(store.profilePic.signed_url);
-          actions.GetPosts();
-        }
-      } catch (error) {
-        console.error(error);
       }
     }
 
     fetchImage();
 
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  return () => {
+    isMounted = false;
+  };
+}, []);
+const [posts,setPosts]=useState([])
+
+useEffect(() => {
+  let isMounted = true;
+
+  async function fetchPosts() {
+    try {
+      await actions.GetPosts();
+      if (isMounted) {
+        return "mounted"
+
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  fetchPosts();
+
+  return () => {
+    isMounted = false;
+  };
+}, []);
 
   return (
     <div className="container-fluid">
