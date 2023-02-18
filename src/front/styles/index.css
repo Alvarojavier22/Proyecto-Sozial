@@ -1224,7 +1224,8 @@ Link * {
   justify-content: center;
   align-items: center;
   height: 40vh;
-  width: 40vw;
+  min-width: 40vw;
+  max-width: 60vw;
 }
 
 .add-friend-btn {
