@@ -266,7 +266,7 @@ const getState = ({
                 setStore({...newStore,
                     posts:[posts, ...newStore.posts]})
                     
-                    console.log("result", result);
+                    console.log("result", response);
             
             },
             PostProducts:async(product)=>{

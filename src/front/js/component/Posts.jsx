@@ -21,6 +21,7 @@ export const Posts = (props) => {
         await actions.getImage();
         if (isMounted) {
           setPic(store.profilePic.signed_url);
+          actions.getPosts()
         }
       } catch (error) {
         console.error(error);
@@ -63,15 +64,22 @@ export const Posts = (props) => {
       console.log("success")
       await actions.getImage()
       setPostImage(store.profilePic.signed_url)
-      if (post.text!=null){
-      let result = await actions.GeneratePost(post)
+      setPostImage(null)
+      setShowPostImage(false)
+      setText("")
+    }else if (post.text!=null){
+        actions.GeneratePost(post)
+        setPostImage(null)
+        setShowPostImage(false)
+        setText("")
       
       console.log(result)}
-    }else{
+    else{
       return
 
     }
   };
+  console.log(postimage)
   const handlePost=(post)=>{
     actions.GeneratePost(post)
     setPostImage(null)
@@ -109,7 +117,7 @@ export const Posts = (props) => {
                 <i onClick={showPost} className="bi bi-images"></i>
               </div>
               <button
-                onClick={post.text!=null?() => handlePost(post):""}
+                onClick={() => handleSubmit()}
                 type="button"
                 className="btn btn-outline-primary post-button"
               >
