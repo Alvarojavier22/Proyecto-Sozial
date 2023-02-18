@@ -131,7 +131,8 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user = db.relationship(User)
     likes = db.relationship("Likes", backref="Post", lazy=True)
-
+    picture_id = db.Column(db.Integer, db.ForeignKey("imagen.id"))
+    picture = db.relationship("Imagen")
     def __repr__(self):
         return f"<Post {self.id}>"
 
