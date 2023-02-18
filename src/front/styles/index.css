@@ -15,8 +15,13 @@ nav {
   background-color: #26466f;
 }
 
-.bi-cart {
+.bi-cart,
+.bi-escape {
   font-size: 22px;
+}
+
+.logout-div {
+  margin-left: 25px;
 }
 
 .link {

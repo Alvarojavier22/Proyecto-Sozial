@@ -1,12 +1,11 @@
-import React, { useState,useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { EditProfile } from "../pages/EditProfile.jsx";
 import { Context } from "../store/appContext.js";
 export const ProfileInfo = (props) => {
   const [edit, setEdit] = useState(false);
-  const[triggerbutton, setTriggerbutton]=useState(false)
+  const [triggerbutton, setTriggerbutton] = useState(false);
 
-  
   const showEdit = () => {
     setEdit(true);
   };
@@ -15,21 +14,20 @@ export const ProfileInfo = (props) => {
     setEdit(false);
   };
 
-  const handleClick=(a)=>{
-    if(a === 1){
-      setEdit(false)
-      setTriggerbutton(false)
-    }else{
-      setEdit(true)
-      setTriggerbutton(true)
+  const handleClick = (a) => {
+    if (a === 1) {
+      setEdit(false);
+      setTriggerbutton(false);
+    } else {
+      setEdit(true);
+      setTriggerbutton(true);
     }
-
-  }
-  const{actions,store}=useContext(Context)
-  const[pic, setPic]=useState(null)
+  };
+  const { actions, store } = useContext(Context);
+  const [pic, setPic] = useState(null);
   useEffect(() => {
     let isMounted = true;
-  
+
     async function fetchImage() {
       try {
         await actions.getImage();
@@ -40,9 +38,9 @@ export const ProfileInfo = (props) => {
         console.error(error);
       }
     }
-  
+
     fetchImage();
-  
+
     return () => {
       isMounted = false;
     };
@@ -52,18 +50,27 @@ export const ProfileInfo = (props) => {
     <div className="container">
       <div className="container-fluid ProfileInfo-container">
         <div className="d-flex justify-content-center">
-          <img src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"} />
+          <img
+            src={
+              pic != null
+                ? pic
+                : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+            }
+          />
         </div>
         <div className="d-flex justify-content-center but">
-          {triggerbutton==false ? (
-            <button onClick={()=>handleClick(0)} className="btn btn-primary">
+          {triggerbutton == false ? (
+            <button
+              onClick={() => handleClick(0)}
+              className="btn btn-primary pub-buttons"
+            >
               Edit profile
             </button>
           ) : (
             ""
           )}
-          {triggerbutton==true ? (
-            <button onClick={()=>handleClick(1)} className="btn btn-danger">
+          {triggerbutton == true ? (
+            <button onClick={() => handleClick(1)} className="btn btn-danger">
               Cancel edit
             </button>
           ) : (
@@ -86,9 +93,7 @@ export const ProfileInfo = (props) => {
       </div>
       {edit ? (
         <div>
-          <EditProfile 
-          trigger={triggerbutton} setTrigger={setTriggerbutton}
-          />
+          <EditProfile trigger={triggerbutton} setTrigger={setTriggerbutton} />
         </div>
       ) : (
         ""
