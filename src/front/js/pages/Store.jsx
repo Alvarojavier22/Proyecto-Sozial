@@ -27,7 +27,7 @@ export const Store = () => {
               alt={item.alt}
               title={item.title}
               description={item.description}
-              price={"$ " + item.price}
+              price={item.price}
             />
           </div>
         ))}

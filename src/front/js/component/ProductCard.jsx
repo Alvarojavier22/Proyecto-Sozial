@@ -24,7 +24,7 @@ export const ProductCard = (props) => {
             <small className="card-text">{props.description}</small>
           </div>
           <div className="store-card-price d-flex align-items-center justify-content-center">
-            <h5 className="card-text">{props.price}</h5>
+            <h5 className="card-text">$ {props.price}</h5>
           </div>
           <div className="d-flex justify-content-center">
             <Link
