@@ -1,9 +1,9 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 export const PostProductContainer = () => {
-  const [userData, setUserData]=useState("")
-  const [pic, setPic]=useState(null)
-  const{actions, store}=useContext(Context)
+  const [userData, setUserData] = useState("");
+  const [pic, setPic] = useState(null);
+  const { actions, store } = useContext(Context);
   const [categories, setCategories] = useState([
     "Music, books, art",
     "Cars, vehicles and style",
@@ -15,24 +15,31 @@ export const PostProductContainer = () => {
 
   const showForm = () => {
     setShow(true);
-    
   };
 
   const hideForm = () => {
     setShow(false);
   };
-  const [name, setName]=useState("")
-  const [description, setDescription]=useState("")
-  const [price, setPrice]=useState(1)
-  const[quantity, setQuantity]=useState(1)
-  const [image_url, setImage_url]=useState("")
-  const available=true
-  const [seller_id, setSeller_id]=useState(1)
-  const product= {image_url,name, description, price, quantity, available, seller_id}
-  console.log(product)
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(1);
+  const [quantity, setQuantity] = useState(1);
+  const [image_url, setImage_url] = useState("");
+  const available = true;
+  const [seller_id, setSeller_id] = useState(1);
+  const product = {
+    image_url,
+    name,
+    description,
+    price,
+    quantity,
+    available,
+    seller_id,
+  };
+  console.log(product);
   useEffect(() => {
     let isMounted = true;
-  
+
     async function fetchImage() {
       try {
         await actions.getImage();
@@ -43,14 +50,14 @@ export const PostProductContainer = () => {
         console.error(error);
       }
     }
-  
+
     fetchImage();
-  
+
     return () => {
       isMounted = false;
     };
   }, []);
- /*useEffect(()=>{
+  /*useEffect(()=>{
     setSeller_id(localStorage.getItem("token"))
     console.log(seller_id)
   }, [])*/
@@ -90,7 +97,13 @@ export const PostProductContainer = () => {
           <div className="post-product-container">
             <div className="product-header d-flex">
               <div className="d-flex align-items-center justify-content-center img">
-                <img src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"} />
+                <img
+                  src={
+                    pic != null
+                      ? pic
+                      : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+                  }
+                />
               </div>
               <div className="buyer-info">
                 <strong>
@@ -117,9 +130,21 @@ export const PostProductContainer = () => {
               </div>
             </div>
             <div className="public-product-inputs">
-              <input placeholder="Title" className="form-control" onChange={(e)=>setName(e.target.value)}></input>
-              <input placeholder="Price" className="form-control" onChange={(e)=>setPrice(e.target.value)}></input>
-              <input placeholder="Desciption" className="form-control" onChange={(e)=>setDescription(e.target.value)}></input>
+              <input
+                placeholder="Title"
+                className="form-control"
+                onChange={(e) => setName(e.target.value)}
+              ></input>
+              <input
+                placeholder="Price"
+                className="form-control"
+                onChange={(e) => setPrice(e.target.value)}
+              ></input>
+              <input
+                placeholder="Desciption"
+                className="form-control"
+                onChange={(e) => setDescription(e.target.value)}
+              ></input>
               <div
                 className="btn-group d-flex justify-content-start"
                 role="group"
@@ -171,8 +196,11 @@ export const PostProductContainer = () => {
               </div>
             </div>
           </div>
-          <div className="public-button">
-            <button onClick={()=>actions. PostProducts(product)}><h5>Public product</h5></button>
+          <div
+            onClick={() => actions.PostProducts(product)}
+            className="public-button"
+          >
+            PUBLIC PRODUCT
           </div>
         </div>
       ) : (
