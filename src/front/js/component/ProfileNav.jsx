@@ -106,7 +106,7 @@ export const ProfileNav = () => {
             </Link>
             <div className="logout-div">
               <Link className="link" to={"/logout"}>
-                <i class="bi bi-escape"></i>
+                <i className="bi bi-escape"></i>
               </Link>
             </div>
 

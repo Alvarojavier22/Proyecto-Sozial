@@ -142,16 +142,16 @@ export const ProductDetail = (props) => {
             {/* button== */}
             <button onClick={Favorite} className="btn btn-primary pub-buttons">
               {favorite ? (
-                <i class="bi bi-heart-fill"></i>
+                <i className="bi bi-heart-fill"></i>
               ) : (
                 <i className="bi bi-heart"></i>
               )}
             </button>
             <button onClick={Cart} className="btn btn-primary pub-buttons">
               {!cart ? (
-                <i class="bi bi-cart"></i>
+                <i className="bi bi-cart"></i>
               ) : (
-                <i class="bi bi-cart-check-fill"></i>
+                <i className="bi bi-cart-check-fill"></i>
               )}
             </button>
             <button className="btn btn-primary pub-buttons">
