@@ -20,9 +20,11 @@ export const ProductCard = (props) => {
           <div className="store-card-title d-flex align-items-center">
             <h5 className="card-title">{props.title}</h5>
           </div>
-          <p className="card-text">{props.description}</p>
+          <div className="description-card-container">
+            <small className="card-text">{props.description}</small>
+          </div>
           <div className="store-card-price d-flex align-items-center justify-content-center">
-            <h5 className="card-text">{props.price}</h5>
+            <h5 className="card-text">$ {props.price}</h5>
           </div>
           <div className="d-flex justify-content-center">
             <Link

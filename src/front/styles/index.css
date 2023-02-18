@@ -28,6 +28,11 @@ nav {
   text-decoration: none;
 }
 
+.categories-container .container-text {
+  text-decoration: none;
+  border: none;
+}
+
 .link * {
   margin: 0;
 }
@@ -155,7 +160,7 @@ nav {
 .info-nav {
   /*para que no se mueva con el hoover*/
   padding: 20px;
-  margin: auto;
+  margin: 10px auto;
   display: flex;
   justify-content: space-around;
 }
@@ -729,8 +734,9 @@ nav {
 
 .shopping-details-content-description {
   margin: 10px 10px;
-  padding: 10px;
+  padding: 15px;
   width: 100%;
+  border-radius: 5px;
   border: 1px solid #26466f;
   /* 
   box-shadow: 2px black; */
@@ -791,10 +797,26 @@ nav {
   padding: 10px;
 }
 
-.favorite-button .btn-info {
+.favorite-button .for-later {
+  background-color: #26466f;
+  border-color: #26466f;
+  color: white;
   display: flex;
   justify-content: space-between;
   margin: 0 2px;
+}
+
+.favorite-button .for-later:hover {
+  background-color: #9b59b6;
+  border-color: #9b59b6;
+  color: white;
+}
+
+.favorite-button .for-later:focus {
+  background-color: #26466f;
+  border-color: #26466f;
+  color: white;
+  box-shadow: none;
 }
 
 .favorite-button .btn-info div {
@@ -1073,8 +1095,8 @@ nav {
   padding: 0px 5px;
 }
 
-Link {
-  border: none;
+Link * {
+  text-decoration: none;
 }
 
 /* ProductCard */
@@ -1111,6 +1133,18 @@ Link {
 .product-card img {
   height: 15rem;
   width: 20rem;
+}
+
+.description-card-container {
+  border-radius: 5px;
+  border: solid #26466f 1px;
+  padding: 5px;
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.btn-danger {
+  padding: 5px;
 }
 
 .store-card-title {

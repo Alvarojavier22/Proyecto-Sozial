@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const ProductCart = (props) => {
+  const [favorite, setFavorite] = useState(false);
+
+  const Favorite = () => {
+    setFavorite(!favorite);
+  };
+
   return (
     <div className="shopping-details-content">
       <div className="shopping-details-content-img">
@@ -75,10 +81,14 @@ export const ProductCart = (props) => {
             </div>
           </div>
         </div>
-        <div className="favorite-button">
-          <button className="btn btn-info">
+        <div onClick={Favorite} className="favorite-button">
+          <button className="btn btn-info for-later">
             <div>
-              <i className="bi bi-heart"></i>
+              {favorite ? (
+                <i className="bi bi-heart-fill"></i>
+              ) : (
+                <i className="bi bi-heart"></i>
+              )}
             </div>
             <div>For later</div>
           </button>

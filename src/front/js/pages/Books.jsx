@@ -9,50 +9,62 @@ export const BooksCategory = () => {
       id: 1,
       img: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
       alt: "sozial-store-product",
-      title: "Amazon Basics",
-      description: "Amazon Basics item",
+      title: `"Mi portada le libro" book`,
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis felis odio, iaculis mattis maximus id, lacinia id lacus. In hac habitasse platea dictumst.",
+      price: "22",
     },
     {
       id: 2,
       img: "https://cf.shopee.com.co/file/d3419be8258e34747d8777f590152a0f",
       alt: "sozial-store-product",
-      title: "Amazon Basics",
-      description: "Amazon Basics item",
+      title: "Beatiful picture",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      price: "200",
     },
     {
       id: 3,
       img: "https://www.todocuadros.es/media/catalog/product/cache/10/small_image/411x/9df78eab33525d08d6e5fb8d27136e95/m/o/moderno-oleo-colores-prisma.jpg",
       alt: "sozial-store-product",
-      title: "Amazon Basics",
-      description: "Amazon Basics item",
+      title: "Random picture",
+      description: "Suspendisse ut est semper sapien cursus mattis.",
+      price: "180",
     },
     {
       id: 4,
       img: "https://template.canva.com/EADtutwov_Q/1/0/256w-nJr37FPJeZs.jpg",
       alt: "sozial-store-product",
-      title: "Amazon Basics",
-      description: "Amazon Basics item",
+      title: `"El buen cirujano" book`,
+      description:
+        "luctus et ultrices posuere cubilia curae; Pellentesque venenatis augue ac nisi elementum gravida. Integer maximus purus placerat, pulvinar.",
+      price: "35",
     },
     {
-      id: 4,
+      id: 5,
       img: "https://template.canva.com/EADwi4xAG6I/1/0/256w-JBWCAd5q564.jpg",
       alt: "sozial-store-product",
-      title: "Amazon Basics",
-      description: "Amazon Basics item",
+      title: `"El quinto infierno" book`,
+      description:
+        "hendrerit et dignissim a, volutpat vitae metus. Cras efficitur molestie mattis. Curabitur venenatis mi lacus, nec imperdiet ex blandit quis. Nunc accumsan justo nulla. Ut in euismod tortor. Maecenas non diam id sapien varius dapibus id sed quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      price: "20",
     },
     {
-      id: 4,
+      id: 6,
       img: "https://1.bp.blogspot.com/-KECHVaUBaTc/T6EZBhM1owI/AAAAAAAAgD4/kwST9AAb9ds/s1600/ARTE+CUADROS+CABALLOS+(2).jpg",
       alt: "sozial-store-product",
-      title: "Amazon Basics",
-      description: "Amazon Basics item",
+      title: "Horse and girl picture",
+      description:
+        "Horse and girl picture. Maecenas sed velit quam. Maecenas at dui mauris. Pellentesque in tortor sit amet lacus laoreet tincidunt in sed ex.",
+      price: "28",
     },
     {
-      id: 4,
+      id: 7,
       img: "https://i.pinimg.com/736x/1d/8e/80/1d8e80245196e91601bccba4f8d52a71.jpg",
       alt: "sozial-store-product",
-      title: "Amazon Basics",
-      description: "Amazon Basics item",
+      title: "Horse picture",
+      description:
+        "Sed vulputate, sem at mollis semper, massa velit condimentum enim, et auctor ligula risus at odio. Duis luctus molestie metus a vehicula.",
+      price: "30",
     },
   ]);
 
@@ -75,6 +87,7 @@ export const BooksCategory = () => {
               alt={item.alt}
               title={item.title}
               description={item.description}
+              price={item.price}
             />
           </div>
         ))}
