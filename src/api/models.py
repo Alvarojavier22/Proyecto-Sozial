@@ -29,6 +29,7 @@ class User(db.Model):
             "email": self.email,
             "is_active": self.is_active,
             "password": self.password,
+            "profile_picture": self.profile_picture
             # para las pruebas del cambio de clave
         }
 
@@ -100,6 +101,7 @@ class Favorites(db.Model):
             "product_id": self.products.id,
             "product_name": self.products.name,
             "user": user.serialize_cart(),
+            "product_picture": self.products.picture,
         }
 
 
@@ -118,6 +120,7 @@ class ShoppingCart(db.Model):
         return {
             "product_id": self.products.id,
             "product_name": self.products.name,
+            "product_picture": self.products.picture,
             "user": user.serialize_cart(),
         }
 
@@ -141,6 +144,7 @@ class Post(db.Model):
             "text": self.text,
             "post_id": self.id,
             "user_id": self.user_id,
+            "profile_picture": self.user.profile_picture,
             "picture": self.picture,
             "user_name": self.user.name + str(" ") + self.user.surname,
         }
@@ -208,6 +212,7 @@ class Buy(db.Model):
         return {
             "product_id": self.products.id,
             "product_name": self.products.name,
+            "product_picture": self.products.picture,
             "user": user.serialize_cart(),
         }
 
