@@ -16,6 +16,7 @@
 
 .left-menu-container * {
   color: white;
+  text-decoration: none;
 }
 
 #left-icons .bi {

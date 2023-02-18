@@ -9,42 +9,37 @@ export const LeftMenuFeed = () => {
   }, []);
   return (
     <div className="left-menu-container d-none d-md-block">
-      <div className="profile d-flex align-items-center">
+      <Link to={"/profile"} className="profile d-flex align-items-center">
         <div id="left-icons">
           <i className="bi bi-person"></i>
         </div>
-
         <div className="center-icons">
-          <Link className="link" to={"/profile"}>
-            {userData.username}
-          </Link>
+          <div className="link">{userData.username}</div>
         </div>
-      </div>
+      </Link>
       <div className="options">
-        <div className="friends d-flex">
+        <Link to="/friends" className="friends d-flex">
           <div id="left-icons">
             <i className="bi bi-person-fill-add"></i>
           </div>
           <div className="center-icons">
-            <Link className="link" to="/friends">
-              Friends
-            </Link>
+            <div className="link">Friends</div>
           </div>
-        </div>
-        <div className="groups d-flex">
+        </Link>
+        {/* <div className="groups d-flex">
           <div id="left-icons">
             <i className="bi bi-people-fill"></i>
           </div>
           <div className="center-icons">Groups</div>
-        </div>
-        <div className="store d-flex align-items-center">
+        </div> */}
+        <Link to={"/store"} className="store d-flex align-items-center">
           <div id="left-icons">
             <i className="bi bi-shop"></i>
           </div>
-          <Link className="link center-icons" to={"/store"}>
+          <div className="link center-icons">
             <div className="center-icons">Store</div>
-          </Link>
-        </div>
+          </div>
+        </Link>
       </div>
     </div>
   );

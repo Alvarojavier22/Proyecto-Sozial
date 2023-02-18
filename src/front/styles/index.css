@@ -39,6 +39,7 @@ nav {
 }
 
 .link * {
+  text-decoration: none;
   margin: 0;
 }
 
@@ -1086,6 +1087,17 @@ nav {
 .categories-cont {
   margin-top: 80px;
 }
+
+.categories-cont * {
+  text-decoration: none;
+}
+
+.categories-container:hover {
+  text-decoration: none;
+  margin-bottom: 13px;
+  box-shadow: #26466f 1px 2px;
+}
+
 .categories-container {
   text-decoration: none;
   padding: 10px 20px;
