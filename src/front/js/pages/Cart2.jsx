@@ -131,8 +131,8 @@ export const CartTwo = () => {
               </strong>
             </div>
             <div className="cards d-flex justify-content-start">
-              <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" />
               <img src="https://cdn-icons-png.flaticon.com/512/196/196565.png" />
+              <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" />
               <img src="https://cdn-icons-png.flaticon.com/512/179/179431.png" />
             </div>
           </div>
