@@ -49,13 +49,11 @@ export const ProfileNav = () => {
                 />
               </svg>
             </Link>
-            <div className="link nav-name">
-              <Link className="link" to={"/profile"}>
-                <strong>
-                  <h4>{userData.username}</h4>
-                </strong>
-              </Link>
-            </div>
+            <Link className="link nav-name" to={"/profile"}>
+              <strong>
+                <h4>{userData.username}</h4>
+              </strong>
+            </Link>
 
             <div className="photo-arrow" style={{ marginLeft: "20px" }}>
               <Link to={"/profile"}>
@@ -92,6 +90,7 @@ export const ProfileNav = () => {
 
           <div className="right-nav d-flex align-items-center justify-content-around d-none d-md-flex">
             <svg
+              style={{ marginRight: "10px" }}
               xmlns="http://www.w3.org/2000/svg"
               width="22"
               height="22"
@@ -105,6 +104,11 @@ export const ProfileNav = () => {
             <Link className="link" to={"/cart2"}>
               <i className="bi bi-cart"></i>
             </Link>
+            <div className="logout-div">
+              <Link className="link" to={"/logout"}>
+                <i class="bi bi-escape"></i>
+              </Link>
+            </div>
 
             {/* 
             <a className="navbar-brand" href="#">
