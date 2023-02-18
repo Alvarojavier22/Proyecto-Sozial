@@ -53,7 +53,7 @@ export const CartTwo = () => {
               </div>
             </div>
           </div>
-          <div className="row prime-delivery d-flex align-items-center justify-content-around">
+          <div className="row prime-delivery normal-delivery d-flex align-items-center justify-content-around">
             <div className="col-sm-12 col-md-4 center">
               <i className="bi bi-truck"></i>
             </div>

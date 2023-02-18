@@ -15,8 +15,13 @@ nav {
   background-color: #26466f;
 }
 
-.bi-cart {
+.bi-cart,
+.bi-escape {
   font-size: 22px;
+}
+
+.logout-div {
+  margin-left: 25px;
 }
 
 .link {
@@ -818,6 +823,11 @@ nav {
   color: white;
 }
 
+.normal-delivery:hover {
+  background-color: #9b59b6;
+  color: white;
+}
+
 .prime-delivery div {
   margin: 5px 0;
 }
@@ -828,6 +838,7 @@ nav {
 }
 
 .prime-delivery {
+  border-radius: 5px;
   border: #26466f solid 1px;
   margin: 20px 0;
   padding: 20px;
@@ -985,6 +996,7 @@ nav {
 }
 
 .public-button {
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
