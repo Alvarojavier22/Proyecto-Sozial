@@ -18,6 +18,11 @@ nav {
 .nav-cart,
 .bi-escape {
   font-size: 22px;
+  margin-right: 10px;
+}
+
+.bi-escape:hover {
+  color: red;
 }
 
 .logout-div {

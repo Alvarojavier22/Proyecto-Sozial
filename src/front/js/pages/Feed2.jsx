@@ -21,53 +21,49 @@ export const Feed2 = () => {
 
   const [pic, setPic] = useState(null);
 
-
-
   useEffect(() => {
     let isMounted = true;
-  
+
     async function fetchImage() {
       try {
         await actions.GetImage();
         if (isMounted) {
-          setPic(store.profilePic.signed_url)
-  
+          setPic(store.profilePic.signed_url);
         }
       } catch (error) {
         console.error(error);
       }
     }
-  
+
     fetchImage();
-  
+
     return () => {
       isMounted = false;
     };
   }, []);
-  
-const [posts,setPosts]=useState([])
 
-useEffect(() => {
-  let isMounted = true;
+  const [posts, setPosts] = useState([]);
 
-  async function fetchPosts() {
-    try {
-      await actions.GetPosts();
-      if (isMounted) {
-        return "mounted"
+  useEffect(() => {
+    let isMounted = true;
 
+    async function fetchPosts() {
+      try {
+        await actions.GetPosts();
+        if (isMounted) {
+          return "mounted";
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
-  }
 
-  fetchPosts();
+    fetchPosts();
 
-  return () => {
-    isMounted = false;
-  };
-}, []);
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="container-fluid">
@@ -98,11 +94,12 @@ useEffect(() => {
               }
               postUsername={post.username || userData.username}
               hourPost={post.hour}
-              postImage={
+              postImage={post.postimage}
+              /* postImage={
                 post.postimage != null
                   ? post.postimage
                   : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEX///+nxBvIAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
-              }
+              } */
               postDescription={post.text}
               onlineUserPhoto={
                 "https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"

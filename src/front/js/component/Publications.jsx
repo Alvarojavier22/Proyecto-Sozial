@@ -42,7 +42,7 @@ export const Publications = (props) => {
           </div>
           <div className="post-divider"></div>
           <div className="post-content d-flex justify-content-center">
-            <img src={props.postImage} />
+            {props.postImage ? <img src={props.postImage} /> : ""}
           </div>
           <div className="post-description">
             <p>
