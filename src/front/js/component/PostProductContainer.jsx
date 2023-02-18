@@ -122,7 +122,7 @@ export const PostProductContainer = () => {
                   placeholder="add photos here..."
                 >
                   <div className="center-photos">
-                    <i classname="bi bi-images"></i>
+                    <i className="bi bi-images"></i>
                     <h5>add photos</h5>
                     <small>You can drag your photos here</small>
                   </div>
