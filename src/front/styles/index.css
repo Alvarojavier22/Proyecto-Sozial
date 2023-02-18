@@ -1128,11 +1128,10 @@ Link {
 }
 
 .store-card-price {
-  width: 100%;
   border: solid #26466f 1px;
   border-radius: 5px;
-  margin: 15px 0;
-  padding: 10px;
+  margin: 15px auto;
+  padding: 5px;
 }
 
 .store-card-price:hover {

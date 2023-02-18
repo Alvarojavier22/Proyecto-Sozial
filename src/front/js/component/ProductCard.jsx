@@ -24,13 +24,15 @@ export const ProductCard = (props) => {
           <div className="store-card-price d-flex align-items-center justify-content-center">
             <h5 className="card-text">{props.price}</h5>
           </div>
-          <Link
-            to="/product-details"
-            href="#"
-            className="btn btn-primary pub-buttons"
-          >
-            More info here
-          </Link>
+          <div className="d-flex justify-content-center">
+            <Link
+              to="/product-details"
+              href="#"
+              className="btn btn-primary pub-buttons"
+            >
+              More info here
+            </Link>
+          </div>
         </div>
       </div>
     </div>
