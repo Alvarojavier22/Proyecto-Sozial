@@ -16,7 +16,7 @@ export const Friends = () => {
       <InfoNav />
       <div className="center-container">
         <button
-          className="btn btn-primary add-friend-btn"
+          className="btn btn-primary pub-buttons add-friend-btn"
           variant="outline-primary"
           onClick={handleShow}
         >
@@ -32,15 +32,6 @@ export const Friends = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Invite your friends to Sozial</h5>
-                <button
-                  type="button"
-                  className="btn btn-danger close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={handleClose}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
               </div>
               <div className="modal-body">
                 <div className="card">

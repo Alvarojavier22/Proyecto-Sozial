@@ -139,7 +139,7 @@ export const ProfileNav = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-bloc d-sm-none">
               <li className="nav-item align-items-center d-flex">
-                <a className="nav-link nav-margin" href="#">
+                <Link to={"/friends"} className="nav-link nav-margin" href="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -155,9 +155,9 @@ export const ProfileNav = () => {
                     />
                   </svg>
                   <span>Friends</span>
-                </a>
+                </Link>
               </li>
-              <li className="nav-item align-items-center d-flex">
+              {/* <li className="nav-item align-items-center d-flex">
                 <a className="nav-link nav-margin" href="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +171,7 @@ export const ProfileNav = () => {
                   </svg>
                   <span>Groups</span>
                 </a>
-              </li>
+              </li> */}
               <li className="nav-item align-items-center d-flex">
                 <Link className="nav-link nav-margin" to="/store">
                   <svg
