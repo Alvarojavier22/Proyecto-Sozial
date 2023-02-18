@@ -17,8 +17,13 @@ export const ProductCard = (props) => {
           alt={props.alt}
         />
         <div className="card-body">
-          <h5 className="card-title">{props.title}</h5>
+          <div className="store-card-title d-flex align-items-center">
+            <h5 className="card-title">{props.title}</h5>
+          </div>
           <p className="card-text">{props.description}</p>
+          <div className="store-card-price d-flex align-items-center justify-content-center">
+            <h5 className="card-text">{props.price}</h5>
+          </div>
           <Link
             to="/product-details"
             href="#"

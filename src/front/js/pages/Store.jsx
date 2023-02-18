@@ -6,8 +6,7 @@ import { ProfileNav } from "../component/ProfileNav.jsx";
 import { Context } from "../store/appContext.js";
 
 export const Store = () => {
-  const{store, actions}=useContext(Context)
-  
+  const { store, actions } = useContext(Context);
 
   return (
     <div className="container-fluid">
@@ -28,6 +27,7 @@ export const Store = () => {
               alt={item.alt}
               title={item.title}
               description={item.description}
+              price={"$ " + item.price}
             />
           </div>
         ))}
