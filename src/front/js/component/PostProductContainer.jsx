@@ -57,10 +57,10 @@ export const PostProductContainer = () => {
       isMounted = false;
     };
   }, []);
-  /*useEffect(()=>{
+  useEffect(()=>{
     setSeller_id(localStorage.getItem("token"))
     console.log(seller_id)
-  }, [])*/
+  }, [])
   return (
     <div className="container-fluid">
       {!show ? (

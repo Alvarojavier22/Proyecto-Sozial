@@ -16,7 +16,7 @@ export const LeftMenuFeed = () => {
 
         <div className="center-icons">
           <Link className="link" to={"/profile"}>
-            {userData.name}
+            {userData.username}
           </Link>
         </div>
       </div>
