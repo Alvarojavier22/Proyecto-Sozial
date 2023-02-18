@@ -1,4 +1,4 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { ProfileNav } from "../component/ProfileNav.jsx";
 import { InfoNav } from "../component/InfoNav.jsx";
@@ -7,34 +7,31 @@ import { LeftMenuFeed } from "../component/LeftMenuFeed.jsx";
 import { Publications } from "../component/Publications.jsx";
 import { RightMenuFeed } from "../component/RightMenuFeed.jsx";
 
-
 export const Feed2 = () => {
-  const{actions, store}=useContext(Context)
+  const { actions, store } = useContext(Context);
   const [userData, setUserData] = useState("");
+
+  const addLike = () => {
+    setLikesNumbers(likesNumbers + 1);
+  };
 
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("user")));
-   
   }, []);
-  
 
-const [pic, setPic]=useState(null)
-useEffect(() => {
-  let isMounted = true;
-
+  const [pic, setPic] = useState(null);
+  useEffect(() => {
+    let isMounted = true;
   async function fetchImage() {
     try {
       await actions.getImage();
       if (isMounted) {
         setPic(store.profilePic.signed_url);
-        
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
-  fetchImage();
+      }
+    }
+
+    fetchImage();
 
   return () => {
     isMounted = false;
@@ -80,17 +77,24 @@ useEffect(() => {
           />
           {store.posts.map((post, index) => (
             <Publications
-
-             
-
+              likesNumber={post.likesNumber}
               key={index}
               name={userData.username}
-
               text={post.text}
-              profilePhoto={post.img!=null?post.img:( pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg")}
+              profilePhoto={
+                post.img != null
+                  ? post.img
+                  : pic != null
+                  ? pic
+                  : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+              }
               postUsername={post.username || userData.username}
               hourPost={post.hour}
-              postImage={post.postimage!=null?post.postimage:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEX///+nxBvIAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"}              
+              postImage={
+                post.postimage != null
+                  ? post.postimage
+                  : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEX///+nxBvIAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC"
+              }
               postDescription={post.text}
               onlineUserPhoto={
                 "https://fastly.picsum.photos/id/1015/400/400.jpg?hmac=eR9RLdpgyMAvCARURWw7OltaTl-3Ci6DfkAxmp0upI8"

@@ -1,13 +1,17 @@
 import React, { useContext, useState } from "react";
 import { InfoNav } from "../component/InfoNav.jsx";
 import { ProfileNav } from "../component/ProfileNav.jsx";
-import { Context } from "../store/appContext.js";
+import { Link } from "react-router-dom";
 
 export const ProductDetail = (props) => {
   const [favorite, setFavorite] = useState(false);
+  const [cart, setCart] = useState(false);
 
   const Favorite = () => {
     setFavorite(!favorite);
+  };
+  const Cart = () => {
+    setCart(!cart);
   };
 
   return (
@@ -17,6 +21,9 @@ export const ProductDetail = (props) => {
         <InfoNav />
       </div>
       <div className="row SellProductsDetails-container">
+        <div className="d-flex align-items-center">
+          <Link to={-1} className="bi bi-arrow-left link"></Link>
+        </div>
         {/* fotos carousel */}
         <div className="col-lg-8 col-sm-12 product-carousel">
           <div
@@ -130,7 +137,7 @@ export const ProductDetail = (props) => {
           </div>
           <div className="user-buttons-interactions">
             <button className="btn btn-primary pub-buttons">
-              Send a message
+              <small>Send a message</small>
             </button>
             {/* button== */}
             <button onClick={Favorite} className="btn btn-primary pub-buttons">
@@ -138,6 +145,13 @@ export const ProductDetail = (props) => {
                 <i class="bi bi-heart-fill"></i>
               ) : (
                 <i className="bi bi-heart"></i>
+              )}
+            </button>
+            <button onClick={Cart} className="btn btn-primary pub-buttons">
+              {!cart ? (
+                <i class="bi bi-cart"></i>
+              ) : (
+                <i class="bi bi-cart-check-fill"></i>
               )}
             </button>
             <button className="btn btn-primary pub-buttons">
@@ -149,6 +163,10 @@ export const ProductDetail = (props) => {
             <p>{props.description}</p>
           </div>
           <div className="end-info-bar"></div>
+          {/* colocar luego */}
+          {/* <div className="seller-name">
+            <h6>Seller: {props.sellerName}</h6>
+          </div> */}
         </div>
       </div>
     </div>

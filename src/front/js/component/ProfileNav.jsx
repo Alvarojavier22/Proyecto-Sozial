@@ -102,7 +102,7 @@ export const ProfileNav = () => {
               <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
             </svg>
             <Link className="link" to={"/cart2"}>
-              <i className="bi bi-cart"></i>
+              <i className="bi bi-cart nav-cart"></i>
             </Link>
             <div className="logout-div">
               <Link className="link" to={"/logout"}>

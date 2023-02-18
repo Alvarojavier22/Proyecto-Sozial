@@ -3,9 +3,11 @@ import React, { useState } from "react";
 export const Publications = (props) => {
   const [like, setLike] = useState(false);
   const [comment, setComment] = useState(false);
+  const [likesNumbers, setLikesNumbers] = useState(1);
 
   const Like = () => {
     setLike(!like);
+    setLikesNumbers(likesNumbers + 1);
   };
 
   const Comment = () => {
@@ -22,9 +24,7 @@ export const Publications = (props) => {
               <div className="name-details">
                 <h4>{props.postUsername}</h4>
 
-
                 <small>{props.hourPost} • Sozial</small>
-
               </div>
             </div>
             <div className="options">
@@ -46,9 +46,7 @@ export const Publications = (props) => {
           </div>
           <div className="post-description">
             <p>
-
               <strong>{props.postUsername}</strong>: {props.postDescription}
-
             </p>
           </div>
           <div className="post-options">
@@ -65,7 +63,7 @@ export const Publications = (props) => {
                         : "bi bi-hand-thumbs-up"
                     }
                   ></i>
-                  <p>Like</p>
+                  <p>{props.likesNumber} Likes</p>
                 </button>
                 <button
                   onClick={Comment}
