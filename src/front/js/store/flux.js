@@ -170,6 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             "https://fastly.picsum.photos/id/842/600/600.jpg?hmac=xpS8Snrlr6C8Daje2yeYe43QAvjnGQF5eudV44EXGKY",
         },
       ],
+      comments:[]
     },
     actions: {
       signUp: async (user) => {
@@ -320,6 +321,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         //console.log(process.env.BACKEND_URL)
       },
+
+      HandleComments: (comment)=>{
+        let newStore = getStore();
+        setStore({ ...newStore, comments: [comment, ...newStore.comments] });
+      },
+
       changeColor: (index, color) => {
         //get the store
         const store = getStore();

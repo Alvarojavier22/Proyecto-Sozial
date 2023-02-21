@@ -1,20 +1,30 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 export const Publications = (props) => {
-  const [like, setLike] = useState(false);
-  const [comment, setComment] = useState(false);
+  const [like, setLike] = useState("");
+  const [comment, setComment] = useState("");
+  const [showcomments, setShowComments]=useState(false)
   //const [showComments, setShowComments] = useState("");
   const [likesNumbers, setLikesNumbers] = useState(1);
-
+  const{actions, store}=useContext(Context)
   const Like = () => {
-    setLike(!like);
-    setLikesNumbers(likesNumbers + 1);
+    if(like!=1){
+    setLike(1)
+    }else{
+      setLike("")
+    }
   };
+  console.log(comment)
 
   const Comment = () => {
     setComment(!comment);
+    setShowComments(false)
   };
-
+  const handleComments=async(comment)=>{
+    setShowComments(true)
+    await actions.HandleComments(comment)
+    setComment("")
+  }
   return (
     <div className="cr">
       <div className="col d-flex justify-content-center">
@@ -64,7 +74,7 @@ export const Publications = (props) => {
                         : "bi bi-hand-thumbs-up"
                     }
                   ></i>
-                  <p>{props.likesNumber} Likes</p>
+                  <p>{like} Likes</p>
                 </button>
                 <button
                   onClick={Comment}
@@ -89,7 +99,7 @@ export const Publications = (props) => {
                 <img src={props.onlineUserPhoto} />
                 <div className="input-group mb-3">
                   <input
-                    onChange={""}
+                    onChange={(e)=>setComment(e.target.value)}
                     placeholder="comment here"
                     type="text"
                     className="form-control"
@@ -98,6 +108,7 @@ export const Publications = (props) => {
                   />
                 </div>
                 <svg
+                  onClick={()=>handleComments(comment)}
                   xmlns="http://www.w3.org/2000/svg"
                   width="36"
                   height="36"
@@ -114,9 +125,16 @@ export const Publications = (props) => {
             ) : (
               ""
             )}
-            <div className="comments">coments</div>
+
+            
+            
           </div>
+           {showcomments &&
+            (<div className="comments">
+              <p>{store.comments[0]}</p></div>
+            )}
         </div>
+       
       </div>
     </div>
   );
