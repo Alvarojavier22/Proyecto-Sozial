@@ -54,7 +54,7 @@ export const Publications = (props) => {
         <div className="header">
           <div className="photo-header">
             <div className="d-flex">
-              <img src={pic!=null?pic: "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"} />
+              <img src={props.profilePhoto} />
               <div className="name-details">
                 <h4>{props.postUsername}</h4>
 
