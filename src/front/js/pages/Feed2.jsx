@@ -20,7 +20,9 @@ export const Feed2 = () => {
   }, []);
 
   const [pic, setPic] = useState(null);
-
+  useEffect(()=>{
+    setPic(store.profilePic.signed_url);
+  })
   useEffect(() => {
     let isMounted = true;
 
@@ -41,7 +43,7 @@ export const Feed2 = () => {
       isMounted = false;
     };
   }, []);
-
+  console.log(pic)
   const [posts, setPosts] = useState([]);
 
   return (
@@ -64,12 +66,7 @@ export const Feed2 = () => {
               key={index}
               name={userData.username}
               text={post.text}
-              profilePhoto={
-                post.img != null
-                  ? post.img
-                  : pic != null
-                  ? pic
-                  : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+              profilePhoto={post.img != null? post.img:( pic!= null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg")
               }
               postUsername={post.username || userData.username}
               /* hourPost={post.hour} */

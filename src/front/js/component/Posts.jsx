@@ -92,10 +92,7 @@ export const Posts = (props) => {
         <div className="input-post">
           <div className="photo-input">
             <img
-              src={
-                pic != null
-                  ? pic
-                  : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+              src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
               }
             />
             <div className="input-group">

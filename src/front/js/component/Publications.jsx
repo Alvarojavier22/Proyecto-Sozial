@@ -15,7 +15,9 @@ export const Publications = (props) => {
     }
   };
   console.log(comment)
-
+  useEffect(()=>{
+    setPic(store.profilePic.signed_url);
+  })
   const [pic, setPic] = useState(null);
 
   useEffect(() => {

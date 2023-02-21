@@ -12,10 +12,12 @@ export const FeedSocial = ({ set }) => {
   }, []);
   
   const [pic, setPic] = useState(null);
-
+  useEffect(()=>{
+    setPic(store.profilePic.signed_url);
+  })
   useEffect(() => {
     let isMounted = true;
-
+  
     async function fetchImage() {
       try {
         await actions.GetImage();
@@ -68,8 +70,7 @@ export const FeedSocial = ({ set }) => {
             }
           />
           <Publications
-            profilePhoto={
-              pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+            profilePhoto={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
             }
             postUsername={userData.username}
             hourPost={"21h"}
