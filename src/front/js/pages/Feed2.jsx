@@ -44,8 +44,6 @@ export const Feed2 = () => {
 
   const [posts, setPosts] = useState([]);
 
-;
-
   return (
     <div className="container-fluid">
       <ProfileNav />
@@ -74,7 +72,7 @@ export const Feed2 = () => {
                   : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
               }
               postUsername={post.username || userData.username}
-              hourPost={post.hour}
+              /* hourPost={post.hour} */
               postImage={post.postimage}
               /* postImage={
                 post.postimage != null
