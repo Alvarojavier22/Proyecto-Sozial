@@ -24,17 +24,27 @@ export const PostProductContainer = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(1);
   const [quantity, setQuantity] = useState(1);
-  const [image_url, setImage_url] = useState("");
+  const [pictures, setPictures] = useState("");
   const available = true;
   const [seller_id, setSeller_id] = useState(1);
   const product = {
-    image_url,
+    pictures,
     name,
     description,
     price,
     quantity,
     available,
     seller_id,
+  };
+  console.log(product)
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setPictures(event.target.result);
+    };
+
+    reader.readAsDataURL(file);
   };
   console.log(product);
   useEffect(() => {
@@ -61,6 +71,14 @@ export const PostProductContainer = () => {
     setSeller_id(localStorage.getItem("token"))
     console.log(seller_id)
   }, [])
+
+  const handlepost=async()=>{
+    await actions.UploadPhoto(pictures)
+    console.log("success")
+    await actions.getImage()
+    setPictures(store.profilePic.signed_url)
+    actions.PostProducts(product)
+  }
   return (
     <div className="container-fluid">
       {!show ? (
@@ -125,6 +143,23 @@ export const PostProductContainer = () => {
                     <i className="bi bi-images"></i>
                     <h5>add photos</h5>
                     <small>You can drag your photos here</small>
+                    <form>
+                    <input
+                     type="file" 
+                     name="profilePic"
+                     id="form-file"
+                     
+                     onChange={handleImageChange}
+                     />
+                     {pictures && (
+                      <img
+                      style={{maxWidth: "200px"}}
+                      name="profilePic"
+                      src={pictures}
+                      alt={"image"}
+                      />
+                     )}
+                     </form>
                   </div>
                 </div>
               </div>
@@ -197,7 +232,7 @@ export const PostProductContainer = () => {
             </div>
           </div>
           <div
-            onClick={() => actions.PostProducts(product)}
+            onClick={() => handlepost()}
             className="public-button"
           >
             PUBLIC PRODUCT
