@@ -42,7 +42,7 @@ class Products(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
     seller_id = db.Column(db.Integer, unique=False, nullable=False)
-    name = db.Column(db.String(50), unique=False, nullable=False)
+    name = db.Column(db.String(300), unique=False, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
     pictures = db.Column(db.String(10000), unique=False, nullable=True)
     price = db.Column(db.Integer, unique=False, nullable=False)
