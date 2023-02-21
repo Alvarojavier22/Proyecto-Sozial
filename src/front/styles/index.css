@@ -385,6 +385,14 @@ nav {
   margin-bottom: 10px;
 }
 
+.comments {
+  border: solid #26466f 1px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 5px 20px;
+}
+
 .post-description {
   display: flex;
   font-size: 16px;
@@ -983,8 +991,12 @@ nav {
 }
 
 .buyer-info {
+  border: #2c3e50 solid 1px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
   margin: 0 5px;
-  padding: 5px;
+  padding: 0 5px;
 }
 
 .buyer-info * {

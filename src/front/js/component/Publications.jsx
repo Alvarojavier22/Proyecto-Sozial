@@ -3,6 +3,7 @@ import React, { useState } from "react";
 export const Publications = (props) => {
   const [like, setLike] = useState(false);
   const [comment, setComment] = useState(false);
+  //const [showComments, setShowComments] = useState("");
   const [likesNumbers, setLikesNumbers] = useState(1);
 
   const Like = () => {
@@ -88,6 +89,7 @@ export const Publications = (props) => {
                 <img src={props.onlineUserPhoto} />
                 <div className="input-group mb-3">
                   <input
+                    onChange={""}
                     placeholder="comment here"
                     type="text"
                     className="form-control"
@@ -112,6 +114,7 @@ export const Publications = (props) => {
             ) : (
               ""
             )}
+            <div className="comments">coments</div>
           </div>
         </div>
       </div>
