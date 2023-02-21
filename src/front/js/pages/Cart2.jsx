@@ -1,80 +1,109 @@
-import React from "react";
+import React, { useState } from "react";
 import { InfoNav } from "../component/InfoNav.jsx";
 import { ProductCart } from "../component/ProductCart.jsx";
 import { ProfileNav } from "../component/ProfileNav.jsx";
 import { App } from "./app.jsx";
 
 export const CartTwo = () => {
+  const [haveProduct, setHaveProduct] = useState(true);
+
+  const changeProduct = () => {
+    setHaveProduct(!haveProduct);
+  };
+
   return (
     <div className="container-fluid">
       <ProfileNav />
       <InfoNav />
       <div className="row shopping-cart-continer">
-        <div className="col-md-8 col-sm-12 shopping-details">
-          <div className="shopping-details-container">
-            <div className="row shopping-details-header d-flex justify-content-between align-items-center">
-              <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
-                <h2>My shopping cart</h2>
+        {/* dejar esto en la versión final por ahora solo por presentación  */}
+        {haveProduct ? (
+          <div className="col-md-8 col-sm-12 shopping-details">
+            <div className="shopping-details-container">
+              <div className="row shopping-details-header d-flex justify-content-between align-items-center">
+                <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
+                  <h2>My shopping cart</h2>
+                </div>
+                <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
+                  <p>Items are reserved for only 60 minutes</p>
+                  <i
+                    style={{
+                      fontSize: "30px",
+                      marginLeft: "60px",
+                      cursor: "pointer",
+                    }}
+                    onClick={changeProduct}
+                    className="bi bi-x"
+                  ></i>
+                </div>
+                <div></div>
               </div>
-              <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
-                <p>Items are reserved for only 60 minutes</p>
+              <ProductCart
+                price={"$20.00"}
+                productTitle={"OTAKU DESIGN Slim mid lenght start t-shirt"}
+                productSubTitle={"Black Silk"}
+                button
+              />
+              <div className="shopping-details-footer d-flex justify-content-end">
+                <div className="footer-price d-flex">
+                  <h4>Sub Total:</h4>
+                  <h4>$20.00</h4>
+                </div>
               </div>
             </div>
-            <ProductCart
-              price={"$20.00"}
-              productTitle={"OTAKU DESIGN Slim mid lenght start t-shirt"}
-              productSubTitle={"Black Silk"}
-            />
-            <div className="shopping-details-footer d-flex justify-content-end">
-              <div className="footer-price d-flex">
-                <h4>Sub Total:</h4>
-                <h4>$20.00</h4>
+            <div className="row prime-delivery black-delivery d-flex align-items-center justify-content-around">
+              <div className="col-sm-12 col-md-4 center">
+                <i className="bi bi-star"></i>
+              </div>
+              <div className="col-sm-12 col-md-4">
+                <h5 id="premiun">PREMIUM DELIVERY</h5>
+                <p id="premiun">Get next day delivery for only $9.99</p>
+              </div>
+              <div className="col-sm-12 col-md-4 center">
+                <div>
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="radioNoLabel"
+                    id="radioNoLabel1"
+                    value=""
+                    aria-label="..."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row prime-delivery normal-delivery d-flex align-items-center justify-content-around">
+              <div className="col-sm-12 col-md-4 center">
+                <i className="bi bi-truck"></i>
+              </div>
+              <div className="col-sm-12 col-md-4">
+                <h5 id="premiun">FREE* STANDARD DELIVERY</h5>
+                <p id="premiun">Normal delivery option avaliable</p>
+              </div>
+              <div className="col-sm-12 col-md-4 center">
+                <div>
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="radioNoLabel"
+                    id="radioNoLabel1"
+                    value=""
+                    aria-label="..."
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div className="row prime-delivery black-delivery d-flex align-items-center justify-content-around">
-            <div className="col-sm-12 col-md-4 center">
-              <i className="bi bi-star"></i>
-            </div>
-            <div className="col-sm-12 col-md-4">
-              <h5 id="premiun">PREMIUM DELIVERY</h5>
-              <p id="premiun">Get next day delivery for only $9.99</p>
-            </div>
-            <div className="col-sm-12 col-md-4 center">
-              <div>
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="radioNoLabel"
-                  id="radioNoLabel1"
-                  value=""
-                  aria-label="..."
-                />
-              </div>
+        ) : (
+          <div className="row shopping-cart-continer">
+            <div
+              style={{ margin: "auto" }}
+              className="col-md-8 col-sm-12 shopping-details d-flex justify-content-center"
+            >
+              <h1>You don't have any product</h1>
             </div>
           </div>
-          <div className="row prime-delivery normal-delivery d-flex align-items-center justify-content-around">
-            <div className="col-sm-12 col-md-4 center">
-              <i className="bi bi-truck"></i>
-            </div>
-            <div className="col-sm-12 col-md-4">
-              <h5 id="premiun">FREE* STANDARD DELIVERY</h5>
-              <p id="premiun">Normal delivery option avaliable</p>
-            </div>
-            <div className="col-sm-12 col-md-4 center">
-              <div>
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="radioNoLabel"
-                  id="radioNoLabel1"
-                  value=""
-                  aria-label="..."
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
         <div className="col-lg-4 col-md-11 m-auto col-sm-12 checkout-details">
           <div className="total">
             <h3>TOTAL</h3>

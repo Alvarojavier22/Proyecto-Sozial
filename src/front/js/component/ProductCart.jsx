@@ -17,9 +17,8 @@ export const ProductCart = (props) => {
           <div>
             <p>{props.price}</p>
           </div>
-          <div>
-            <i className="bi bi-x"></i>
-          </div>
+          {/* dejar esto en la versión final por ahora solo por presentación */}
+          <div>{/* <i className="bi bi-x"></i> */}</div>
         </div>
         <div className="content-description-specifications">
           <p>{props.productTitle}</p>
