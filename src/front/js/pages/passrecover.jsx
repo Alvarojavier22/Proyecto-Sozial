@@ -27,22 +27,23 @@ export const PassRecover=()=>{
 }*/
 const showAlert=async ()=>{
   const willDelete = await swal({
-    title: "Are you sure?",
-    text: "Once deleted, you will not be able to recover this imaginary file!",
+   
+    text: "Type the code we sent to your e-mail account",
     icon: "warning",
     content: "input",
     buttons: true,
     
   });
   if (willDelete) {
-    swal("Poof! Your imaginary file has been deleted!", {
+    swal( {
+      text: "Code accepted",
       icon: "success",
       buttons: false,
       timer: 2000
     });
     navigate("/newpass")
   } else {
-    swal("Your imaginary file is safe!");
+    swal("Code incorrect");
   }
   
 }
