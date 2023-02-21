@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Posts } from "./Posts.jsx";
+import { Context } from "../store/appContext.js";
 import { ProfileInfo } from "./ProfileInfo.jsx";
 import { Publications } from "./Publications.jsx";
 
 export const FeedSocial = ({ set }) => {
   const [userData, setUserData] = useState({});
-
+  const {actions,store}=useContext(Context)
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("user")));
   }, []);

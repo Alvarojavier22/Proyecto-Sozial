@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 export const Publications = (props) => {
   const [like, setLike] = useState("");
@@ -16,6 +16,29 @@ export const Publications = (props) => {
   };
   console.log(comment)
 
+  const [pic, setPic] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchImage() {
+      try {
+        await actions.GetImage();
+        if (isMounted) {
+          setPic(store.profilePic.signed_url);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchImage();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const Comment = () => {
     setComment(!comment);
     setShowComments(false)
@@ -31,7 +54,7 @@ export const Publications = (props) => {
         <div className="header">
           <div className="photo-header">
             <div className="d-flex">
-              <img src={props.profilePhoto} />
+              <img src={pic!=null?pic: "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"} />
               <div className="name-details">
                 <h4>{props.postUsername}</h4>
 
@@ -96,7 +119,7 @@ export const Publications = (props) => {
             <div className="post-divider"></div>
             {comment ? (
               <div className="input-comment">
-                <img src={props.onlineUserPhoto} />
+                <img src={pic!=null?pic:"https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"} />
                 <div className="input-group mb-3">
                   <input
                     onChange={(e)=>setComment(e.target.value)}
