@@ -159,15 +159,8 @@ export const PostProductContainer = () => {
                       src={pictures}
                       alt={"image"}
 
-                      />
-                      {pictures && (
-                        <img
-                          style={{ maxWidth: "200px" }}
-                          name="profilePic"
-                          src={pictures}
-                          alt={"image"}
-                        />
-                      )}
+                      />)}
+                    
                     </form>
                   </div>
                 </div>
