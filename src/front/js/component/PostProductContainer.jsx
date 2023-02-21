@@ -67,10 +67,10 @@ export const PostProductContainer = () => {
       isMounted = false;
     };
   }, []);
-  useEffect(()=>{
+  /*useEffect(()=>{
     setSeller_id(localStorage.getItem("token"))
     console.log(seller_id)
-  }, [])
+  }, [])*/
 
   const handlepost=async()=>{
     await actions.UploadPhoto(pictures)
@@ -154,7 +154,6 @@ export const PostProductContainer = () => {
                      {pictures && (
                       <img
                       style={{maxWidth: "200px"}}
-                      name="profilePic"
                       src={pictures}
                       alt={"image"}
                       />
@@ -232,7 +231,7 @@ export const PostProductContainer = () => {
             </div>
           </div>
           <div
-            onClick={() => handlepost()}
+            onClick={() => actions.PostProducts(product)}
             className="public-button"
           >
             PUBLIC PRODUCT
