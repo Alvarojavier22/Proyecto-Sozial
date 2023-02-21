@@ -67,10 +67,11 @@ export const PostProductContainer = () => {
       isMounted = false;
     };
   }, []);
-  useEffect(() => {
-    setSeller_id(localStorage.getItem("token"));
-    console.log(seller_id);
-  }, []);
+  /*useEffect(()=>{
+    setSeller_id(localStorage.getItem("token"))
+    console.log(seller_id)
+  }, [])*/
+
 
   const handlepost = async () => {
     await actions.UploadPhoto(pictures);
@@ -144,11 +145,20 @@ export const PostProductContainer = () => {
                     <h5>add photos</h5>
                     <small>You can drag your photos here</small>
                     <form>
-                      <input
-                        type="file"
-                        name="profilePic"
-                        id="form-file"
-                        onChange={handleImageChange}
+
+                    <input
+                     type="file" 
+                     name="profilePic"
+                     id="form-file"
+                     
+                     onChange={handleImageChange}
+                     />
+                     {pictures && (
+                      <img
+                      style={{maxWidth: "200px"}}
+                      src={pictures}
+                      alt={"image"}
+
                       />
                       {pictures && (
                         <img
@@ -230,7 +240,12 @@ export const PostProductContainer = () => {
               </div>
             </div>
           </div>
-          <div onClick={() => handlepost()} className="public-button">
+
+          <div
+            onClick={() => actions.PostProducts(product)}
+            className="public-button"
+          >
+
             PUBLIC PRODUCT
           </div>
         </div>
