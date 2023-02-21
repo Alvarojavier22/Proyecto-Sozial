@@ -1,11 +1,12 @@
-import React, {useState} from "react";
-import { Link} from "react-router-dom";
+import React, {useState, } from "react";
+import { Link, Navigate, useNavigate} from "react-router-dom";
 import "./stylepage.css"
 import { Popup } from "../component/popup.jsx";
+import swal from "sweetalert";
 
 
 export const PassRecover=()=>{
-    
+  const navigate=useNavigate()
   const[buttonPopup, setButtonPopup]= useState(false)
   const [email, setEmail]=useState("")
   const[message, setMessage]=useState("")
@@ -24,6 +25,27 @@ export const PassRecover=()=>{
   }
   setMessage("solicitud de reinicio de clave enviada")
 }*/
+const showAlert=async ()=>{
+  const willDelete = await swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this imaginary file!",
+    icon: "warning",
+    content: "input",
+    buttons: true,
+    
+  });
+  if (willDelete) {
+    swal("Poof! Your imaginary file has been deleted!", {
+      icon: "success",
+      buttons: false,
+      timer: 2000
+    });
+    navigate("/newpass")
+  } else {
+    swal("Your imaginary file is safe!");
+  }
+  
+}
 
     return(
         <div className="container-fluid " id="contsign">
@@ -37,7 +59,7 @@ export const PassRecover=()=>{
   </div>
   <div className="container d-flex justify-content-end">
   <Link to="/"><button type="button" className="btn btn-secondary">Cancel</button></Link>
-  <button type="button" className="btn btn-primary ms-1 click" onClick={()=> setButtonPopup(true)}>Send</button>
+  <button type="button" className="btn btn-primary ms-1 click" onClick={()=> showAlert()}>Send</button>
   </div>
 </form>
 

@@ -1,9 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import swal from "sweetalert";
+
 export const Newpass=()=>{
     const [newPassHide, setNewPassHide]=useState(true)
     const [secNewPassHide, setSecNewPassHide]=useState(true)
+    const navigate = useNavigate()
+    const alert=async()=>{
+        return swal({
+            text: "Your password has been reset succesfully",
+            buttons: false,
+            icon:"success"
+
+    });
+            
+        
+    }
+
     return(
         <div className="container-fluid" id="backnewpass">
             <div className=" container newpass">
@@ -17,7 +31,7 @@ export const Newpass=()=>{
                         <i className={`far fa-eye${ secNewPassHide==true? "": "-slash"} `} onClick={()=>secNewPassHide==true?setSecNewPassHide(false):setSecNewPassHide(true)} id="togglePassword" style={{"marginLeft": "-30px", "cursor": "pointer"}}></i>
                     </div>
                     <div className="buttondiv">
-                        <button type="button" className="buttonsetpass">Set Password</button>
+                        <Link to="/"><button onClick={()=> alert()} type="button" className="buttonsetpass">Set Password</button></Link>
                     </div>
                     <footer>
                         <p>if you still need help, contact <Link to="#" id="sozialsupp">Sozial Support</Link></p>

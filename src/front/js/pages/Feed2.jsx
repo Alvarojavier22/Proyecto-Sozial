@@ -44,26 +44,7 @@ export const Feed2 = () => {
 
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchPosts() {
-      try {
-        await actions.GetPosts();
-        if (isMounted) {
-          return "mounted";
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchPosts();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+;
 
   return (
     <div className="container-fluid">

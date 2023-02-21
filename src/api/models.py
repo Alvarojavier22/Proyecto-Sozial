@@ -44,7 +44,7 @@ class Products(db.Model):
     seller_id = db.Column(db.Integer, unique=False, nullable=False)
     name = db.Column(db.String(50), unique=False, nullable=False)
     description = db.Column(db.String(300), unique=False, nullable=False)
-    pictures = db.Column(db.String(1000), unique=False, nullable=True)
+    pictures = db.Column(db.String(10000), unique=False, nullable=True)
     price = db.Column(db.Integer, unique=False, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     avaliable = db.Column(db.Boolean(), unique=False, nullable=False)

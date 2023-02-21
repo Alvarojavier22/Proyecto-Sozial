@@ -101,6 +101,8 @@ export const SignUp = () => {
       title: "Great",
       text: "User created succesfully",
       icon: "success",
+      timer: 1000,
+      button:false
     });
   };
 
