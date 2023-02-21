@@ -36,7 +36,7 @@ export const PostProductContainer = () => {
     available,
     seller_id,
   };
-  console.log(product)
+  console.log(product);
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -67,18 +67,18 @@ export const PostProductContainer = () => {
       isMounted = false;
     };
   }, []);
-  useEffect(()=>{
-    setSeller_id(localStorage.getItem("token"))
-    console.log(seller_id)
-  }, [])
+  useEffect(() => {
+    setSeller_id(localStorage.getItem("token"));
+    console.log(seller_id);
+  }, []);
 
-  const handlepost=async()=>{
-    await actions.UploadPhoto(pictures)
-    console.log("success")
-    await actions.getImage()
-    setPictures(store.profilePic.signed_url)
-    actions.PostProducts(product)
-  }
+  const handlepost = async () => {
+    await actions.UploadPhoto(pictures);
+    console.log("success");
+    await actions.getImage();
+    setPictures(store.profilePic.signed_url);
+    actions.PostProducts(product);
+  };
   return (
     <div className="container-fluid">
       {!show ? (
@@ -144,22 +144,21 @@ export const PostProductContainer = () => {
                     <h5>add photos</h5>
                     <small>You can drag your photos here</small>
                     <form>
-                    <input
-                     type="file" 
-                     name="profilePic"
-                     id="form-file"
-                     
-                     onChange={handleImageChange}
-                     />
-                     {pictures && (
-                      <img
-                      style={{maxWidth: "200px"}}
-                      name="profilePic"
-                      src={pictures}
-                      alt={"image"}
+                      <input
+                        type="file"
+                        name="profilePic"
+                        id="form-file"
+                        onChange={handleImageChange}
                       />
-                     )}
-                     </form>
+                      {pictures && (
+                        <img
+                          style={{ maxWidth: "200px" }}
+                          name="profilePic"
+                          src={pictures}
+                          alt={"image"}
+                        />
+                      )}
+                    </form>
                   </div>
                 </div>
               </div>
@@ -207,7 +206,7 @@ export const PostProductContainer = () => {
                 className="btn-group d-flex justify-content-start"
                 role="group"
               >
-                <button
+                {/* <button
                   id="btnGroupDrop1"
                   type="button"
                   className="btn btn-warning dropdown-toggle"
@@ -215,7 +214,7 @@ export const PostProductContainer = () => {
                   aria-expanded="false"
                 >
                   Avaliable
-                </button>
+                </button> */}
                 <ul className="dropdown-menu" aria-labelledby="btnGroupDrop1">
                   <li>
                     <a className="dropdown-item" href="#">
@@ -231,10 +230,7 @@ export const PostProductContainer = () => {
               </div>
             </div>
           </div>
-          <div
-            onClick={() => handlepost()}
-            className="public-button"
-          >
+          <div onClick={() => handlepost()} className="public-button">
             PUBLIC PRODUCT
           </div>
         </div>
