@@ -123,7 +123,7 @@ export const PostProductContainer = () => {
                   }
                 />
               </div>
-              <div className="buyer-info">
+              <div className="buyer-info d-flex align-items-center">
                 <strong>
                   <p>{userData.username}</p>
                 </strong>

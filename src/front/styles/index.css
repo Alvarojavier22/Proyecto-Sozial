@@ -983,8 +983,12 @@ nav {
 }
 
 .buyer-info {
+  border: #2c3e50 solid 1px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
   margin: 0 5px;
-  padding: 5px;
+  padding: 0 5px;
 }
 
 .buyer-info * {
