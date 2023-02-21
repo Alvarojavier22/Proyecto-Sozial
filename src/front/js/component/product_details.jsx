@@ -133,7 +133,7 @@ export const ProductDetail = (props) => {
             <h3>{props.title}</h3>
           </div>
           <div className="sell-products-price">
-            <h5>Price: $2000.00</h5>
+            <h5>Price: $20.00</h5>
           </div>
           <div className="user-buttons-interactions">
             <button className="btn btn-primary pub-buttons">

@@ -68,6 +68,15 @@ export const ClothesCategory = () => {
         "commodo nibh nec, bibendum turpis. Sed pretium dolor at eros feugiat dignissim vitae ac turpis. Nam urna lorem, consectetur non",
       price: "10",
     },
+    {
+      id: 8,
+      img: "https://http2.mlstatic.com/D_NQ_NP_629893-CBT48890389810_012022-O.jpg",
+      alt: "sozial-store-product",
+      title: "Teens clothes",
+      description:
+        "natoque penatibus et magnis dis parturient monte ommodo nibh nec, bibendum turpis. Sed pretium dolor at eros feugiat dignissim vitae ac turpis. Nam urna lorem, consectetur non",
+      price: "20",
+    },
   ]);
 
   return (

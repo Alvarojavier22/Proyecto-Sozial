@@ -21,12 +21,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       products: [
         {
           id: 1,
-          img: "https://i.pinimg.com/736x/60/25/69/6025694842b457c914461e991349d7a7.jpg",
+          img: "https://http2.mlstatic.com/D_NQ_NP_629893-CBT48890389810_012022-O.jpg",
           alt: "sozial-store-product",
-          title: "Cars store",
+          title: "Teens clothes",
           description:
-            "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-          price: "10000",
+            "natoque penatibus et magnis dis parturient monte ommodo nibh nec, bibendum turpis. Sed pretium dolor at eros feugiat dignissim vitae ac turpis. Nam urna lorem, consectetur non",
+          price: "20",
         },
         {
           id: 2,
